@@ -19,3 +19,6 @@ Route::get('/', function () {
 });
 Route::get('/compilar', [JasperController::class, 'compilar'])->name('compilar');
 Route::get('/reporte', [JasperController::class, 'reporte'])->name('reporte');
+Route::get('/listarParametros', [JasperController::class, 'listarParametros'])->name('listarParametros');
+Route::get('/compilarConParametros', [JasperController::class, 'compilarConParametros'])->name('compilarConParametros');
+Route::get('/reporteParametros', [JasperController::class, 'reporteParametros'])->name('reporteParametros');
