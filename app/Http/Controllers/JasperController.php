@@ -34,11 +34,13 @@ class JasperController extends Controller
 
         $jasper = new PHPJasper;
 
-        $jasper->process(
+        $output =  $jasper->process(
             $input,
             $output,
             $options
-        )->execute();
+        )->output();
+
+        shell_exec($output);
 
         $pathToFile = base_path() .
             '/vendor/geekcom/phpjasper/examples/hello_world.pdf';
