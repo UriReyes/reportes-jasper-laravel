@@ -128,7 +128,7 @@ class JasperController extends Controller
         }
 
         //USO DE JASPER REPORT
-        $input = "C:\Users\urire\JaspersoftWorkspace\MyReports\json.jrxml";
+        $input = base_path() . "/resources/plantillas/json.jrxml";
         $output = base_path() .
             '/resources/reports/pdf';
 
