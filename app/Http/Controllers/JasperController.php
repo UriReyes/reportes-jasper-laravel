@@ -96,8 +96,8 @@ class JasperController extends Controller
             'Accept' => 'application/json; version=2.0',
             'Authorization' => $authorization
         ])->get("{$url}/short/msp/customers");
-        $response = $response->object();
-        return $response->data;
+        $response = $response->json();
+        return $response['data'];
     }
 
     public function getMonitors($url, $zaaid)
@@ -110,9 +110,9 @@ class JasperController extends Controller
             'Authorization' => $authorization,
             'Cookie' => $cookie
         ])->get("{$url}/monitors");
-        $response = $response->object();
+        $response = $response->json();
         dd($response);
-        return $response->data;
+        return $response['data'];
     }
 
 
@@ -122,7 +122,7 @@ class JasperController extends Controller
         $site24x7Url = env('SITE_24X7_API');
         $customers = $this->getCustomers($site24x7Url);
         foreach ($customers as $customer) {
-            $zaaid = $customer->zaaid;
+            $zaaid = $customer['zaaid'];
             $monitors = $this->getMonitors($site24x7Url, $zaaid);
             dd($monitors);
         }
@@ -169,7 +169,8 @@ class JasperController extends Controller
             }
           }';
         $name = 'test';
-        $data = json_decode($json, true);
+        $data = ['customers' => ['customer' => $customers]];
+
         $jsonTmpfilePath = storage_path('app/public') . '/jasper/' . $name . '.json';
         $jsonTmpfile = fopen($jsonTmpfilePath, 'w');
         fwrite($jsonTmpfile, json_encode($data));
