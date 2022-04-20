@@ -111,65 +111,52 @@ class JasperController extends Controller
             'Cookie' => $cookie
         ])->get("{$url}/monitors");
         $response = $response->json();
-        dd($response);
         return $response['data'];
     }
 
+    public function getAvailabilityReport($url, $zaaid)
+    {
+        $authorization = "Zoho-oauthtoken {$this->getRefreshToken()}";
+        $cookie = "zaaid={$zaaid}";
+        $response = Http::withHeaders([
+            'Accept' => 'application/json; version=2.0',
+            'Authorization' => $authorization,
+            'Cookie' => $cookie
+        ])->get("{$url}/reports/availability_summary/424449000000040027?period=7");
+        $response = $response->json();
+        return $response;
+    }
 
     public function reporteParametros()
     {
-        //CONSUMO API SITE24x7
+        // CONSUMO API SITE24x7
         $site24x7Url = env('SITE_24X7_API');
         $customers = $this->getCustomers($site24x7Url);
-        foreach ($customers as $customer) {
-            $zaaid = $customer['zaaid'];
-            $monitors = $this->getMonitors($site24x7Url, $zaaid);
-            dd($monitors);
-        }
+        $data = $this->getAvailabilityReport($site24x7Url, "764241863");
+        // foreach ($customers as $customer) {
+        //     $zaaid = $customer['zaaid'];
+        //     $monitors = $this->getMonitors($site24x7Url, $zaaid);
+        // }
 
-        //USO DE JASPER REPORT
-        $input = base_path() . "/resources/plantillas/json.jrxml";
+        //USO DE JASPER REPORT        
+        $input = "C:\Users\uriel.santiago\JaspersoftWorkspace\KIO-Jasper\Resumen.jrxml";
         $output = base_path() .
             '/resources/reports/pdf';
-
-        $json = '{
-            "contacts": {
-              "person": [
-                {
-                  "name": "Vittor Mattos (vitormattos)",
-                  "street": "Street 1",
-                  "city": "Fairfax",
-                  "phone": "+1 (415) 111-1111"
-                },
-                {
-                  "name": "Daniel Rodrigues (geekcom)",
-                  "street": "Street 2",
-                  "city": "San Francisco",
-                  "phone": "+1 (415) 222-2222"
-                },
-                {
-                  "name": "Rafael Queiroz (rafaelqueiroz)",
-                  "street": "Street 2",
-                  "city": "Paradise City",
-                  "phone": "+1 (415) 333-3333"
-                },
-                {
-                    "name": "Uriel Santiago Reyes Paredes",
-                    "street": "Street 3",
-                    "city": "Paradise City",
-                    "phone": "+1 (415) 444-3333"
-                },
-                {
-                    "name": "Uriel Santiago Reyes Paredes",
-                    "street": "Street 4",
-                    "city": "Paradise City",
-                    "phone": "+1 (415) 444-3333"
-                  }
-              ]
-            }
-          }';
         $name = 'test';
-        $data = ['customers' => ['customer' => $customers]];
+
+        $charts = array_map(function ($item) {
+            if ($item['key'] == 'percentage_chart') {
+                $item['data']['uptimes'] = array_map(function ($item) {
+                    return [
+                        'date' => $item[0],
+                        'uptime' => $item[1]
+                    ];
+                }, $item['data']);
+            }
+            return $item;
+        }, $data['data']['charts']);
+
+        $data['data']['charts'] = $charts;
 
         $jsonTmpfilePath = storage_path('app/public') . '/jasper/' . $name . '.json';
         $jsonTmpfile = fopen($jsonTmpfilePath, 'w');
@@ -193,11 +180,12 @@ class JasperController extends Controller
             $options
         )->output();
 
-
+        //Compilando el reporte graficas.jrxml
+        // shell_exec('jasperstarter compile "C:/Users/uriel.santiago/JaspersoftWorkspace/KIO-Jasper/graficas.jrxml"');
         shell_exec($output);
 
         $pathToFile = base_path() .
-            '/resources/reports/pdf/json.pdf';
+            '/resources/reports/pdf/Resumen.pdf';
         return response()->file($pathToFile);
     }
 }
