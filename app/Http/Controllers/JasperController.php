@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;
+use App\Traits\ApiSite24x7;
+use Carbon\Carbon;
 use PHPJasper\PHPJasper;
+
 
 class JasperController extends Controller
 {
+    use ApiSite24x7;
+
     public function compilar()
     {
 
@@ -75,100 +78,62 @@ class JasperController extends Controller
         ]);
     }
 
-    public function getRefreshToken()
-    {
-        $url = env('ZOHO_API_URL');
-        $response = Http::asForm()->post("{$url}/token", [
-            'client_id' => env('ZOHO_CLIENT_ID'),
-            'client_secret' => env('ZOHO_CLIENT_SECRET'),
-            'refresh_token' => env('ZOHO_REFRESH_TOKEN'),
-            'grant_type' => "refresh_token"
-        ]);
-        $response = $response->object();
-        return $response->access_token;
-    }
-
-    public function getCustomers($url)
-    {
-        $authorization = "Zoho-oauthtoken {$this->getRefreshToken()}";
-        $response = Http::withHeaders([
-            'Content-Type' => 'application/json;charset=UTF-8',
-            'Accept' => 'application/json; version=2.0',
-            'Authorization' => $authorization
-        ])->get("{$url}/short/msp/customers");
-        $response = $response->json();
-        return $response['data'];
-    }
-
-    public function getMonitors($url, $zaaid)
-    {
-        $authorization = "Zoho-oauthtoken {$this->getRefreshToken()}";
-        $cookie = "zaaid={$zaaid}";
-        $response = Http::withHeaders([
-            'Content-Type' => 'application/json;charset=UTF-8',
-            'Accept' => 'application/json; version=2.0',
-            'Authorization' => $authorization,
-            'Cookie' => $cookie
-        ])->get("{$url}/monitors");
-        $response = $response->json();
-        return $response['data'];
-    }
-
-    public function getAvailabilityReport($url, $zaaid)
-    {
-        $authorization = "Zoho-oauthtoken {$this->getRefreshToken()}";
-        $cookie = "zaaid={$zaaid}";
-        $response = Http::withHeaders([
-            'Accept' => 'application/json; version=2.0',
-            'Authorization' => $authorization,
-            'Cookie' => $cookie
-        ])->get("{$url}/reports/availability_summary/424449000000040027?period=7");
-        $response = $response->json();
-        return $response;
-    }
-
     public function reporteParametros()
     {
         // CONSUMO API SITE24x7
         $site24x7Url = env('SITE_24X7_API');
-        $customers = $this->getCustomers($site24x7Url);
-        $data = $this->getAvailabilityReport($site24x7Url, "764241863");
+        $refresh_token = $this->getRefreshToken();
+        // $customers = $this->getCustomers($site24x7Url);
+        $customer = "SEFIA";
+        $zaaid = "764241863";
+        $monitors = $this->getMonitors($site24x7Url, $zaaid, $refresh_token);
+        foreach ($monitors as $monitor) {
+            $monitor_id = $monitor['monitor_id'];
+            $data = $this->getAvailabilityReport($site24x7Url, $monitor_id, $zaaid, $refresh_token);
+            if ($monitor['type'] == 'SERVER') {
+                $customers = [
+                    'customer' => [
+                        'name' => $customer,
+                        'zaaid' => $zaaid,
+                        'monitor' => $monitor,
+                        'availability' => $this->getUptimeDownTimeAndMaintenance($data)
+                    ]
+                ];
+                $this->getJasperReport($customers, $monitor_id . '_monitor');
+
+                // dd('Creado con exito');
+            }
+        }
+
         // foreach ($customers as $customer) {
         //     $zaaid = $customer['zaaid'];
         //     $monitors = $this->getMonitors($site24x7Url, $zaaid);
         // }
 
-        //USO DE JASPER REPORT        
+        return response()->json([
+            'status' => 'ok',
+            'msj' => '¡Reporte compilado!'
+        ]);
+    }
+
+    public function getJasperReport($data, $file_name = "Resumen")
+    {
         $input = "C:\Users\uriel.santiago\JaspersoftWorkspace\KIO-Jasper\Resumen.jrxml";
         $output = base_path() .
-            '/resources/reports/pdf';
+            '/resources/reports/pdf/' . $file_name;
         $name = 'test';
-
-        $charts = array_map(function ($item) {
-            if ($item['key'] == 'percentage_chart') {
-                $item['data']['uptimes'] = array_map(function ($item) {
-                    return [
-                        'date' => $item[0],
-                        'uptime' => $item[1]
-                    ];
-                }, $item['data']);
-            }
-            return $item;
-        }, $data['data']['charts']);
-
-        $data['data']['charts'] = $charts;
 
         $jsonTmpfilePath = storage_path('app/public') . '/jasper/' . $name . '.json';
         $jsonTmpfile = fopen($jsonTmpfilePath, 'w');
         fwrite($jsonTmpfile, json_encode($data));
         fclose($jsonTmpfile);
-        $datafile = $jsonTmpfilePath;
+
         $options = [
             'format' => ['pdf'],
             'params' => [],
             'db_connection' => [
                 'driver' => 'json',
-                'data_file' => $datafile
+                'data_file' => $jsonTmpfilePath
             ]
         ];
 
@@ -184,8 +149,29 @@ class JasperController extends Controller
         // shell_exec('jasperstarter compile "C:/Users/uriel.santiago/JaspersoftWorkspace/KIO-Jasper/graficas.jrxml"');
         shell_exec($output);
 
-        $pathToFile = base_path() .
-            '/resources/reports/pdf/Resumen.pdf';
-        return response()->file($pathToFile);
+        // $pathToFile = base_path() .
+        //     '/resources/reports/pdf/Resumen.pdf';
+        // return response()->file($pathToFile);
+    }
+
+    public function getUptimeDownTimeAndMaintenance($data)
+    {
+        $charts = array_map(function ($item) {
+            if ($item['key'] == 'percentage_chart') {
+                $item['data']['uptimes'] = array_map(function ($item) {
+                    return [
+                        'date' => Carbon::parse($item[0])->format('Y-m-d H:i:s'),
+                        'uptime' => $item[1],
+                        'downtime' => $item[2],
+                        'maintenance' => $item[3],
+                    ];
+                }, $item['data']);
+            }
+            return $item;
+        }, $data['data']['charts']);
+
+        $data['data']['charts'] = $charts;
+
+        return $data;
     }
 }
