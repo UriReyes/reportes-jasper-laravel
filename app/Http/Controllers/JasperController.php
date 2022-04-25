@@ -89,16 +89,19 @@ class JasperController extends Controller
         $monitors = $this->getMonitors($site24x7Url, $zaaid, $refresh_token);
         foreach ($monitors as $monitor) {
             $monitor_id = $monitor['monitor_id'];
-            $data = $this->getAvailabilityReport($site24x7Url, $monitor_id, $zaaid, $refresh_token);
+            $availability = $this->getAvailabilityReport($site24x7Url, $monitor_id, $zaaid, $refresh_token);
+            $performance = $this->getPerformance($site24x7Url, $monitor_id, $zaaid, $refresh_token, 'unit_of_time=3&period=7');
             if ($monitor['type'] == 'SERVER') {
                 $customers = [
                     'customer' => [
                         'name' => $customer,
                         'zaaid' => $zaaid,
                         'monitor' => $monitor,
-                        'availability' => $this->getUptimeDownTimeAndMaintenance($data)
+                        'availability' => $this->getUptimeDownTimeAndMaintenance($availability),
+                        'performance' =>  $performance
                     ]
                 ];
+                dd($performance);
                 $this->getJasperReport($customers, $monitor_id . '_monitor');
 
                 // dd('Creado con exito');
