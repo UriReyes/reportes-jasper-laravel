@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Traits\ApiSite24x7;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Storage;
 use PHPJasper\PHPJasper;
 
 
@@ -117,10 +118,11 @@ class JasperController extends Controller
     public function getJasperReport($data, $folder_name, $file_name = "Resumen")
     {
         $input = "C:\Users\uriel.santiago\JaspersoftWorkspace\KIO-Jasper\Resumen.jrxml";
-        $output = base_path() .
-            '/resources/reports/pdf/' . $file_name;
-        $name = 'test';
-
+        Storage::makeDirectory('public/reports' . DIRECTORY_SEPARATOR . Carbon::now()->format('Y-m-d') . DIRECTORY_SEPARATOR . $folder_name);
+        $output_folder = storage_path('app/public') .
+            '/reports' . DIRECTORY_SEPARATOR . Carbon::now()->format('Y-m-d') . DIRECTORY_SEPARATOR . $folder_name . DIRECTORY_SEPARATOR . $file_name . '.pdf';
+        // dd($output_folder);
+        $name = 'api';
         $jsonTmpfilePath = storage_path('app/public') . '/jasper/' . $name . '.json';
         $jsonTmpfile = fopen($jsonTmpfilePath, 'w');
         fwrite($jsonTmpfile, json_encode($data));
@@ -139,7 +141,7 @@ class JasperController extends Controller
 
         $output = $jasper->process(
             $input,
-            $output,
+            $output_folder,
             $options
         )->output();
 
