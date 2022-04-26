@@ -83,43 +83,38 @@ class JasperController extends Controller
         // CONSUMO API SITE24x7
         $site24x7Url = env('SITE_24X7_API');
         $refresh_token = $this->getRefreshToken();
-        // $customers = $this->getCustomers($site24x7Url);
-        $customer = "SEFIA";
-        $zaaid = "764241863";
-        $monitors = $this->getMonitors($site24x7Url, $zaaid, $refresh_token);
-        foreach ($monitors as $monitor) {
-            $monitor_id = $monitor['monitor_id'];
-            $availability = $this->getAvailabilityReport($site24x7Url, $monitor_id, $zaaid, $refresh_token);
-            $performance = $this->getPerformance($site24x7Url, $monitor_id, $zaaid, $refresh_token, 'unit_of_time=3&period=7');
-            if ($monitor['type'] == 'SERVER') {
-                $customers = [
-                    'customer' => [
-                        'name' => $customer,
-                        'zaaid' => $zaaid,
-                        'monitor' => $monitor,
-                        'availability' => $this->getUptimeDownTimeAndMaintenance($availability),
-                        'performance' =>  $performance
-                    ]
-                ];
-                dd($performance);
-                $this->getJasperReport($customers, $monitor_id . '_monitor');
+        $customers_its = $this->getCustomers($site24x7Url, $refresh_token);
+        foreach ($customers_its as $customer_it) {
+            $customer = $customer_it['name'];
+            $zaaid = $customer_it['zaaid'];
+            $monitors = $this->getMonitors($site24x7Url, $zaaid, $refresh_token);
+            foreach ($monitors as $monitor) {
+                $monitor_id = $monitor['monitor_id'];
+                $availability = $this->getAvailabilityReport($site24x7Url, $monitor_id, $zaaid, $refresh_token);
+                $performance = $this->getPerformance($site24x7Url, $monitor_id, $zaaid, $refresh_token, 'unit_of_time=3&period=7');
+                if ($monitor['type'] == 'SERVER') {
+                    $customers = [
+                        'customer' => [
+                            'name' => $customer,
+                            'zaaid' => $zaaid,
+                            'monitor' => $monitor,
+                            'availability' => $this->getUptimeDownTimeAndMaintenance($availability),
+                            'performance' =>  $this->applyFormatToPerformance($performance)
+                        ]
+                    ];
+                    $this->getJasperReport($customers,  $customer, $monitor_id . '_monitor');
 
-                // dd('Creado con exito');
+                    // dd('Creado con exito');
+                }
             }
         }
-
-        // foreach ($customers as $customer) {
-        //     $zaaid = $customer['zaaid'];
-        //     $monitors = $this->getMonitors($site24x7Url, $zaaid);
-        // }
-
         return response()->json([
             'status' => 'ok',
             'msj' => '¡Reporte compilado!'
         ]);
     }
 
-    public function getJasperReport($data, $file_name = "Resumen")
+    public function getJasperReport($data, $folder_name, $file_name = "Resumen")
     {
         $input = "C:\Users\uriel.santiago\JaspersoftWorkspace\KIO-Jasper\Resumen.jrxml";
         $output = base_path() .
@@ -176,5 +171,60 @@ class JasperController extends Controller
         $data['data']['charts'] = $charts;
 
         return $data;
+    }
+
+    public function applyFormatToPerformance($performance)
+    {
+        $newPerformances = [];
+        foreach ($performance['data']['chart_data'] as $pfms) {
+            foreach ($pfms as $pfm) {
+                if (array_key_exists('OverallCPUChart', $pfm)) {
+                    $newPerformances['OverallCPUChart'] = $this->getOverallCPUChart($pfm['OverallCPUChart']);
+                }
+                if (array_key_exists('OverallMemoryChart', $pfm)) {
+                    $newPerformances['OverallMemoryChart'] = $this->getOverallMemoryChart($pfm['OverallMemoryChart']);
+                }
+                if (array_key_exists('OverallDiskUtilization', $pfm)) {
+                    $newPerformances['OverallDiskUtilization'] = $this->getOverallDiskUtilization($pfm['OverallDiskUtilization']);
+                }
+            }
+        }
+        $performance['data']['chart_data'] = $newPerformances;
+        return $performance;
+    }
+
+    public function getOverallCPUChart($OverallCPUChart)
+    {
+        $OverallCPUChart['chart_data'] = array_map(function ($item) {
+            return [
+                'date' => array_key_exists(0, $item) ? Carbon::parse($item[0])->format('Y-m-d H:i:s') : null,
+                'value' => array_key_exists(1, $item) ? $item[1] : null,
+            ];
+        },  $OverallCPUChart['chart_data']);
+
+        return $OverallCPUChart;
+    }
+    public function getOverallMemoryChart($OverallMemoryChart)
+    {
+        $OverallMemoryChart['chart_data'] = array_map(function ($item) {
+            return [
+                'date' => array_key_exists(0, $item) ? Carbon::parse($item[0])->format('Y-m-d H:i:s') : null,
+                'value' => array_key_exists(1, $item) ? $item[1] : null,
+            ];
+        }, $OverallMemoryChart['chart_data']);
+
+        return $OverallMemoryChart;
+    }
+    public function getOverallDiskUtilization($OverallDiskUtilization)
+    {
+        $OverallDiskUtilization['chart_data'] = array_map(function ($item) {
+            return [
+                'date' => array_key_exists(0, $item) ? Carbon::parse($item[0])->format('Y-m-d H:i:s') : null,
+                'performance1' => array_key_exists(1, $item) ? $item[1] : null,
+                'performance2' => array_key_exists(2, $item) ? $item[2] : null,
+            ];
+        }, $OverallDiskUtilization['chart_data']);
+
+        return $OverallDiskUtilization;
     }
 }
