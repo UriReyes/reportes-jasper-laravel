@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.19.0.final using JasperReports Library version 6.19.0-646c68931cebf1a58bc65c4359d1f0ca223c5e94  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Blank_A4" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="242f578f-b409-4724-83ee-6c40d2d69761">
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<queryString language="json">
+		<![CDATA[]]>
+	</queryString>
+	<field name="date" class="java.lang.String"/>
+	<field name="uptime" class="java.lang.Float"/>
+	<field name="maintenance" class="java.lang.Integer"/>
+	<field name="downtime" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="326">
+			<barChart>
+				<chart evaluationTime="Report">
+					<reportElement x="0" y="0" width="580" height="320" uuid="0905bf5b-7e2d-407d-82b9-35105584c212"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<categoryDataset>
+					<dataset resetType="Report"/>
+					<categorySeries>
+						<seriesExpression><![CDATA["Uptime"]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{date}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{uptime}]]></valueExpression>
+						<labelExpression><![CDATA[$F{date}]]></labelExpression>
+					</categorySeries>
+					<categorySeries>
+						<seriesExpression><![CDATA["Downtime"]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{date}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{downtime}]]></valueExpression>
+						<labelExpression><![CDATA[$F{date}]]></labelExpression>
+					</categorySeries>
+					<categorySeries>
+						<seriesExpression><![CDATA["Maintenance"]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{date}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{maintenance}]]></valueExpression>
+						<labelExpression><![CDATA[$F{date}]]></labelExpression>
+					</categorySeries>
+				</categoryDataset>
+				<barPlot>
+					<plot/>
+					<itemLabel/>
+					<categoryAxisFormat>
+						<axisFormat labelColor="#000000" tickLabelColor="#000000" axisLineColor="#000000"/>
+					</categoryAxisFormat>
+					<valueAxisFormat>
+						<axisFormat labelColor="#000000" tickLabelColor="#000000" axisLineColor="#000000"/>
+					</valueAxisFormat>
+				</barPlot>
+			</barChart>
+		</band>
+	</title>
+</jasperReport>

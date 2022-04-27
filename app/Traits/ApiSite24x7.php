@@ -58,4 +58,17 @@ trait ApiSite24x7
         $response = $response->json();
         return $response;
     }
+
+    public function getPerformance($url, $monitor_id, $zaaid, $refresh_token, $attributos)
+    {
+        $authorization = "Zoho-oauthtoken {$refresh_token}";
+        $cookie = "zaaid={$zaaid}";
+        $response = Http::withHeaders([
+            'Accept' => 'application/json; version=2.0',
+            'Authorization' => $authorization,
+            'Cookie' => $cookie
+        ])->get("{$url}/reports/performance/{$monitor_id}?${attributos}");
+        $response = $response->json();
+        return $response;
+    }
 }

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.19.0.final using JasperReports Library version 6.19.0-646c68931cebf1a58bc65c4359d1f0ca223c5e94  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="performance_overallmemorychart" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="769bcdef-003b-4415-9efa-412203ab8dd9">
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Test"/>
+	<queryString language="json">
+		<![CDATA[customer.performance.data.chart_data.OverallMemoryChart]]>
+	</queryString>
+	<field name="95_percentile" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="95_percentile"/>
+		<fieldDescription><![CDATA[95_percentile]]></fieldDescription>
+	</field>
+	<field name="average" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="average"/>
+		<fieldDescription><![CDATA[average]]></fieldDescription>
+	</field>
+	<field name="min" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="min"/>
+		<fieldDescription><![CDATA[min]]></fieldDescription>
+	</field>
+	<field name="chart_data" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="chart_data"/>
+		<fieldDescription><![CDATA[chart_data]]></fieldDescription>
+	</field>
+	<field name="max" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="max"/>
+		<fieldDescription><![CDATA[max]]></fieldDescription>
+	</field>
+	<title>
+		<band height="300" splitType="Stretch">
+			<staticText>
+				<reportElement x="10" y="10" width="100" height="30" uuid="36ab6c35-90d1-4dca-9338-781d7d4e169d"/>
+				<text><![CDATA[Porcentaje promedio de CPU]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="110" y="10" width="180" height="30" uuid="db8c8c43-74c2-4854-a673-e12f61bf5333"/>
+				<textFieldExpression><![CDATA[$F{average}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="310" y="10" width="100" height="30" uuid="592c584a-f003-4eb7-be68-60d72cb14298"/>
+				<text><![CDATA[Porcentaje mínimo de CPU]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="411" y="10" width="170" height="30" uuid="51bca5f5-f6ed-47b3-b881-607d5b138d26"/>
+				<textFieldExpression><![CDATA[$F{min}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="9" y="60" width="100" height="30" uuid="cc21d858-527e-4843-9c73-1483a52acaaf"/>
+				<text><![CDATA[Porcentaje máximo de CPU]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="110" y="60" width="170" height="30" uuid="69143953-854e-4a77-a7a0-22441f4d3fc1"/>
+				<textFieldExpression><![CDATA[$F{max}]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement x="9" y="100" width="572" height="200" uuid="632ff9d4-ed64-4718-9c87-461e90f69d61"/>
+				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("chart_data")]]></dataSourceExpression>
+				<subreportExpression><![CDATA["C:\\Users\\uriel.santiago\\JaspersoftWorkspace\\KIO-Jasper\\performance_overallmemorychart_charts.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</title>
+</jasperReport>
