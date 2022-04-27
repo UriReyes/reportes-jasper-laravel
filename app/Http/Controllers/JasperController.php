@@ -85,9 +85,12 @@ class JasperController extends Controller
         $site24x7Url = env('SITE_24X7_API');
         $refresh_token = $this->getRefreshToken();
         $customers_its = $this->getCustomers($site24x7Url, $refresh_token);
+        // dd($customers_its);
         foreach ($customers_its as $customer_it) {
             $customer = $customer_it['name'];
             $zaaid = $customer_it['zaaid'];
+            // $customer = "BANSEFI";
+            // $zaaid = "763698181";
             $monitors = $this->getMonitors($site24x7Url, $zaaid, $refresh_token);
             foreach ($monitors as $monitor) {
                 $monitor_id = $monitor['monitor_id'];
@@ -107,6 +110,7 @@ class JasperController extends Controller
 
                     // dd('Creado con exito');
                 }
+                sleep(2);
             }
         }
         return response()->json([
@@ -115,11 +119,11 @@ class JasperController extends Controller
         ]);
     }
 
-    public function getJasperReport($data, $folder_name, $file_name = "Resumen")
+    public function getJasperReport($data, $folder_name, $file_name = "Resumen", $type = "SERVER")
     {
         $public = public_path('jasperreports\\');
         $xmlTmpfilePath = $public . "Resumen.jrxml";
-        $textoRemplazar = "C:\\\Users\\\uriel.santiago\\\JaspersoftWorkspace\\\\";
+        $textoRemplazar = "C:\\\Users\\\uriel.santiago\\\JaspersoftWorkspace\\\KIO-Jasper\\\\";
         $contenido = file_get_contents("C:\\laragon\\www\\reportes-jasper-laravel\\public\\jasperreports\\Resumen.jrxml");
         $templateRuta = str_replace($textoRemplazar, str_replace('\\', '\\\\', (string)$public), (string)$contenido);
         $templateMod = file_put_contents($xmlTmpfilePath, $templateRuta);
@@ -150,7 +154,6 @@ class JasperController extends Controller
             $output_folder,
             $options
         )->output();
-
         //Compilando el reporte graficas.jrxml
         // shell_exec('jasperstarter compile "C:/Users/uriel.santiago/JaspersoftWorkspace/KIO-Jasper/graficas.jrxml"');
         shell_exec($output);
@@ -162,77 +165,87 @@ class JasperController extends Controller
 
     public function getUptimeDownTimeAndMaintenance($data)
     {
-        $charts = array_map(function ($item) {
-            if ($item['key'] == 'percentage_chart') {
-                $item['data']['uptimes'] = array_map(function ($item) {
-                    return [
-                        'date' => Carbon::parse($item[0])->format('Y-m-d H:i:s'),
-                        'uptime' => $item[1],
-                        'downtime' => $item[2],
-                        'maintenance' => $item[3],
-                    ];
-                }, $item['data']);
-            }
-            return $item;
-        }, $data['data']['charts']);
+        if (array_key_exists('data', $data)) {
+            $charts = array_map(function ($item) {
+                if ($item['key'] == 'percentage_chart') {
+                    $item['data']['uptimes'] = array_map(function ($item) {
+                        return [
+                            'date' => Carbon::parse($item[0])->format('Y-m-d H:i:s'),
+                            'uptime' => $item[1],
+                            'downtime' => $item[2],
+                            'maintenance' => $item[3],
+                        ];
+                    }, $item['data']);
+                }
+                return $item;
+            }, $data['data']['charts']);
+            $data['data']['charts'] = $charts;
 
-        $data['data']['charts'] = $charts;
-
-        return $data;
+            return $data;
+        }
     }
 
     public function applyFormatToPerformance($performance)
     {
-        $newPerformances = [];
-        foreach ($performance['data']['chart_data'] as $pfms) {
-            foreach ($pfms as $pfm) {
-                if (array_key_exists('OverallCPUChart', $pfm)) {
-                    $newPerformances['OverallCPUChart'] = $this->getOverallCPUChart($pfm['OverallCPUChart']);
-                }
-                if (array_key_exists('OverallMemoryChart', $pfm)) {
-                    $newPerformances['OverallMemoryChart'] = $this->getOverallMemoryChart($pfm['OverallMemoryChart']);
-                }
-                if (array_key_exists('OverallDiskUtilization', $pfm)) {
-                    $newPerformances['OverallDiskUtilization'] = $this->getOverallDiskUtilization($pfm['OverallDiskUtilization']);
+        if (array_key_exists('data', $performance)) {
+            $newPerformances = [];
+            foreach ($performance['data']['chart_data'] as $pfms) {
+                foreach ($pfms as $pfm) {
+                    if (array_key_exists('OverallCPUChart', $pfm)) {
+                        $newPerformances['OverallCPUChart'] = $this->getOverallCPUChart($pfm['OverallCPUChart']);
+                    }
+                    if (array_key_exists('OverallMemoryChart', $pfm)) {
+                        $newPerformances['OverallMemoryChart'] = $this->getOverallMemoryChart($pfm['OverallMemoryChart']);
+                    }
+                    if (array_key_exists('OverallDiskUtilization', $pfm)) {
+                        $newPerformances['OverallDiskUtilization'] = $this->getOverallDiskUtilization($pfm['OverallDiskUtilization']);
+                    }
                 }
             }
+            $performance['data']['chart_data'] = $newPerformances;
+            return $performance;
         }
-        $performance['data']['chart_data'] = $newPerformances;
-        return $performance;
     }
 
     public function getOverallCPUChart($OverallCPUChart)
     {
-        $OverallCPUChart['chart_data'] = array_map(function ($item) {
-            return [
-                'date' => array_key_exists(0, $item) ? Carbon::parse($item[0])->format('Y-m-d H:i:s') : null,
-                'value' => array_key_exists(1, $item) ? $item[1] : null,
-            ];
-        },  $OverallCPUChart['chart_data']);
+        if (array_key_exists('chart_data', $OverallCPUChart)) {
 
-        return $OverallCPUChart;
+            $OverallCPUChart['chart_data'] = array_map(function ($item) {
+                return [
+                    'date' => array_key_exists(0, $item) ? Carbon::parse($item[0])->format('Y-m-d H:i:s') : null,
+                    'value' => array_key_exists(1, $item) ? $item[1] : null,
+                ];
+            },  $OverallCPUChart['chart_data']);
+
+            return $OverallCPUChart;
+        }
     }
+
     public function getOverallMemoryChart($OverallMemoryChart)
     {
-        $OverallMemoryChart['chart_data'] = array_map(function ($item) {
-            return [
-                'date' => array_key_exists(0, $item) ? Carbon::parse($item[0])->format('Y-m-d H:i:s') : null,
-                'value' => array_key_exists(1, $item) ? $item[1] : null,
-            ];
-        }, $OverallMemoryChart['chart_data']);
-
-        return $OverallMemoryChart;
+        if (array_key_exists('chart_data', $OverallMemoryChart)) {
+            $OverallMemoryChart['chart_data'] = array_map(function ($item) {
+                return [
+                    'date' => array_key_exists(0, $item) ? Carbon::parse($item[0])->format('Y-m-d H:i:s') : null,
+                    'value' => array_key_exists(1, $item) ? $item[1] : null,
+                ];
+            }, $OverallMemoryChart['chart_data']);
+            return $OverallMemoryChart;
+        }
     }
+
     public function getOverallDiskUtilization($OverallDiskUtilization)
     {
-        $OverallDiskUtilization['chart_data'] = array_map(function ($item) {
-            return [
-                'date' => array_key_exists(0, $item) ? Carbon::parse($item[0])->format('Y-m-d H:i:s') : null,
-                'performance1' => array_key_exists(1, $item) ? $item[1] : null,
-                'performance2' => array_key_exists(2, $item) ? $item[2] : null,
-            ];
-        }, $OverallDiskUtilization['chart_data']);
-
-        return $OverallDiskUtilization;
+        if (array_key_exists('chart_data', $OverallDiskUtilization)) {
+            $OverallDiskUtilization['chart_data'] = array_map(function ($item) {
+                return [
+                    'date' => array_key_exists(0, $item) ? Carbon::parse($item[0])->format('Y-m-d H:i:s') : null,
+                    'performance1' => array_key_exists(1, $item) ? $item[1] : null,
+                    'performance2' => array_key_exists(2, $item) ? $item[2] : null,
+                ];
+            }, $OverallDiskUtilization['chart_data']);
+            return $OverallDiskUtilization;
+        }
     }
 }

@@ -24,32 +24,32 @@
 	<background>
 		<band splitType="Stretch"/>
 	</background>
-	<title>
-		<band height="85">
+	<detail>
+		<band height="87">
 			<textField>
-				<reportElement x="100" y="2" width="208" height="30" uuid="406465b8-a020-4c8e-9542-4db29e8fbe86"/>
+				<reportElement x="101" y="2" width="208" height="30" uuid="c2dd2f20-4ca8-4b9c-8a20-4136f4d49a92"/>
 				<textFieldExpression><![CDATA[$F{report_name}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="0" y="2" width="100" height="30" uuid="a7cfdcad-e2cd-4a91-9ad2-d2c48f3f77ae"/>
+				<reportElement x="1" y="2" width="100" height="30" uuid="f049a4be-14b9-402c-b5cf-a689c61ca7b3"/>
 				<text><![CDATA[Nombre del reporte]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="429" y="2" width="166" height="30" uuid="c45c6a79-456f-4650-9887-37ef4560ba0d"/>
+				<reportElement x="430" y="2" width="166" height="30" uuid="04259bc5-6bf2-4c8c-9b91-6aed142d5aad"/>
 				<textFieldExpression><![CDATA[$F{availability_percentage}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="330" y="2" width="100" height="30" uuid="51516298-7342-4332-ac40-f3faa9cc8de5"/>
+				<reportElement x="331" y="2" width="100" height="30" uuid="318e1acb-e7f5-46f7-be7a-73904c2b666f"/>
 				<text><![CDATA[Porcentaje de disponibilidad]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="100" y="52" width="208" height="30" uuid="fb47c157-7db2-4a98-b1a5-bd9b854078f9"/>
+				<reportElement x="101" y="52" width="208" height="30" uuid="147c4614-19e2-4340-a01f-905fee449496"/>
 				<textFieldExpression><![CDATA[$F{availability_duration}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="0" y="52" width="100" height="30" uuid="47a94a44-d20b-4cd1-98e7-c4db20e88dd3"/>
+				<reportElement x="1" y="52" width="100" height="30" uuid="31747a3a-883f-492a-b3fc-9e157f5e77eb"/>
 				<text><![CDATA[Duración de disponibilidad]]></text>
 			</staticText>
 		</band>
-	</title>
+	</detail>
 </jasperReport>

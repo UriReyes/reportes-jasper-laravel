@@ -51,55 +51,55 @@
 	<background>
 		<band splitType="Stretch"/>
 	</background>
-	<title>
-		<band height="193">
+	<detail>
+		<band height="185">
 			<staticText>
-				<reportElement x="40" y="0" width="490" height="30" uuid="583d933e-72a0-44d7-9b97-a94cb0d5cac5"/>
+				<reportElement x="41" y="5" width="490" height="30" uuid="a2354a9d-682f-429b-a491-7b4ba14bc26b"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="18"/>
 				</textElement>
 				<text><![CDATA[INFORMACIÓN DEL MONITOR]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="100" y="50" width="190" height="30" uuid="1bdbd253-4579-4a92-a10a-b0cfdb16ecb0"/>
+				<reportElement x="101" y="55" width="190" height="30" uuid="0c2fbcc0-d5f5-4c45-ad78-04e66c51ccd0"/>
 				<textFieldExpression><![CDATA[$F{display_name}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="0" y="50" width="100" height="30" uuid="21e6c29d-e89e-4169-a126-a9d4bf139212"/>
+				<reportElement x="1" y="55" width="100" height="30" uuid="951ff878-0d99-4e48-a368-9fa497aac7b3"/>
 				<text><![CDATA[Nombre del monitor o dispositivo]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="410" y="50" width="185" height="30" uuid="b46f90fd-b069-42f6-bc66-4069156cd113"/>
+				<reportElement x="411" y="55" width="185" height="30" uuid="25a8d478-fad5-48ce-85a7-82222e6031ba"/>
 				<textFieldExpression><![CDATA[$F{monitor_id}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="310" y="50" width="100" height="30" uuid="809bd5f2-f75e-4bf1-8515-3a5ef0b2c849"/>
+				<reportElement x="311" y="55" width="100" height="30" uuid="ba3a9a73-2920-4ff2-ad29-8634d276da61"/>
 				<text><![CDATA[Id del monitor]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="100" y="99" width="190" height="30" uuid="ea92a893-0d0e-484b-bd73-1bc1b198b308"/>
+				<reportElement x="101" y="104" width="190" height="30" uuid="96ff1d59-dae8-40cc-90b5-9f230e75c0e9"/>
 				<textFieldExpression><![CDATA[$F{type}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="0" y="99" width="100" height="30" uuid="a326b2a5-6813-4718-ac0e-43a5155f8b19"/>
+				<reportElement x="1" y="104" width="100" height="30" uuid="d5afd775-9b45-424e-98ae-89729146ac84"/>
 				<text><![CDATA[Tipo de monitor]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="410" y="98" width="185" height="30" uuid="a87cd128-21ef-4fb9-b5ea-b160318ba356"/>
+				<reportElement x="411" y="103" width="185" height="30" uuid="8cb1db62-d670-487e-94e2-d596b42c7f78"/>
 				<textFieldExpression><![CDATA[$F{server_type}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="310" y="99" width="100" height="30" uuid="d7f3d35a-5f1d-4199-bcbf-f0fb2a8ff0e4"/>
+				<reportElement x="311" y="104" width="100" height="30" uuid="801d4565-f55d-4ce5-bd24-16b1b7e85f60"/>
 				<text><![CDATA[Tipo de servidor]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="100" y="150" width="190" height="30" uuid="927e4593-daa4-42d8-b5f8-7aab816b89b6"/>
+				<reportElement x="101" y="155" width="190" height="30" uuid="63f0595c-5c3c-44ff-8903-034389dc72be"/>
 				<textFieldExpression><![CDATA[$F{period_name}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="0" y="150" width="100" height="30" uuid="deb253a6-6619-4a28-9c0e-4b91aadc0ab6"/>
+				<reportElement x="1" y="155" width="100" height="30" uuid="ffdc1bf3-dbf7-4555-8302-f331e01f9ca5"/>
 				<text><![CDATA[Nombre del periodo]]></text>
 			</staticText>
 		</band>
-	</title>
+	</detail>
 </jasperReport>

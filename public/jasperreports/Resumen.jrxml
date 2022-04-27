@@ -34,9 +34,9 @@
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="79" splitType="Stretch">
+		<band height="42" splitType="Stretch">
 			<staticText>
-				<reportElement mode="Opaque" x="0" y="0" width="550" height="79" forecolor="#FFFFFF" backcolor="#334FCC" uuid="1df1c442-72a3-4b29-9a21-9b7d68f963e2"/>
+				<reportElement mode="Opaque" x="0" y="0" width="550" height="42" forecolor="#FFFFFF" backcolor="#334FCC" uuid="1df1c442-72a3-4b29-9a21-9b7d68f963e2"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial" size="26"/>
 				</textElement>
@@ -45,7 +45,7 @@
 		</band>
 	</title>
 	<detail>
-		<band height="802" splitType="Stretch">
+		<band height="724" splitType="Stretch">
 			<textField>
 				<reportElement x="0" y="0" width="100" height="30" uuid="f5ae3159-9bde-4395-b7e8-dd3bf2f3310d">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ea1f57c6-122d-4592-ad0d-38f6943aeeb8"/>
@@ -53,35 +53,44 @@
 				<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
 			</textField>
 			<subreport>
-				<reportElement x="1" y="30" width="550" height="100" uuid="22b32f6d-4f26-4cc0-8493-7a1f6fdb311f"/>
+				<reportElement x="1" y="30" width="550" height="110" uuid="22b32f6d-4f26-4cc0-8493-7a1f6fdb311f"/>
 				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("monitor")]]></dataSourceExpression>
-				<subreportExpression><![CDATA["C:\\Users\\uriel.santiago\\JaspersoftWorkspace\\KIO-Jasper\\monitor.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA["C:\\laragon\\www\\reportes-jasper-laravel\\public\\jasperreports\\monitor.jasper"]]></subreportExpression>
 			</subreport>
 			<subreport>
-				<reportElement x="1" y="140" width="550" height="170" uuid="ab05a58c-2638-48a0-94b5-95c2f22773fb"/>
+				<reportElement x="-1" y="157" width="551" height="100" uuid="ab05a58c-2638-48a0-94b5-95c2f22773fb"/>
 				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("availability.data")]]></dataSourceExpression>
-				<subreportExpression><![CDATA["C:\\Users\\uriel.santiago\\JaspersoftWorkspace\\KIO-Jasper\\availability.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA["C:\\laragon\\www\\reportes-jasper-laravel\\public\\jasperreports\\availability.jasper"]]></subreportExpression>
 			</subreport>
 			<subreport>
-				<reportElement x="1" y="360" width="550" height="60" uuid="734ae9e1-1be9-4b35-b670-5d575fbfa187"/>
+				<reportElement x="0" y="273" width="550" height="60" uuid="734ae9e1-1be9-4b35-b670-5d575fbfa187"/>
 				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("availability.data.charts.data.uptimes")]]></dataSourceExpression>
-				<subreportExpression><![CDATA["C:\\Users\\uriel.santiago\\JaspersoftWorkspace\\KIO-Jasper\\graficas.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA["C:\\laragon\\www\\reportes-jasper-laravel\\public\\jasperreports\\graficas.jasper"]]></subreportExpression>
 			</subreport>
 			<subreport>
-				<reportElement x="1" y="430" width="551" height="130" uuid="41fa938e-2d9d-438c-af4e-52c02ce1dfd2"/>
+				<reportElement x="0" y="343" width="551" height="130" uuid="41fa938e-2d9d-438c-af4e-52c02ce1dfd2"/>
 				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("performance.data.chart_data.OverallCPUChart")]]></dataSourceExpression>
-				<subreportExpression><![CDATA["C:\\Users\\uriel.santiago\\JaspersoftWorkspace\\KIO-Jasper\\performance_overallcpuchart.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA["C:\\laragon\\www\\reportes-jasper-laravel\\public\\jasperreports\\performance_overallcpuchart.jasper"]]></subreportExpression>
 			</subreport>
 			<subreport>
-				<reportElement x="1" y="571" width="549" height="139" uuid="5f307152-bbae-4bde-81d1-842fe94f3239"/>
+				<reportElement x="1" y="492" width="549" height="139" uuid="5f307152-bbae-4bde-81d1-842fe94f3239"/>
 				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("performance.data.chart_data.OverallMemoryChart")]]></dataSourceExpression>
-				<subreportExpression><![CDATA["C:\\Users\\uriel.santiago\\JaspersoftWorkspace\\KIO-Jasper\\performance_overallmemorychart.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA["C:\\laragon\\www\\reportes-jasper-laravel\\public\\jasperreports\\performance_overallmemorychart.jasper"]]></subreportExpression>
 			</subreport>
 			<subreport>
-				<reportElement x="0" y="720" width="551" height="80" uuid="fd4cc73e-f486-4104-91a6-2e36ee5e8601"/>
+				<reportElement x="0" y="644" width="551" height="80" uuid="fd4cc73e-f486-4104-91a6-2e36ee5e8601"/>
 				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("performance.data.chart_data.OverallDiskUtilization")]]></dataSourceExpression>
-				<subreportExpression><![CDATA["C:\\Users\\uriel.santiago\\JaspersoftWorkspace\\KIO-Jasper\\performance_overalldiskutilization.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA["C:\\laragon\\www\\reportes-jasper-laravel\\public\\jasperreports\\performance_overalldiskutilization.jasper"]]></subreportExpression>
 			</subreport>
+			<break>
+				<reportElement x="0" y="338" width="100" height="1" uuid="5b920244-d282-446d-9826-543f11224e9b"/>
+			</break>
+			<break>
+				<reportElement x="0" y="481" width="100" height="1" uuid="294355e7-deb9-4310-aba9-97cd09653ffa"/>
+			</break>
+			<break>
+				<reportElement x="0" y="638" width="100" height="1" uuid="71512fb3-d4d4-42bc-ab1f-8724a70a4bc0"/>
+			</break>
 		</band>
 	</detail>
 </jasperReport>
