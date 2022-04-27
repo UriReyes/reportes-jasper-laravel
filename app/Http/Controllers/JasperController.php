@@ -146,7 +146,7 @@ class JasperController extends Controller
         $jasper = new PHPJasper;
 
         $output = $jasper->process(
-            $input,
+            $xmlTmpfilePath,
             $output_folder,
             $options
         )->output();
