@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.19.0.final using JasperReports Library version 6.19.0-646c68931cebf1a58bc65c4359d1f0ca223c5e94  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="availability" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="4423d35d-d712-49ea-9dcd-3097105b9690">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Test"/>
+	<queryString language="json">
+		<![CDATA[customer.availability.data]]>
+	</queryString>
+	<field name="maintenance_percentage" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="summary_details.maintenance_percentage"/>
+		<fieldDescription><![CDATA[summary_details.maintenance_percentage]]></fieldDescription>
+	</field>
+	<field name="report_name" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="info.report_name"/>
+		<fieldDescription><![CDATA[info.report_name]]></fieldDescription>
+	</field>
+	<field name="availability_percentage" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="summary_details.availability_percentage"/>
+		<fieldDescription><![CDATA[summary_details.availability_percentage]]></fieldDescription>
+	</field>
+	<field name="availability_duration" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="summary_details.availability_duration"/>
+		<fieldDescription><![CDATA[summary_details.availability_duration]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="85">
+			<textField>
+				<reportElement x="100" y="2" width="208" height="30" uuid="406465b8-a020-4c8e-9542-4db29e8fbe86"/>
+				<textFieldExpression><![CDATA[$F{report_name}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="2" width="100" height="30" uuid="a7cfdcad-e2cd-4a91-9ad2-d2c48f3f77ae"/>
+				<text><![CDATA[Nombre del reporte]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="429" y="2" width="166" height="30" uuid="c45c6a79-456f-4650-9887-37ef4560ba0d"/>
+				<textFieldExpression><![CDATA[$F{availability_percentage}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="330" y="2" width="100" height="30" uuid="51516298-7342-4332-ac40-f3faa9cc8de5"/>
+				<text><![CDATA[Porcentaje de disponibilidad]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="100" y="52" width="208" height="30" uuid="fb47c157-7db2-4a98-b1a5-bd9b854078f9"/>
+				<textFieldExpression><![CDATA[$F{availability_duration}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="52" width="100" height="30" uuid="47a94a44-d20b-4cd1-98e7-c4db20e88dd3"/>
+				<text><![CDATA[Duración de disponibilidad]]></text>
+			</staticText>
+		</band>
+	</title>
+</jasperReport>

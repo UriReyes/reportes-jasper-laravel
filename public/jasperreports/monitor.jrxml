@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.19.0.final using JasperReports Library version 6.19.0-646c68931cebf1a58bc65c4359d1f0ca223c5e94  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="monitor" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="b8818c2f-40ba-42af-bb03-5ac6ee8e6020">
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<queryString language="json">
+		<![CDATA[customer.monitor]]>
+	</queryString>
+	<field name="ipaddress" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="ipaddress"/>
+		<fieldDescription><![CDATA[ipaddress]]></fieldDescription>
+	</field>
+	<field name="tag_ids" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="tag_ids"/>
+		<fieldDescription><![CDATA[tag_ids]]></fieldDescription>
+	</field>
+	<field name="monitor_id" class="java.lang.Long">
+		<property name="net.sf.jasperreports.json.field.expression" value="monitor_id"/>
+		<fieldDescription><![CDATA[monitor_id]]></fieldDescription>
+	</field>
+	<field name="threshold_profile_id" class="java.lang.Long">
+		<property name="net.sf.jasperreports.json.field.expression" value="threshold_profile_id"/>
+		<fieldDescription><![CDATA[threshold_profile_id]]></fieldDescription>
+	</field>
+	<field name="type" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="type"/>
+		<fieldDescription><![CDATA[type]]></fieldDescription>
+	</field>
+	<field name="display_name" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="display_name"/>
+		<fieldDescription><![CDATA[display_name]]></fieldDescription>
+	</field>
+	<field name="monitor_groups" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="monitor_groups"/>
+		<fieldDescription><![CDATA[monitor_groups]]></fieldDescription>
+	</field>
+	<field name="notification_profile_id" class="java.lang.Long">
+		<property name="net.sf.jasperreports.json.field.expression" value="notification_profile_id"/>
+		<fieldDescription><![CDATA[notification_profile_id]]></fieldDescription>
+	</field>
+	<field name="server_type" class="java.lang.String"/>
+	<field name="os_type" class="java.lang.String"/>
+	<field name="period_name" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="193">
+			<staticText>
+				<reportElement x="40" y="0" width="490" height="30" uuid="583d933e-72a0-44d7-9b97-a94cb0d5cac5"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="18"/>
+				</textElement>
+				<text><![CDATA[INFORMACIÓN DEL MONITOR]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="100" y="50" width="190" height="30" uuid="1bdbd253-4579-4a92-a10a-b0cfdb16ecb0"/>
+				<textFieldExpression><![CDATA[$F{display_name}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="50" width="100" height="30" uuid="21e6c29d-e89e-4169-a126-a9d4bf139212"/>
+				<text><![CDATA[Nombre del monitor o dispositivo]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="410" y="50" width="185" height="30" uuid="b46f90fd-b069-42f6-bc66-4069156cd113"/>
+				<textFieldExpression><![CDATA[$F{monitor_id}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="310" y="50" width="100" height="30" uuid="809bd5f2-f75e-4bf1-8515-3a5ef0b2c849"/>
+				<text><![CDATA[Id del monitor]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="100" y="99" width="190" height="30" uuid="ea92a893-0d0e-484b-bd73-1bc1b198b308"/>
+				<textFieldExpression><![CDATA[$F{type}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="99" width="100" height="30" uuid="a326b2a5-6813-4718-ac0e-43a5155f8b19"/>
+				<text><![CDATA[Tipo de monitor]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="410" y="98" width="185" height="30" uuid="a87cd128-21ef-4fb9-b5ea-b160318ba356"/>
+				<textFieldExpression><![CDATA[$F{server_type}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="310" y="99" width="100" height="30" uuid="d7f3d35a-5f1d-4199-bcbf-f0fb2a8ff0e4"/>
+				<text><![CDATA[Tipo de servidor]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="100" y="150" width="190" height="30" uuid="927e4593-daa4-42d8-b5f8-7aab816b89b6"/>
+				<textFieldExpression><![CDATA[$F{period_name}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="150" width="100" height="30" uuid="deb253a6-6619-4a28-9c0e-4b91aadc0ab6"/>
+				<text><![CDATA[Nombre del periodo]]></text>
+			</staticText>
+		</band>
+	</title>
+</jasperReport>
