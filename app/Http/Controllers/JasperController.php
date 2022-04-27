@@ -117,7 +117,13 @@ class JasperController extends Controller
 
     public function getJasperReport($data, $folder_name, $file_name = "Resumen")
     {
-        $input = "C:\Users\uriel.santiago\JaspersoftWorkspace\KIO-Jasper\Resumen.jrxml";
+        $public = public_path('jasperreports\\');
+        $xmlTmpfilePath = $public . "Resumen.jrxml";
+        $textoRemplazar = "C:\\\Users\\\uriel.santiago\\\JaspersoftWorkspace\\\\";
+        $contenido = file_get_contents("C:\\laragon\\www\\reportes-jasper-laravel\\public\\jasperreports\\Resumen.jrxml");
+        $templateRuta = str_replace($textoRemplazar, str_replace('\\', '\\\\', (string)$public), (string)$contenido);
+        $templateMod = file_put_contents($xmlTmpfilePath, $templateRuta);
+
         Storage::makeDirectory('public/reports' . DIRECTORY_SEPARATOR . Carbon::now()->format('Y-m-d') . DIRECTORY_SEPARATOR . $folder_name);
         $output_folder = storage_path('app/public') .
             '/reports' . DIRECTORY_SEPARATOR . Carbon::now()->format('Y-m-d') . DIRECTORY_SEPARATOR . $folder_name . DIRECTORY_SEPARATOR . $file_name . '.pdf';
