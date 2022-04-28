@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Traits\ApiSite24x7;
+use App\Traits\ReestructurarDatosAPISite24x7;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
 use PHPJasper\PHPJasper;
@@ -11,73 +12,7 @@ use PHPJasper\PHPJasper;
 class JasperController extends Controller
 {
     use ApiSite24x7;
-
-    public function compilar()
-    {
-
-        $input = base_path() .
-            '/vendor/geekcom/phpjasper/examples/hello_world.jrxml';
-
-        $jasper = new PHPJasper;
-        $jasper->compile($input)->execute();
-
-        return response()->json([
-            'status' => 'ok',
-            'msj' => '¡Reporte compilado!'
-        ]);
-    }
-
-    public function reporte()
-    {
-        $input = base_path() .
-            '/vendor/geekcom/phpjasper/examples/hello_world.jasper';
-        $output = base_path() .
-            '/vendor/geekcom/phpjasper/examples';
-        $options = [
-            'format' => ['pdf']
-        ];
-
-        $jasper = new PHPJasper;
-
-        $output =  $jasper->process(
-            $input,
-            $output,
-            $options
-        )->output();
-
-        shell_exec($output);
-
-        $pathToFile = base_path() .
-            '/vendor/geekcom/phpjasper/examples/hello_world.pdf';
-        return response()->file($pathToFile);
-    }
-
-    public function listarParametros()
-    {
-        $input = "C:\Users\urire\JaspersoftWorkspace\MyReports\Coffee_Landscape_5.jrxml";
-
-        $jasper = new PHPJasper;
-        $output = $jasper->listParameters($input)->execute();
-
-        return response()->json([
-            'status' => 'ok',
-            'parms' => $output
-        ]);
-    }
-
-    public function compilarConParametros()
-    {
-        # code...
-        $input = "C:\Users\urire\JaspersoftWorkspace\MyReports\Coffee_Landscape_5.jrxml";
-
-        $jasper = new PHPJasper;
-        $jasper->compile($input)->execute();
-
-        return response()->json([
-            'status' => 'ok',
-            'msj' => '¡Reporte compilado!'
-        ]);
-    }
+    use ReestructurarDatosAPISite24x7;
 
     public function reporteParametros()
     {
@@ -108,14 +43,10 @@ class JasperController extends Controller
                             'performance_disk' => $this->applyFormatToPerformanceDisk($performance_disk),
                         ]
                     ];
-                    dump($customers);
-                    // $this->getJasperReport($customers,  $customer, $monitor_id . '_monitor');
-
-                    // dd('Creado con exito');
+                    $this->getJasperReport($customers,  $customer, $monitor_id . '_monitor');
                 }
-                // sleep(2);
+                sleep(2);
             }
-            die();
         }
         return response()->json([
             'status' => 'ok',
@@ -134,8 +65,7 @@ class JasperController extends Controller
 
         Storage::makeDirectory('public/reports' . DIRECTORY_SEPARATOR . Carbon::now()->format('Y-m-d') . DIRECTORY_SEPARATOR . $folder_name);
         $output_folder = storage_path('app/public') .
-            '/reports' . DIRECTORY_SEPARATOR . Carbon::now()->format('Y-m-d') . DIRECTORY_SEPARATOR . $folder_name . DIRECTORY_SEPARATOR . $file_name . '.pdf';
-        // dd($output_folder);
+            '/reports' . DIRECTORY_SEPARATOR . Carbon::now()->format('Y-m-d') . DIRECTORY_SEPARATOR . $folder_name . DIRECTORY_SEPARATOR . $file_name;
         $name = 'api';
         $jsonTmpfilePath = storage_path('app/public') . '/jasper/' . $name . '.json';
         $jsonTmpfile = fopen($jsonTmpfilePath, 'w');
@@ -161,32 +91,10 @@ class JasperController extends Controller
         //Compilando el reporte graficas.jrxml
         // shell_exec('jasperstarter compile "C:/Users/uriel.santiago/JaspersoftWorkspace/KIO-Jasper/graficas.jrxml"');
         shell_exec($output);
-
+        // dd($output);
         // $pathToFile = base_path() .
         //     '/resources/reports/pdf/Resumen.pdf';
         // return response()->file($pathToFile);
-    }
-
-    public function getUptimeDownTimeAndMaintenance($data)
-    {
-        if (array_key_exists('data', $data)) {
-            $charts = array_map(function ($item) {
-                if ($item['key'] == 'percentage_chart') {
-                    $item['data']['uptimes'] = array_map(function ($item) {
-                        return [
-                            'date' => Carbon::parse($item[0])->format('Y-m-d H:i:s'),
-                            'uptime' => $item[1],
-                            'downtime' => $item[2],
-                            'maintenance' => $item[3],
-                        ];
-                    }, $item['data']);
-                }
-                return $item;
-            }, $data['data']['charts']);
-            $data['data']['charts'] = $charts;
-
-            return $data;
-        }
     }
 
     public function applyFormatToPerformance($performance)
@@ -234,108 +142,6 @@ class JasperController extends Controller
             }
             $performance['data']['chart_data'] = $newPerformances;
             return $performance;
-        }
-    }
-
-    public function getOverallCPUChart($OverallCPUChart)
-    {
-        if (array_key_exists('chart_data', $OverallCPUChart)) {
-
-            $OverallCPUChart['chart_data'] = array_map(function ($item) {
-                return [
-                    'date' => array_key_exists(0, $item) ? Carbon::parse($item[0])->format('Y-m-d H:i:s') : null,
-                    'value' => array_key_exists(1, $item) ? $item[1] : null,
-                ];
-            },  $OverallCPUChart['chart_data']);
-
-            return $OverallCPUChart;
-        }
-    }
-
-    public function getOverallMemoryChart($OverallMemoryChart)
-    {
-        if (array_key_exists('chart_data', $OverallMemoryChart)) {
-            $OverallMemoryChart['chart_data'] = array_map(function ($item) {
-                return [
-                    'date' => array_key_exists(0, $item) ? Carbon::parse($item[0])->format('Y-m-d H:i:s') : null,
-                    'value' => array_key_exists(1, $item) ? $item[1] : null,
-                ];
-            }, $OverallMemoryChart['chart_data']);
-            return $OverallMemoryChart;
-        }
-    }
-
-    public function getOverallDiskUtilization($OverallDiskUtilization)
-    {
-        if (array_key_exists('chart_data', $OverallDiskUtilization)) {
-            $OverallDiskUtilization['chart_data'] = array_map(function ($item) {
-                return [
-                    'date' => array_key_exists(0, $item) ? Carbon::parse($item[0])->format('Y-m-d H:i:s') : null,
-                    'performance1' => array_key_exists(1, $item) ? $item[1] : null,
-                    'performance2' => array_key_exists(2, $item) ? $item[2] : null,
-                ];
-            }, $OverallDiskUtilization['chart_data']);
-            return $OverallDiskUtilization;
-        }
-    }
-
-    public function getIndividualDiskUtilization($IndividualDiskUtilization)
-    {
-        if (array_key_exists('chart_data', $IndividualDiskUtilization)) {
-            $IndividualDiskUtilization['chart_data'] = array_map(function ($item) {
-                return [
-                    'disk' => array_key_exists(0, $item) ? $item[0] : null,
-                    'value1' => array_key_exists(1, $item) ? $item[1] : null,
-                    'value2' => array_key_exists(2, $item) ? $item[2] : null,
-                ];
-            }, $IndividualDiskUtilization['chart_data']);
-            return $IndividualDiskUtilization;
-        }
-    }
-
-    public function getIndividualDiskUtilizationTimeChart($IndividualDiskUtilizationTimeChart)
-    {
-        // pass IndividualDiskUtilizationTimeChart to array_map
-        $IndividualDiskUtilizationTimeChart['chart_data'] = array_map(function ($item) {
-            if (array_key_exists('chart_data', $item)) {
-                $item['chart_data'] = array_map(function ($item) {
-                    return [
-                        'disk' => array_key_exists(0, $item) ? $item[0] : null,
-                        'value1' => array_key_exists(1, $item) ? $item[1] : null,
-                        'value2' => array_key_exists(2, $item) ? $item[2] : null,
-                    ];
-                }, $item['chart_data']);
-                return $item;
-            }
-        }, $IndividualDiskUtilizationTimeChart);
-        return $IndividualDiskUtilizationTimeChart;
-    }
-
-    public function getOverallDiskUsedChart($OverallDiskUsedChart)
-    {
-        if (array_key_exists('chart_data', $OverallDiskUsedChart)) {
-            $OverallDiskUsedChart['chart_data'] = array_map(function ($item) {
-                return [
-                    'date' => array_key_exists(0, $item) ? Carbon::parse($item[0])->format('Y-m-d H:i:s') : null,
-                    'value1' => array_key_exists(1, $item) ? $item[1] : null,
-                    'value2' => array_key_exists(2, $item) ? $item[2] : null,
-                ];
-            }, $OverallDiskUsedChart['chart_data']);
-            return $OverallDiskUsedChart;
-        }
-    }
-
-    public function getDiskIO($DiskIO)
-    {
-        if (array_key_exists('chart_data', $DiskIO)) {
-            $DiskIO['chart_data'] = array_map(function ($item) {
-                return [
-                    'date' => array_key_exists(0, $item) ? Carbon::parse($item[0])->format('Y-m-d H:i:s') : null,
-                    'value1' => array_key_exists(1, $item) ? $item[1] : null,
-                    'value2' => array_key_exists(2, $item) ? $item[2] : null,
-                ];
-            }, $DiskIO['chart_data']);
-            return $DiskIO;
         }
     }
 }
