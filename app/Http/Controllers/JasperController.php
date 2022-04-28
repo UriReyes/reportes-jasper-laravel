@@ -96,6 +96,7 @@ class JasperController extends Controller
                 $monitor_id = $monitor['monitor_id'];
                 $availability = $this->getAvailabilityReport($site24x7Url, $monitor_id, $zaaid, $refresh_token);
                 $performance = $this->getPerformance($site24x7Url, $monitor_id, $zaaid, $refresh_token, 'unit_of_time=3&period=7');
+                $performance_disk = $this->getPerformance($site24x7Url, $monitor_id, $zaaid, $refresh_token, 'unit_of_time=3&period=7&report_attribute=DISK');
                 if ($monitor['type'] == 'SERVER') {
                     $customers = [
                         'customer' => [
@@ -103,15 +104,18 @@ class JasperController extends Controller
                             'zaaid' => $zaaid,
                             'monitor' => $monitor,
                             'availability' => $this->getUptimeDownTimeAndMaintenance($availability),
-                            'performance' =>  $this->applyFormatToPerformance($performance)
+                            'performance' =>  $this->applyFormatToPerformance($performance),
+                            'performance_disk' => $this->applyFormatToPerformanceDisk($performance_disk),
                         ]
                     ];
-                    $this->getJasperReport($customers,  $customer, $monitor_id . '_monitor');
+                    dump($customers);
+                    // $this->getJasperReport($customers,  $customer, $monitor_id . '_monitor');
 
                     // dd('Creado con exito');
                 }
-                sleep(2);
+                // sleep(2);
             }
+            die();
         }
         return response()->json([
             'status' => 'ok',
@@ -207,6 +211,32 @@ class JasperController extends Controller
         }
     }
 
+    public function applyFormatToPerformanceDisk($performance)
+    {
+
+        if (array_key_exists('data', $performance)) {
+            $newPerformances = [];
+            foreach ($performance['data']['chart_data'] as $pfms) {
+                foreach ($pfms as $pfm) {
+                    if (array_key_exists('OverallDiskUsedChart', $pfm)) {
+                        $newPerformances['OverallDiskUsedChart'] = $this->getOverallDiskUsedChart($pfm['OverallDiskUsedChart']);
+                    }
+                    if (array_key_exists('IndividualDiskUtilization', $pfm)) {
+                        $newPerformances['IndividualDiskUtilization'] = $this->getIndividualDiskUtilization($pfm['IndividualDiskUtilization']);
+                    }
+                    if (array_key_exists('DiskIO', $pfm)) {
+                        $newPerformances['DiskIO'] = $this->getDiskIO($pfm['DiskIO']);
+                    }
+                }
+                if (array_key_exists('IndividualDiskUtilizationTimeChart', $pfms)) {
+                    $newPerformances['IndividualDiskUtilizationTimeChart'] = $this->getIndividualDiskUtilizationTimeChart($pfms['IndividualDiskUtilizationTimeChart']);
+                }
+            }
+            $performance['data']['chart_data'] = $newPerformances;
+            return $performance;
+        }
+    }
+
     public function getOverallCPUChart($OverallCPUChart)
     {
         if (array_key_exists('chart_data', $OverallCPUChart)) {
@@ -246,6 +276,66 @@ class JasperController extends Controller
                 ];
             }, $OverallDiskUtilization['chart_data']);
             return $OverallDiskUtilization;
+        }
+    }
+
+    public function getIndividualDiskUtilization($IndividualDiskUtilization)
+    {
+        if (array_key_exists('chart_data', $IndividualDiskUtilization)) {
+            $IndividualDiskUtilization['chart_data'] = array_map(function ($item) {
+                return [
+                    'disk' => array_key_exists(0, $item) ? $item[0] : null,
+                    'value1' => array_key_exists(1, $item) ? $item[1] : null,
+                    'value2' => array_key_exists(2, $item) ? $item[2] : null,
+                ];
+            }, $IndividualDiskUtilization['chart_data']);
+            return $IndividualDiskUtilization;
+        }
+    }
+
+    public function getIndividualDiskUtilizationTimeChart($IndividualDiskUtilizationTimeChart)
+    {
+        // pass IndividualDiskUtilizationTimeChart to array_map
+        $IndividualDiskUtilizationTimeChart['chart_data'] = array_map(function ($item) {
+            if (array_key_exists('chart_data', $item)) {
+                $item['chart_data'] = array_map(function ($item) {
+                    return [
+                        'disk' => array_key_exists(0, $item) ? $item[0] : null,
+                        'value1' => array_key_exists(1, $item) ? $item[1] : null,
+                        'value2' => array_key_exists(2, $item) ? $item[2] : null,
+                    ];
+                }, $item['chart_data']);
+                return $item;
+            }
+        }, $IndividualDiskUtilizationTimeChart);
+        return $IndividualDiskUtilizationTimeChart;
+    }
+
+    public function getOverallDiskUsedChart($OverallDiskUsedChart)
+    {
+        if (array_key_exists('chart_data', $OverallDiskUsedChart)) {
+            $OverallDiskUsedChart['chart_data'] = array_map(function ($item) {
+                return [
+                    'date' => array_key_exists(0, $item) ? Carbon::parse($item[0])->format('Y-m-d H:i:s') : null,
+                    'value1' => array_key_exists(1, $item) ? $item[1] : null,
+                    'value2' => array_key_exists(2, $item) ? $item[2] : null,
+                ];
+            }, $OverallDiskUsedChart['chart_data']);
+            return $OverallDiskUsedChart;
+        }
+    }
+
+    public function getDiskIO($DiskIO)
+    {
+        if (array_key_exists('chart_data', $DiskIO)) {
+            $DiskIO['chart_data'] = array_map(function ($item) {
+                return [
+                    'date' => array_key_exists(0, $item) ? Carbon::parse($item[0])->format('Y-m-d H:i:s') : null,
+                    'value1' => array_key_exists(1, $item) ? $item[1] : null,
+                    'value2' => array_key_exists(2, $item) ? $item[2] : null,
+                ];
+            }, $DiskIO['chart_data']);
+            return $DiskIO;
         }
     }
 }
