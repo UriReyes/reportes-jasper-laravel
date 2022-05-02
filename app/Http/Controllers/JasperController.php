@@ -7,32 +7,46 @@ use App\Traits\ReestructurarDatosAPISite24x7;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
 use PHPJasper\PHPJasper;
-
+use Jenssegers\Date\Date;
 
 class JasperController extends Controller
 {
     use ApiSite24x7;
     use ReestructurarDatosAPISite24x7;
 
-    public function reporteParametros()
+    public function index()
+    {
+        // $site24x7Url = env('SITE_24X7_API');
+        // $refresh_token = $this->getRefreshToken();
+        // $customers_its = $this->getCustomers($site24x7Url, $refresh_token);
+        // dd($customers_its);
+        // return view('welcome', compact('customers_its'));
+        return view('welcome');
+    }
+
+    public function reporteParametros($customer = null, $zaaid = null)
     {
         // CONSUMO API SITE24x7
         $site24x7Url = env('SITE_24X7_API');
         $refresh_token = $this->getRefreshToken();
-        $customers_its = $this->getCustomers($site24x7Url, $refresh_token);
+        // $customers_its = $this->getCustomers($site24x7Url, $refresh_token);
         // dd($customers_its);
-        foreach ($customers_its as $customer_it) {
-            $customer = $customer_it['name'];
-            $zaaid = $customer_it['zaaid'];
-            // $customer = "BANSEFI";
-            // $zaaid = "763698181";
-            $monitors = $this->getMonitors($site24x7Url, $zaaid, $refresh_token);
-            foreach ($monitors as $monitor) {
+        // foreach ($customers_its as $index => $customer_it) {
+        // if ($index >= 26) {
+        //     $customer = $customer_it['name'];
+        //     $zaaid = $customer_it['zaaid'];
+        // $customer = "BANSEFI";
+        $zaaid = "763698181";
+        $monitors = $this->getMonitors($site24x7Url, $zaaid, $refresh_token);
+        foreach ($monitors as $monitor) {
+            // dd($monitor);
+            if ($monitor['display_name'] == 'BANBC_APP47.bantcb.bansefi.gob.mx') {
                 $monitor_id = $monitor['monitor_id'];
                 $availability = $this->getAvailabilityReport($site24x7Url, $monitor_id, $zaaid, $refresh_token);
                 $performance = $this->getPerformance($site24x7Url, $monitor_id, $zaaid, $refresh_token, 'unit_of_time=3&period=7');
                 $performance_disk = $this->getPerformance($site24x7Url, $monitor_id, $zaaid, $refresh_token, 'unit_of_time=3&period=7&report_attribute=DISK');
                 if ($monitor['type'] == 'SERVER') {
+                    // dd($this->getMonitor($site24x7Url, $zaaid, $refresh_token, $monitor_id));
                     $customers = [
                         'customer' => [
                             'name' => $customer,
@@ -43,29 +57,38 @@ class JasperController extends Controller
                             'performance_disk' => $this->applyFormatToPerformanceDisk($performance_disk),
                         ]
                     ];
-                    $this->getJasperReport($customers,  $customer, $monitor_id . '_monitor');
+
+                    $this->getJasperReport($customers,  $customer, $monitor['display_name'], $monitor['type']);
                 }
-                sleep(2);
             }
         }
-        return response()->json([
-            'status' => 'ok',
-            'msj' => '¡Reporte compilado!'
-        ]);
+        // sleep(5);
+        // }
+        // }
+        // return response()->json([
+        //     'status' => 'ok',
+        //     'msj' => '¡Reporte compilado!'
+        // ]);
+        return redirect()->route('home');
     }
 
     public function getJasperReport($data, $folder_name, $file_name = "Resumen", $type = "SERVER")
     {
         $public = public_path('jasperreports\\');
         $xmlTmpfilePath = $public . "Resumen.jrxml";
-        $textoRemplazar = "C:\\\Users\\\uriel.santiago\\\JaspersoftWorkspace\\\KIO-Jasper\\\\";
-        $contenido = file_get_contents("C:\\laragon\\www\\reportes-jasper-laravel\\public\\jasperreports\\Resumen.jrxml");
-        $templateRuta = str_replace($textoRemplazar, str_replace('\\', '\\\\', (string)$public), (string)$contenido);
-        $templateMod = file_put_contents($xmlTmpfilePath, $templateRuta);
+        // $textoRemplazar = "C:\\\Users\\\uriel.santiago\\\JaspersoftWorkspace\\\KIO-Jasper\\\\";
+        // $contenido = file_get_contents("C:\\laragon\\www\\reportes-jasper-laravel\\public\\jasperreports\\Resumen.jrxml");
+        // $templateRuta = str_replace($textoRemplazar, str_replace('\\', '\\\\', (string)$public), (string)$contenido);
+        // file_put_contents($xmlTmpfilePath, $templateRuta);
 
-        Storage::makeDirectory('public/reports' . DIRECTORY_SEPARATOR . Carbon::now()->format('Y-m-d') . DIRECTORY_SEPARATOR . $folder_name);
+        Date::setLocale('es');
+        $last_month = ucfirst(Date::now()->subMonth()->format('F'));
+        // get last month from now
+
+        $path_reports = Carbon::now()->format('Y') . DIRECTORY_SEPARATOR . $folder_name . DIRECTORY_SEPARATOR . $last_month . DIRECTORY_SEPARATOR . $type;
+        Storage::makeDirectory('public/InformesKIO' . DIRECTORY_SEPARATOR . $path_reports);
         $output_folder = storage_path('app/public') .
-            '/reports' . DIRECTORY_SEPARATOR . Carbon::now()->format('Y-m-d') . DIRECTORY_SEPARATOR . $folder_name . DIRECTORY_SEPARATOR . $file_name;
+            '/InformesKIO' . DIRECTORY_SEPARATOR . $path_reports . DIRECTORY_SEPARATOR . $file_name;
         $name = 'api';
         $jsonTmpfilePath = storage_path('app/public') . '/jasper/' . $name . '.json';
         $jsonTmpfile = fopen($jsonTmpfilePath, 'w');
@@ -91,7 +114,7 @@ class JasperController extends Controller
         //Compilando el reporte graficas.jrxml
         // shell_exec('jasperstarter compile "C:/Users/uriel.santiago/JaspersoftWorkspace/KIO-Jasper/graficas.jrxml"');
         shell_exec($output);
-        // dd($output);
+        dd($output);
         // $pathToFile = base_path() .
         //     '/resources/reports/pdf/Resumen.pdf';
         // return response()->file($pathToFile);

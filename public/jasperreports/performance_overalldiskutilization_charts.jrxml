@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.19.0.final using JasperReports Library version 6.19.0-646c68931cebf1a58bc65c4359d1f0ca223c5e94  -->
+<!-- Created with Jaspersoft Studio version 6.19.1.final using JasperReports Library version 6.19.1-867c00bf88cd4d784d404379d6c05e1b419e8a4c  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="performance_overalldiskutilization_charts" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="2c46b3df-1997-4372-8cd7-96415e2625a4">
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Test"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Adapter API - KIO"/>
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
@@ -26,11 +26,12 @@
 		<property name="net.sf.jasperreports.json.field.expression" value="performance2"/>
 		<fieldDescription><![CDATA[performance2]]></fieldDescription>
 	</field>
+	<sortField name="date"/>
 	<title>
-		<band height="245" splitType="Stretch">
-			<barChart>
+		<band height="204" splitType="Stretch">
+			<stackedBarChart>
 				<chart evaluationTime="Report">
-					<reportElement x="0" y="0" width="595" height="245" uuid="c2695aec-f535-48f1-b5c1-7cd7fb7bb0be"/>
+					<reportElement x="10" y="0" width="520" height="200" uuid="cd363bad-8623-496e-8d96-13a35dca7a32"/>
 					<chartTitle/>
 					<chartSubtitle/>
 					<chartLegend/>
@@ -38,27 +39,39 @@
 				<categoryDataset>
 					<dataset resetType="Report"/>
 					<categorySeries>
-						<seriesExpression><![CDATA["SERIES 1"]]></seriesExpression>
-						<categoryExpression><![CDATA[$F{date}]]></categoryExpression>
+						<seriesExpression><![CDATA["Used Space %"]]></seriesExpression>
+						<categoryExpression><![CDATA[LEFT($F{date},10)]]></categoryExpression>
 						<valueExpression><![CDATA[$F{performance1}]]></valueExpression>
+						<labelExpression><![CDATA[$F{date}]]></labelExpression>
 					</categorySeries>
 					<categorySeries>
-						<seriesExpression><![CDATA["SERIES 2"]]></seriesExpression>
-						<categoryExpression><![CDATA[$F{date}]]></categoryExpression>
+						<seriesExpression><![CDATA["Free Space %"]]></seriesExpression>
+						<categoryExpression><![CDATA[LEFT($F{date},10)]]></categoryExpression>
 						<valueExpression><![CDATA[$F{performance2}]]></valueExpression>
+						<labelExpression><![CDATA[$F{date}]]></labelExpression>
 					</categorySeries>
 				</categoryDataset>
 				<barPlot>
-					<plot/>
+					<plot labelRotation="74.0">
+						<seriesColor seriesOrder="0" color="#DF4B3C"/>
+						<seriesColor seriesOrder="1" color="#2EC36E"/>
+					</plot>
 					<itemLabel/>
-					<categoryAxisFormat>
-						<axisFormat labelColor="#000000" tickLabelColor="#000000" axisLineColor="#000000"/>
+					<categoryAxisFormat labelRotation="74.0">
+						<axisFormat labelColor="#000000" tickLabelColor="#000000" axisLineColor="#000000">
+							<labelFont>
+								<font size="9"/>
+							</labelFont>
+							<tickLabelFont>
+								<font size="9" isBold="false"/>
+							</tickLabelFont>
+						</axisFormat>
 					</categoryAxisFormat>
 					<valueAxisFormat>
 						<axisFormat labelColor="#000000" tickLabelColor="#000000" axisLineColor="#000000"/>
 					</valueAxisFormat>
 				</barPlot>
-			</barChart>
+			</stackedBarChart>
 		</band>
 	</title>
 </jasperReport>

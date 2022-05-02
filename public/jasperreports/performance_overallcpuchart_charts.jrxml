@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.19.0.final using JasperReports Library version 6.19.0-646c68931cebf1a58bc65c4359d1f0ca223c5e94  -->
+<!-- Created with Jaspersoft Studio version 6.19.1.final using JasperReports Library version 6.19.1-867c00bf88cd4d784d404379d6c05e1b419e8a4c  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="performance_overallcpuchart_charts" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="fe5f42c9-00fa-4c1e-8412-d7c61d619a21">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Test"/>
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
@@ -22,11 +22,22 @@
 		<property name="net.sf.jasperreports.json.field.expression" value="value"/>
 		<fieldDescription><![CDATA[value]]></fieldDescription>
 	</field>
+	<sortField name="date"/>
+	<variable name="value1" class="java.math.BigDecimal" calculation="Highest">
+		<variableExpression><![CDATA[$F{value}]]></variableExpression>
+	</variable>
+	<variable name="value2" class="java.math.BigDecimal" calculation="Average">
+		<variableExpression><![CDATA[$F{value}]]></variableExpression>
+	</variable>
 	<title>
-		<band height="227" splitType="Stretch">
-			<barChart>
+		<band height="225" splitType="Stretch">
+			<lineChart>
 				<chart evaluationTime="Report">
-					<reportElement x="0" y="0" width="595" height="227" uuid="9217860a-a478-401f-a875-0046f59e90b3"/>
+					<reportElement x="20" y="0" width="512" height="210" uuid="f54d03d2-049c-43d2-982a-ba919902df54">
+						<property name="net.sf.jasperreports.customizer.0.selectionMode" value="itemSeries"/>
+						<property name="net.sf.jasperreports.customizer.0.shapeType" value="polygon"/>
+						<property name="net.sf.jasperreports.customizer.class.0" value="net.sf.jasperreports.customizers.shape.LineDotShapeCustomizer"/>
+					</reportElement>
 					<chartTitle/>
 					<chartSubtitle/>
 					<chartLegend/>
@@ -34,23 +45,31 @@
 				<categoryDataset>
 					<dataset resetType="Report"/>
 					<categorySeries>
-						<seriesExpression><![CDATA["SERIES 1"]]></seriesExpression>
-						<categoryExpression><![CDATA[$F{date}]]></categoryExpression>
+						<seriesExpression><![CDATA["CPU Utilization %"]]></seriesExpression>
+						<categoryExpression><![CDATA[LEFT($F{date},10)]]></categoryExpression>
 						<valueExpression><![CDATA[$F{value}]]></valueExpression>
 						<labelExpression><![CDATA[$F{date}]]></labelExpression>
 					</categorySeries>
 				</categoryDataset>
-				<barPlot>
-					<plot/>
-					<itemLabel/>
-					<categoryAxisFormat>
-						<axisFormat labelColor="#000000" tickLabelColor="#000000" axisLineColor="#000000"/>
+				<linePlot isShowLines="true" isShowShapes="false">
+					<plot labelRotation="74.0">
+						<seriesColor seriesOrder="0" color="#75D7EA"/>
+					</plot>
+					<categoryAxisFormat labelRotation="74.0">
+						<axisFormat labelColor="#000000" tickLabelColor="#000000" axisLineColor="#000000">
+							<labelFont>
+								<font size="10"/>
+							</labelFont>
+							<tickLabelFont>
+								<font size="9"/>
+							</tickLabelFont>
+						</axisFormat>
 					</categoryAxisFormat>
 					<valueAxisFormat>
 						<axisFormat labelColor="#000000" tickLabelColor="#000000" axisLineColor="#000000"/>
 					</valueAxisFormat>
-				</barPlot>
-			</barChart>
+				</linePlot>
+			</lineChart>
 		</band>
 	</title>
 </jasperReport>

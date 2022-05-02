@@ -16,7 +16,6 @@ trait ApiSite24x7
             'grant_type' => "refresh_token"
         ]);
         $response = $response->object();
-
         return $response->access_token;
     }
 
@@ -42,6 +41,20 @@ trait ApiSite24x7
             'Authorization' => $authorization,
             'Cookie' => $cookie
         ])->get("{$url}/monitors");
+        $response = $response->json();
+        return $response['data'];
+    }
+
+    public function getMonitor($url, $zaaid, $refresh_token, $monitor_id)
+    {
+        $authorization = "Zoho-oauthtoken {$refresh_token}";
+        $cookie = "zaaid={$zaaid}";
+        $response = Http::withHeaders([
+            'Content-Type' => 'application/json;charset=UTF-8',
+            'Accept' => 'application/json; version=2.0',
+            'Authorization' => $authorization,
+            'Cookie' => $cookie
+        ])->get("{$url}/monitors/{$monitor_id}");
         $response = $response->json();
         return $response['data'];
     }

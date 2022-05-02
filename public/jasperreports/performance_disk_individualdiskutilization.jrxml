@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.19.0.final using JasperReports Library version 6.19.0-646c68931cebf1a58bc65c4359d1f0ca223c5e94  -->
+<!-- Created with Jaspersoft Studio version 6.19.1.final using JasperReports Library version 6.19.1-867c00bf88cd4d784d404379d6c05e1b419e8a4c  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="performance_disk_individualdiskutilization" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="16aeef6e-6e1d-49f0-81fe-7be10a36513b">
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
@@ -10,7 +10,7 @@
 	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="SITE_API_SERVER"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Adapter API - KIO"/>
 	<queryString language="json">
 		<![CDATA[customer.performance_disk.data.chart_data.IndividualDiskUtilization.chart_data]]>
 	</queryString>
@@ -29,11 +29,11 @@
 	<background>
 		<band splitType="Stretch"/>
 	</background>
-	<detail>
-		<band height="323" splitType="Stretch">
-			<barChart>
+	<summary>
+		<band height="256">
+			<stackedBarChart>
 				<chart evaluationTime="Report">
-					<reportElement x="0" y="67" width="595" height="253" uuid="1ce8bf72-244a-41d0-bf0a-78ec47285072"/>
+					<reportElement x="10" y="37" width="528" height="213" uuid="59e1d834-41e2-4176-902b-8f42a9344640"/>
 					<chartTitle/>
 					<chartSubtitle/>
 					<chartLegend/>
@@ -41,18 +41,23 @@
 				<categoryDataset>
 					<dataset resetType="Report"/>
 					<categorySeries>
-						<seriesExpression><![CDATA["SERIES 1"]]></seriesExpression>
+						<seriesExpression><![CDATA["Free Space"]]></seriesExpression>
 						<categoryExpression><![CDATA[$F{disk}]]></categoryExpression>
 						<valueExpression><![CDATA[$F{value1}]]></valueExpression>
+						<labelExpression><![CDATA[$F{value1}.toString() + "%"]]></labelExpression>
 					</categorySeries>
 					<categorySeries>
-						<seriesExpression><![CDATA["SERIES 2"]]></seriesExpression>
+						<seriesExpression><![CDATA["Used Space"]]></seriesExpression>
 						<categoryExpression><![CDATA[$F{disk}]]></categoryExpression>
 						<valueExpression><![CDATA[$F{value2}]]></valueExpression>
+						<labelExpression><![CDATA[$F{value2}.toString() + "%"]]></labelExpression>
 					</categorySeries>
 				</categoryDataset>
-				<barPlot>
-					<plot/>
+				<barPlot isShowLabels="true">
+					<plot>
+						<seriesColor seriesOrder="0" color="#2EC36E"/>
+						<seriesColor seriesOrder="1" color="#DF4B3C"/>
+					</plot>
 					<itemLabel/>
 					<categoryAxisFormat>
 						<axisFormat labelColor="#000000" tickLabelColor="#000000" axisLineColor="#000000"/>
@@ -61,11 +66,14 @@
 						<axisFormat labelColor="#000000" tickLabelColor="#000000" axisLineColor="#000000"/>
 					</valueAxisFormat>
 				</barPlot>
-			</barChart>
+			</stackedBarChart>
 			<staticText>
-				<reportElement x="20" y="27" width="260" height="30" uuid="1065df5b-b563-4986-b5bb-7d2fa608cac9"/>
-				<text><![CDATA[IndividualDiskUtilization]]></text>
+				<reportElement x="10" y="2" width="218" height="36" uuid="26f097d9-430e-4539-a034-c3c673367a5b"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Individual Disk Utilization (%)]]></text>
 			</staticText>
 		</band>
-	</detail>
+	</summary>
 </jasperReport>

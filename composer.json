@@ -8,6 +8,7 @@
         "php": "^8.0.2",
         "geekcom/phpjasper": "^3.1",
         "guzzlehttp/guzzle": "^7.2",
+        "jenssegers/date": "^4.0",
         "laravel/framework": "^9.2",
         "laravel/sanctum": "^2.14.1",
         "laravel/tinker": "^2.7"

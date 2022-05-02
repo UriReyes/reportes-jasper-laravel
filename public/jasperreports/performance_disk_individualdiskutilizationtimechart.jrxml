@@ -41,41 +41,67 @@
 	<background>
 		<band splitType="Stretch"/>
 	</background>
+	<title>
+		<band height="50">
+			<staticText>
+				<reportElement x="10" y="20" width="158" height="25" uuid="4e2fcafd-bca0-4ab0-af8b-b9b28e2b89b4"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Current Individual Disk Utilization Time]]></text>
+			</staticText>
+		</band>
+	</title>
 	<detail>
-		<band height="348">
-			<staticText>
-				<reportElement x="15" y="48" width="100" height="30" uuid="1e595a21-d556-4cb5-adb5-a84b3d5341dc"/>
-				<text><![CDATA[Porcentaje promedio de CPU]]></text>
-			</staticText>
-			<textField>
-				<reportElement x="115" y="48" width="180" height="30" uuid="99271c6d-bd8b-41ca-be36-364f7d5feea9"/>
-				<textFieldExpression><![CDATA[$F{average}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="315" y="48" width="100" height="30" uuid="1eaec456-521d-4de1-bc76-5d7e60653aef"/>
-				<text><![CDATA[Porcentaje mínimo de CPU]]></text>
-			</staticText>
-			<textField>
-				<reportElement x="416" y="48" width="170" height="30" uuid="d274f5e4-76cc-492e-9dec-0a24b37a40c1"/>
-				<textFieldExpression><![CDATA[$F{min}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="14" y="98" width="100" height="30" uuid="dd360790-52e9-49a1-b095-ff941949ca6b"/>
-				<text><![CDATA[Porcentaje máximo de CPU]]></text>
-			</staticText>
-			<textField>
-				<reportElement x="115" y="98" width="170" height="30" uuid="134c0e5c-c83b-4843-8023-8971ef8f8864"/>
-				<textFieldExpression><![CDATA[$F{max}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="15" y="15" width="255" height="30" uuid="d9d7787f-2afb-4ba5-9c16-06b72dcea4d5"/>
-				<text><![CDATA[Individual Disk Utilization Time Chart]]></text>
-			</staticText>
+		<band height="90">
 			<subreport>
-				<reportElement x="15" y="140" width="571" height="200" uuid="3ba3392d-6fd5-4fdd-90df-102976c827c4"/>
+				<reportElement x="10" y="50" width="571" height="30" uuid="3ba3392d-6fd5-4fdd-90df-102976c827c4"/>
 				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("chart_data")]]></dataSourceExpression>
-				<subreportExpression><![CDATA["C:\\Users\\uriel.santiago\\JaspersoftWorkspace\\KIO-Jasper\\performance_disk_individualdiskutilizationtimechart_charts.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA["C:\\Users\\uriel.santiago\\JaspersoftWorkspace\\KIO-Jasper-Final\\performance_disk_individualdiskutilizationtimechart_charts.jasper"]]></subreportExpression>
 			</subreport>
+			<textField>
+				<reportElement x="191" y="20" width="100" height="20" uuid="5a41684c-b961-420c-8e75-d4c6b70d9c24"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{average}.replace( "[","").replace( "]","")  + " %"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="191" y="0" width="100" height="20" uuid="23d74ef2-99a4-4904-bb63-332c333a7b42"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Average]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="311" y="0" width="100" height="20" uuid="8329dea7-befb-4ce9-9696-27513ca02a46"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Minimum]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="311" y="20" width="100" height="20" uuid="c77de31e-4b3a-4dbd-bef8-bece1096dae8"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{min}.replace( "[","").replace( "]","")  + " %"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="431" y="0" width="100" height="20" uuid="b9bf253c-6f6d-4ef4-bcc1-e918080c8603"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Maximum]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="431" y="20" width="100" height="20" uuid="6f81eda0-5058-421a-b445-4945b23c2d26"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{max}.replace( "[","").replace( "]","")  + " %"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="10" y="15" width="100" height="25" uuid="fd2309a1-06fc-423f-a304-2b19b7d694c7"/>
+				<textElement>
+					<font size="16" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{label}]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 </jasperReport>
