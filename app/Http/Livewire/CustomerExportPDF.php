@@ -1,74 +1,74 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Livewire;
 
 use App\Traits\ApiSite24x7;
 use App\Traits\ReestructurarDatosAPISite24x7;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
+use Livewire\Component;
 use PHPJasper\PHPJasper;
 use Jenssegers\Date\Date;
 
-class JasperController extends Controller
+class CustomerExportPDF extends Component
 {
     use ApiSite24x7;
     use ReestructurarDatosAPISite24x7;
 
-    public function index()
+    public $customer;
+    public $totalMonitors;
+    public $zaaid;
+    public $name;
+    public $last_month;
+    public $percentage = 0;
+    public $completed_reports = 0;
+    public function mount($customer)
     {
-        $site24x7Url = env('SITE_24X7_API');
-        $refresh_token = $this->getRefreshToken();
-        $customers_its = $this->getCustomers($site24x7Url, $refresh_token);
-        // dd($customers_its);
-        return view('welcome', compact('customers_its'));
+        $this->customer = $customer;
+        $this->zaaid = $customer['zaaid'];
+        $this->name = $customer['name'];
+        Date::setLocale('es');
+        $this->last_month = ucfirst(Date::now()->subMonth()->format('F'));
     }
 
-    public function reporteParametros($customer = null, $zaaid = null)
+    public function startProcess()
     {
-        // CONSUMO API SITE24x7
         $site24x7Url = env('SITE_24X7_API');
         $refresh_token = $this->getRefreshToken();
-        Date::setLocale('es');
-        $last_month = ucfirst(Date::now()->subMonth()->format('F'));
-        // $customers_its = $this->getCustomers($site24x7Url, $refresh_token);
-        // dd($customers_its);
-        // foreach ($customers_its as $index => $customer_it) {
-        // if ($index >= 26) {
-        //     $customer = $customer_it['name'];
-        //     $zaaid = $customer_it['zaaid'];
-        // $customer = "BANSEFI";
-        // $zaaid = "763698181";
-        $monitors = $this->getMonitors($site24x7Url, $zaaid, $refresh_token);
+        $monitors = $this->getMonitors($site24x7Url, $this->zaaid, $refresh_token);
+        $this->totalMonitors = count($monitors);
         foreach ($monitors as $monitor) {
             $monitor_id = $monitor['monitor_id'];
             if ($monitor['type'] == 'SERVER' and $monitor['state'] == 0) {
-                $availability = $this->getAvailabilityReport($site24x7Url, $monitor_id, $zaaid, $refresh_token);
-                $performance = $this->getPerformance($site24x7Url, $monitor_id, $zaaid, $refresh_token, 'unit_of_time=3&period=7');
-                $performance_disk = $this->getPerformance($site24x7Url, $monitor_id, $zaaid, $refresh_token, 'unit_of_time=3&period=7&report_attribute=DISK');
+                $availability = $this->getAvailabilityReport($site24x7Url, $monitor_id, $this->zaaid, $refresh_token);
+                $performance = $this->getPerformance($site24x7Url, $monitor_id, $this->zaaid, $refresh_token, 'unit_of_time=3&period=7');
+                $performance_disk = $this->getPerformance($site24x7Url, $monitor_id, $this->zaaid, $refresh_token, 'unit_of_time=3&period=7&report_attribute=DISK');
                 $customers = [
                     'customer' => [
-                        'name' => $customer,
-                        'zaaid' => $zaaid,
+                        'name' => $this->name,
+                        'zaaid' => $this->zaaid,
                         'monitor' => $monitor,
                         'availability' => $this->getUptimeDownTimeAndMaintenance($availability),
                         'performance' =>  $this->applyFormatToPerformance($performance),
                         'performance_disk' => $this->applyFormatToPerformanceDisk($performance_disk),
                     ]
                 ];
-                $path_reports = Carbon::now()->format('Y') . DIRECTORY_SEPARATOR . $customer . DIRECTORY_SEPARATOR . $last_month . DIRECTORY_SEPARATOR . $monitor['type'];
+                $path_reports = Carbon::now()->format('Y') . DIRECTORY_SEPARATOR . $this->name . DIRECTORY_SEPARATOR . $this->last_month . DIRECTORY_SEPARATOR . $monitor['type'];
                 Storage::makeDirectory('public/InformesKIO' . DIRECTORY_SEPARATOR . $path_reports);
-                $this->getJasperReport($customers,  $customer, $monitor['display_name'], $path_reports, $monitor['type']);
+                $this->getJasperReport($customers,  $this->name, $monitor['display_name'], $path_reports, $monitor['type']);
+                $this->completed_reports++;
+                sleep(5);
+                $this->percentage = $this->getPercentage($this->completed_reports, $this->totalMonitors);
+                // $this->emit('current-percentage', $current_percentage);
             }
         }
-        //     sleep(5);
-        // }
-        // }
-        // return response()->json([
-        //     'status' => 'ok',
-        //     'msj' => '¡Reporte compilado!'
-        // ]);
-        return redirect()->route('home');
     }
+
+    public function render()
+    {
+        return view('livewire.customer-export-p-d-f');
+    }
+
 
     public function getJasperReport($data, $folder_name, $file_name = "Resumen", $path_reports, $type = "SERVER")
     {
@@ -158,5 +158,12 @@ class JasperController extends Controller
             $performance['data']['chart_data'] = $newPerformances;
             return $performance;
         }
+    }
+
+    function getPercentage($cantidad, $total)
+    {
+        $porcentaje = ((float)$cantidad * 100) / $total; // Regla de tres
+        // $porcentaje = round($porcentaje, 0);  // Quitar los decimalesreturn $porcentaje;
+        return $porcentaje;
     }
 }
