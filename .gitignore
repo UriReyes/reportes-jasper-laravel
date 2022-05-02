@@ -1,6 +1,8 @@
 /node_modules
 /public/hot
 /public/storage
+/storage/app/public/InformesKIO
+/storage/app/public/reports
 /storage/*.key
 /vendor
 .env
