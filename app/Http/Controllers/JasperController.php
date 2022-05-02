@@ -16,12 +16,11 @@ class JasperController extends Controller
 
     public function index()
     {
-        // $site24x7Url = env('SITE_24X7_API');
-        // $refresh_token = $this->getRefreshToken();
-        // $customers_its = $this->getCustomers($site24x7Url, $refresh_token);
+        $site24x7Url = env('SITE_24X7_API');
+        $refresh_token = $this->getRefreshToken();
+        $customers_its = $this->getCustomers($site24x7Url, $refresh_token);
         // dd($customers_its);
-        // return view('welcome', compact('customers_its'));
-        return view('welcome');
+        return view('welcome', compact('customers_its'));
     }
 
     public function reporteParametros($customer = null, $zaaid = null)
@@ -36,33 +35,28 @@ class JasperController extends Controller
         //     $customer = $customer_it['name'];
         //     $zaaid = $customer_it['zaaid'];
         // $customer = "BANSEFI";
-        $zaaid = "763698181";
+        // $zaaid = "763698181";
         $monitors = $this->getMonitors($site24x7Url, $zaaid, $refresh_token);
         foreach ($monitors as $monitor) {
-            // dd($monitor);
-            if ($monitor['display_name'] == 'BANBC_APP47.bantcb.bansefi.gob.mx') {
-                $monitor_id = $monitor['monitor_id'];
+            $monitor_id = $monitor['monitor_id'];
+            if ($monitor['type'] == 'SERVER' and $monitor['state'] == 0) {
                 $availability = $this->getAvailabilityReport($site24x7Url, $monitor_id, $zaaid, $refresh_token);
                 $performance = $this->getPerformance($site24x7Url, $monitor_id, $zaaid, $refresh_token, 'unit_of_time=3&period=7');
                 $performance_disk = $this->getPerformance($site24x7Url, $monitor_id, $zaaid, $refresh_token, 'unit_of_time=3&period=7&report_attribute=DISK');
-                if ($monitor['type'] == 'SERVER') {
-                    // dd($this->getMonitor($site24x7Url, $zaaid, $refresh_token, $monitor_id));
-                    $customers = [
-                        'customer' => [
-                            'name' => $customer,
-                            'zaaid' => $zaaid,
-                            'monitor' => $monitor,
-                            'availability' => $this->getUptimeDownTimeAndMaintenance($availability),
-                            'performance' =>  $this->applyFormatToPerformance($performance),
-                            'performance_disk' => $this->applyFormatToPerformanceDisk($performance_disk),
-                        ]
-                    ];
-
-                    $this->getJasperReport($customers,  $customer, $monitor['display_name'], $monitor['type']);
-                }
+                $customers = [
+                    'customer' => [
+                        'name' => $customer,
+                        'zaaid' => $zaaid,
+                        'monitor' => $monitor,
+                        'availability' => $this->getUptimeDownTimeAndMaintenance($availability),
+                        'performance' =>  $this->applyFormatToPerformance($performance),
+                        'performance_disk' => $this->applyFormatToPerformanceDisk($performance_disk),
+                    ]
+                ];
+                $this->getJasperReport($customers,  $customer, $monitor['display_name'], $monitor['type']);
             }
         }
-        // sleep(5);
+        //     sleep(5);
         // }
         // }
         // return response()->json([
@@ -114,7 +108,7 @@ class JasperController extends Controller
         //Compilando el reporte graficas.jrxml
         // shell_exec('jasperstarter compile "C:/Users/uriel.santiago/JaspersoftWorkspace/KIO-Jasper/graficas.jrxml"');
         shell_exec($output);
-        dd($output);
+        // dd($output);
         // $pathToFile = base_path() .
         //     '/resources/reports/pdf/Resumen.pdf';
         // return response()->file($pathToFile);

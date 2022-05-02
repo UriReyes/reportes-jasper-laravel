@@ -260,7 +260,7 @@
                 {{-- <a href="{{ route('reporteParametros') }}"
                     class="leading-normal bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-base md:text-2xl mb-8 text-center md:text-left slide-in-bottom-subtitle">
                     Iniciar</a> --}}
-                {{-- @foreach ($customers_its as $customer)
+                @foreach ($customers_its as $customer)
                     <a target="_blank"
                         href="{{ route('reporteParametros', [
                             'customer' => $customer['name'],
@@ -268,7 +268,7 @@
                         ]) }}"
                         class="leading-normal bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-base md:text-2xl mb-8 text-center md:text-left slide-in-bottom-subtitle">
                         {{ $customer['name'] }}</a>
-                @endforeach --}}
+                @endforeach
             </div>
 
             <!--Right Col-->
