@@ -217,57 +217,60 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
         integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     @livewireStyles
 </head>
 
 
 <body class="leading-normal tracking-normal text-gray-900" style="font-family: 'Source Sans Pro', sans-serif;">
-
-
-
-    <div class="h-screen pb-14 bg-right bg-cover" style="background-image:url('bg.svg');">
-        <!--Nav-->
-        <div class="w-full container mx-auto p-6">
-            <div class="w-full flex items-center justify-between">
-                <a class="flex items-center text-indigo-400 no-underline hover:no-underline font-bold text-2xl lg:text-4xl"
-                    href="#">
-                    <img class="w-1/12" src="{{ asset('assets/img/logo-KIO.webp') }}" alt="" srcset="">
+    <div class="h-screen pb-14 bg-right bg-cover">
+        <nav class="bg-white border-gray-200 px-2 sm:px-4 py-2.5 rounded dark:bg-gray-800">
+            <div class="container flex flex-wrap justify-between items-center mx-auto">
+                <a href="https://flowbite.com" class="flex items-center">
+                    <img src="{{ asset('assets/img/logo-KIO.webp') }}" class="mr-3 h-6 sm:h-9" alt="Flowbite Logo">
+                    <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">KIO NETWORKS</span>
                 </a>
-
-                <div class="flex w-1/2 justify-end content-center">
-                    {{-- <a class="inline-block text-blue-300 no-underline hover:text-indigo-800 hover:text-underline text-center h-10 p-2 md:h-auto md:p-4"
-                        data-tippy-content="@twitter_handle" href="https://twitter.com/intent/tweet?url=#">
-                        <svg class="fill-current h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-                            <path
-                                d="M30.063 7.313c-.813 1.125-1.75 2.125-2.875 2.938v.75c0 1.563-.188 3.125-.688 4.625a15.088 15.088 0 0 1-2.063 4.438c-.875 1.438-2 2.688-3.25 3.813a15.015 15.015 0 0 1-4.625 2.563c-1.813.688-3.75 1-5.75 1-3.25 0-6.188-.875-8.875-2.625.438.063.875.125 1.375.125 2.688 0 5.063-.875 7.188-2.5-1.25 0-2.375-.375-3.375-1.125s-1.688-1.688-2.063-2.875c.438.063.813.125 1.125.125.5 0 1-.063 1.5-.25-1.313-.25-2.438-.938-3.313-1.938a5.673 5.673 0 0 1-1.313-3.688v-.063c.813.438 1.688.688 2.625.688a5.228 5.228 0 0 1-1.875-2c-.5-.875-.688-1.813-.688-2.75 0-1.063.25-2.063.75-2.938 1.438 1.75 3.188 3.188 5.25 4.25s4.313 1.688 6.688 1.813a5.579 5.579 0 0 1 1.5-5.438c1.125-1.125 2.5-1.688 4.125-1.688s3.063.625 4.188 1.813a11.48 11.48 0 0 0 3.688-1.375c-.438 1.375-1.313 2.438-2.563 3.188 1.125-.125 2.188-.438 3.313-.875z">
-                            </path>
-                        </svg>
-                    </a> --}}
+                <button data-collapse-toggle="mobile-menu" type="button"
+                    class="inline-flex items-center p-2 ml-3 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+                    aria-controls="mobile-menu" aria-expanded="false">
+                    <span class="sr-only">Open main menu</span>
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                            d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+                            clip-rule="evenodd"></path>
+                    </svg>
+                    <svg class="hidden w-6 h-6" fill="currentColor" viewBox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                            d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                            clip-rule="evenodd"></path>
+                    </svg>
+                </button>
+                <div class="hidden w-full md:block md:w-auto" id="mobile-menu">
+                    <ul class="flex flex-col mt-4 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium">
+                        <li>
+                            <a href="#"
+                                class="block py-2 pr-4 pl-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white"
+                                aria-current="page">Home</a>
+                        </li>
+                        <li>
+                            <a href="#"
+                                class="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">About</a>
+                        </li>
+                        <li>
+                            <a href="#"
+                                class="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Storage</a>
+                        </li>
+                    </ul>
                 </div>
             </div>
-        </div>
-
+        </nav>
         <!--Main-->
-        <div class="container pt-12 md:pt-24 px-6 mx-auto flex flex-wrap flex-col md:flex-row items-center">
-
+        <div class="container pt-6 md:pt-6 px-6 mx-auto flex flex-wrap flex-col md:flex-row items-center">
             <!--Left Col-->
-            <div class="flex flex-col w-full xl:w-2/5 justify-center lg:items-start overflow-y-hidden">
-                <h1
-                    class="my-4 text-3xl md:text-5xl text-purple-800 font-bold leading-tight text-center md:text-left slide-in-bottom-h1">
-                    EXPORTACIÓN MASIVA DE REPORTES DE Site24x7</h1>
-                {{-- <a href="{{ route('reporteParametros') }}"
-                    class="leading-normal bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-base md:text-2xl mb-8 text-center md:text-left slide-in-bottom-subtitle">
-                    Iniciar</a> --}}
-                @foreach ($customers_its as $customer)
-                    @livewire('customer-export-p-d-f', ['customer' => $customer],key($customer->id))
-                @endforeach
-            </div>
-
-            <!--Right Col-->
-            <div class="w-full xl:w-3/5 py-6 overflow-y-hidden">
-                <img class="w-5/12 mx-auto lg:mr-0 slide-in-bottom" src="{{ asset('assets/img/report.png') }}">
-            </div>
-
+            @livewire('reportes-site-jasper', ['customers_its'=>$customers_its])
             <!--Footer-->
             <div class="w-full pt-7 pb-3 text-sm text-center md:text-left fade-in">
                 <a class="text-gray-500 no-underline hover:no-underline" href="#">&copy; KIO Networks
@@ -278,12 +281,29 @@
 
 
     </div>
-
-
     @livewireScripts
-    <!-- jQuery if you need it
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  -->
+
+    <script>
+        Pusher.logToConsole = false;
+        var pusher = new Pusher('97627475d5972b5f156a', {
+            cluster: 'us2'
+        });
+        var channel = pusher.subscribe('progress-report');
+        channel.bind('process-report', function(data) {
+            Livewire.emit('current-percentage', data);
+        });
+
+        // document.addEventListener('DOMContentLoaded', function() {
+        //     let periodsSelect = document.getElementById('periods');
+        //     // with event change the value of period in livewire
+        //     periodsSelect.addEventListener('change', (event) => {
+        //         let period = Number(event.target.value);
+        //         Livewire.emit('uPeriodWithNewValue', period);
+        //     });
+        // });
+    </script>
+
+
 </body>
 
 </html>

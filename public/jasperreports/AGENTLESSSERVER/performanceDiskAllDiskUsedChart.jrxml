@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.19.0.final using JasperReports Library version 6.19.0-646c68931cebf1a58bc65c4359d1f0ca223c5e94  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="performanceDiskAllDiskUsedChart" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="d64e8178-2fd4-4ea1-b874-f309a4760917">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="MonitorAgentServerLessAdapter"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<queryString language="json">
+		<![CDATA[customer.performance_disk.data.AllDiskUsedChart]]>
+	</queryString>
+	<field name="95_percentile" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="95_percentile"/>
+		<fieldDescription><![CDATA[95_percentile]]></fieldDescription>
+	</field>
+	<field name="average" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="average"/>
+		<fieldDescription><![CDATA[average]]></fieldDescription>
+	</field>
+	<field name="min" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="min"/>
+		<fieldDescription><![CDATA[min]]></fieldDescription>
+	</field>
+	<field name="chart_data" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="chart_data"/>
+		<fieldDescription><![CDATA[chart_data]]></fieldDescription>
+	</field>
+	<field name="max" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="max"/>
+		<fieldDescription><![CDATA[max]]></fieldDescription>
+	</field>
+	<field name="label" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="label"/>
+		<fieldDescription><![CDATA[label]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="321" splitType="Stretch">
+			<textField>
+				<reportElement x="100" y="0" width="100" height="30" uuid="c6eabb4d-5178-4e03-a75e-6338fa10e28f"/>
+				<textFieldExpression><![CDATA[$F{95_percentile}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="0" width="100" height="30" uuid="c5e20251-1d17-4bac-99a5-224f0aca16ca"/>
+				<text><![CDATA[95_percentile]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="350" y="0" width="100" height="30" uuid="520a9478-68f8-4b1e-b330-dac52af4738d"/>
+				<textFieldExpression><![CDATA[$F{average}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="250" y="0" width="100" height="30" uuid="4d21aaa5-bffd-43cc-9ce0-ba534073467d"/>
+				<text><![CDATA[average]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="100" y="40" width="100" height="30" uuid="d428583a-e627-4667-8cf2-3e78b431c1e4"/>
+				<textFieldExpression><![CDATA[$F{min}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="40" width="100" height="30" uuid="58b324bc-e4c6-4450-a1d7-12e8c0abd784"/>
+				<text><![CDATA[min]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="350" y="40" width="100" height="30" uuid="a505ac6d-fb5f-4355-9f4b-1c5955a6737b"/>
+				<textFieldExpression><![CDATA[$F{max}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="250" y="40" width="100" height="30" uuid="f0c84d75-9fc0-43dc-bffb-c52b80246e74"/>
+				<text><![CDATA[max]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="100" y="80" width="100" height="30" uuid="d3cad8f5-328c-4dd8-bf1d-e5ef1f1e6611"/>
+				<textFieldExpression><![CDATA[$F{label}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="80" width="100" height="30" uuid="e3017d16-4ab7-45dc-91e2-7302639410df"/>
+				<text><![CDATA[label]]></text>
+			</staticText>
+			<subreport>
+				<reportElement x="0" y="110" width="595" height="200" uuid="8b7005ad-635f-44bc-8b1d-df125b9a0b63"/>
+				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("chart_data")]]></dataSourceExpression>
+				<subreportExpression><![CDATA["C:\\laragon\\www\\reportes-jasper-laravel\\public\\jasperreports\\AGENTLESSSERVER\\performanceDiskAllDiskUsedChartCharts.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+</jasperReport>

@@ -71,6 +71,18 @@ trait ReestructurarDatosAPISite24x7
             return $OverallDiskUtilization;
         }
     }
+    public function getFormattedResponse($item)
+    {
+        if (array_key_exists('chart_data', $item)) {
+            $item['chart_data'] = array_map(function ($item) {
+                return [
+                    'date' => array_key_exists(0, $item) ? Carbon::parse($item[0])->format('Y-m-d H:i:s') : null,
+                    'value1' => array_key_exists(1, $item) ? $item[1] : null,
+                ];
+            }, $item['chart_data']);
+            return $item;
+        }
+    }
 
     public function getIndividualDiskUtilization($IndividualDiskUtilization)
     {

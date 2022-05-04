@@ -59,7 +59,7 @@ trait ApiSite24x7
         return $response['data'];
     }
 
-    public function getAvailabilityReport($url, $monitor_id, $zaaid, $refresh_token)
+    public function getAvailabilityReport($url, $monitor_id, $zaaid, $refresh_token, $atributos)
     {
         $authorization = "Zoho-oauthtoken {$refresh_token}";
         $cookie = "zaaid={$zaaid}";
@@ -67,7 +67,7 @@ trait ApiSite24x7
             'Accept' => 'application/json; version=2.0',
             'Authorization' => $authorization,
             'Cookie' => $cookie
-        ])->get("{$url}/reports/availability_summary/${monitor_id}?period=7");
+        ])->get("{$url}/reports/availability_summary/${monitor_id}${atributos}");
         $response = $response->json();
         return $response;
     }
@@ -80,7 +80,19 @@ trait ApiSite24x7
             'Accept' => 'application/json; version=2.0',
             'Authorization' => $authorization,
             'Cookie' => $cookie
-        ])->get("{$url}/reports/performance/{$monitor_id}?${attributos}");
+        ])->get("{$url}/reports/performance/{$monitor_id}{$attributos}");
+        $response = $response->json();
+        return $response;
+    }
+    public function getPerformanceCharts($url, $monitor_id, $zaaid, $refresh_token, $attributos)
+    {
+        $authorization = "Zoho-oauthtoken {$refresh_token}";
+        $cookie = "zaaid={$zaaid}";
+        $response = Http::withHeaders([
+            'Accept' => 'application/json; version=2.0',
+            'Authorization' => $authorization,
+            'Cookie' => $cookie
+        ])->get("{$url}/charts/performance/{$monitor_id}{$attributos}");
         $response = $response->json();
         return $response;
     }

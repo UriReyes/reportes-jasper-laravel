@@ -3,6 +3,7 @@
 /public/storage
 /storage/app/public/InformesKIO
 /storage/app/public/reports
+/storage/app/public/jasper
 /storage/*.key
 /vendor
 .env
@@ -16,3 +17,4 @@ yarn-error.log
 /.vscode
 
 resources/reports/pdf/
+storage/app/public/jasper/api.json

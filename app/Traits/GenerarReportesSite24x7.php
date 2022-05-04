@@ -1,77 +1,19 @@
 <?php
+//make a trait for api site 24x7
+namespace App\Traits;
 
-namespace App\Http\Controllers;
-
-use App\Traits\ApiSite24x7;
-use App\Traits\GenerarReportesSite24x7;
-use App\Traits\ReestructurarDatosAPISite24x7;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 use PHPJasper\PHPJasper;
-use Jenssegers\Date\Date;
 
-class JasperController extends Controller
+trait GenerarReportesSite24x7
 {
-    use ApiSite24x7, ReestructurarDatosAPISite24x7, GenerarReportesSite24x7;
-    public function index()
-    {
-        $site24x7Url = env('SITE_24X7_API');
-        $refresh_token = $this->getRefreshToken();
-        $customers_its = $this->getCustomers($site24x7Url, $refresh_token);
-        // dd($customers_its);
-        return view('welcome', compact('customers_its'));
-    }
+    use ReestructurarDatosAPISite24x7;
 
-    public function reporteParametros($customer = null, $zaaid = null)
+    public function getJasperReport($data, $folder_name, $file_name = "Resumen", $path_reports, $monitor_id, $type = "SERVER")
     {
-        // CONSUMO API SITE24x7
-        $site24x7Url = env('SITE_24X7_API');
-        $refresh_token = $this->getRefreshToken();
-        Date::setLocale('es');
-        $last_month = ucfirst(Date::now()->subMonth()->format('F'));
-        // $customers_its = $this->getCustomers($site24x7Url, $refresh_token);
-        // dd($customers_its);
-        // foreach ($customers_its as $index => $customer_it) {
-        // if ($index >= 26) {
-        //     $customer = $customer_it['name'];
-        //     $zaaid = $customer_it['zaaid'];
-        // $customer = "BANSEFI";
-        // $zaaid = "763698181";
-        $monitors = $this->getMonitors($site24x7Url, $zaaid, $refresh_token);
-        foreach ($monitors as $monitor) {
-            $monitor_id = $monitor['monitor_id'];
-            if ($monitor['type'] == 'SERVER' and $monitor['state'] == 0) {
-                $availability = $this->getAvailabilityReport($site24x7Url, $monitor_id, $zaaid, $refresh_token);
-                $performance = $this->getPerformance($site24x7Url, $monitor_id, $zaaid, $refresh_token, 'unit_of_time=3&period=7');
-                $performance_disk = $this->getPerformance($site24x7Url, $monitor_id, $zaaid, $refresh_token, 'unit_of_time=3&period=7&report_attribute=DISK');
-                $customers = [
-                    'customer' => [
-                        'name' => $customer,
-                        'zaaid' => $zaaid,
-                        'monitor' => $monitor,
-                        'availability' => $this->getUptimeDownTimeAndMaintenance($availability),
-                        'performance' =>  $this->applyFormatToPerformance($performance),
-                        'performance_disk' => $this->applyFormatToPerformanceDisk($performance_disk),
-                    ]
-                ];
-                $path_reports = Carbon::now()->format('Y') . DIRECTORY_SEPARATOR . $customer . DIRECTORY_SEPARATOR . $last_month . DIRECTORY_SEPARATOR . $monitor['type'];
-                Storage::makeDirectory('public/InformesKIO' . DIRECTORY_SEPARATOR . $path_reports);
-                $this->getJasperReport($customers,  $customer, $monitor['display_name'], $path_reports, $monitor['type']);
-            }
-        }
-        //     sleep(5);
-        // }
-        // }
-        // return response()->json([
-        //     'status' => 'ok',
-        //     'msj' => '¡Reporte compilado!'
-        // ]);
-        return redirect()->route('home');
-    }
-
-    /* public function getJasperReport($data, $folder_name, $file_name = "Resumen", $path_reports, $type = "SERVER")
-    {
-        $public = public_path('jasperreports\\');
+        $public = public_path("jasperreports/{$type}/");
         $xmlTmpfilePath = $public . "Resumen.jrxml";
         // $textoRemplazar = "C:\\\Users\\\uriel.santiago\\\JaspersoftWorkspace\\\KIO-Jasper\\\\";
         // $contenido = file_get_contents("C:\\laragon\\www\\reportes-jasper-laravel\\public\\jasperreports\\Resumen.jrxml");
@@ -80,12 +22,13 @@ class JasperController extends Controller
 
         $output_folder = storage_path('app/public') .
             '/InformesKIO' . DIRECTORY_SEPARATOR . $path_reports . DIRECTORY_SEPARATOR . $file_name;
-        $name = 'api';
-        $jsonTmpfilePath = storage_path('app/public') . '/jasper/' . $name . '.json';
+
+        Storage::makeDirectory("public/jasper/{$folder_name}");
+        $file_api_name = "{$folder_name}/{$monitor_id}.json";
+        $jsonTmpfilePath = storage_path('app/public/jasper/') . $file_api_name;
         $jsonTmpfile = fopen($jsonTmpfilePath, 'w');
         fwrite($jsonTmpfile, json_encode($data));
         fclose($jsonTmpfile);
-
         $options = [
             'format' => ['pdf'],
             'params' => [],
@@ -126,6 +69,21 @@ class JasperController extends Controller
                     if (array_key_exists('OverallDiskUtilization', $pfm)) {
                         $newPerformances['OverallDiskUtilization'] = $this->getOverallDiskUtilization($pfm['OverallDiskUtilization']);
                     }
+                    if (array_key_exists('ResponseTimeChart', $pfm)) {
+                        $newPerformances['ResponseTimeChart'] = $this->getFormattedResponse($pfm['ResponseTimeChart']);
+                    }
+                    if (array_key_exists('CpuUtilChart', $pfm)) {
+                        $newPerformances['CpuUtilChart'] = $this->getFormattedResponse($pfm['CpuUtilChart']);
+                    }
+                    if (array_key_exists('CpuUtilChart', $pfm)) {
+                        $newPerformances['CpuUtilChart'] = $this->getFormattedResponse($pfm['CpuUtilChart']);
+                    }
+                    if (array_key_exists('MemoryUtilChart', $pfm)) {
+                        $newPerformances['MemoryUtilChart'] = $this->getFormattedResponse($pfm['MemoryUtilChart']);
+                    }
+                    if (array_key_exists('DiskUtilChart', $pfm)) {
+                        $newPerformances['DiskUtilChart'] = $this->getFormattedResponse($pfm['DiskUtilChart']);
+                    }
                 }
             }
             $performance['data']['chart_data'] = $newPerformances;
@@ -157,5 +115,29 @@ class JasperController extends Controller
             $performance['data']['chart_data'] = $newPerformances;
             return $performance;
         }
-    }*/
+    }
+    public function applyFormatToPerformanceDiskCharts($performance)
+    {
+
+        if (array_key_exists('data', $performance)) {
+            if (array_key_exists('AllDiskUsedChart', $performance['data'])) {
+                $newPerformances = [];
+                foreach ($performance['data']['AllDiskUsedChart'] as $disks) {
+                    foreach ($disks as $disk) {
+                        array_push($newPerformances, $this->getFormattedResponse($disk));
+                    }
+                    $performance['data']['AllDiskUsedChart'] = $newPerformances;
+                    return $performance;
+                }
+            }
+        }
+        return [];
+    }
+
+    function getPercentage($cantidad, $total)
+    {
+        $porcentaje = ($cantidad * 100) / $total; // Regla de tres
+        // $porcentaje = round($porcentaje, 0);  // Quitar los decimalesreturn $porcentaje;
+        return round($porcentaje);
+    }
 }
