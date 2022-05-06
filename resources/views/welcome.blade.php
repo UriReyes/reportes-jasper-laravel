@@ -1,13 +1,8 @@
-<!DOCTYPE html>
-<html lang="es">
+@extends('layouts.layout')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>KIO Networks</title>
-    <meta name="description" content="">
-    <meta name="keywords" content="">
+@section('content')
+    @livewire('reportes-site-jasper', ['customers_its'=>$customers_its])
+@endsection
 
     <!-- Font Awesome if you need it
  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css">
@@ -288,18 +283,5 @@
         channel.bind('process-report', function(data) {
             Livewire.emit('current-percentage', data);
         });
-
-        // document.addEventListener('DOMContentLoaded', function() {
-        //     let periodsSelect = document.getElementById('periods');
-        //     // with event change the value of period in livewire
-        //     periodsSelect.addEventListener('change', (event) => {
-        //         let period = Number(event.target.value);
-        //         Livewire.emit('uPeriodWithNewValue', period);
-        //     });
-        // });
     </script>
-
-
-</body>
-
-</html>
+@endsection

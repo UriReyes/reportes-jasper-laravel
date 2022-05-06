@@ -3,7 +3,6 @@
 namespace App\Traits;
 
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 use PHPJasper\PHPJasper;
 
@@ -52,6 +51,54 @@ trait GenerarReportesSite24x7
         // $pathToFile = base_path() .
         //     '/resources/reports/pdf/Resumen.pdf';
         // return response()->file($pathToFile);
+    }
+
+    public function createFolderToCustomer($last_month, $customer_name, $monitor = null)
+    {
+        $path_reports = Carbon::now()->format('Y') . DIRECTORY_SEPARATOR . $customer_name . DIRECTORY_SEPARATOR . $last_month;
+        if ($monitor) {
+            $path_reports = Carbon::now()->format('Y') . DIRECTORY_SEPARATOR . $customer_name . DIRECTORY_SEPARATOR . $last_month . DIRECTORY_SEPARATOR . $monitor['type'];
+        }
+        Storage::makeDirectory('public/InformesKIO' . DIRECTORY_SEPARATOR . $path_reports);
+        return $path_reports;
+    }
+
+    public function processSite24x7Monitors($monitor, $site24x7Url, $refresh_token, $zaaid, $customer_name, $last_month)
+    {
+        $monitor_id = $monitor['monitor_id'];
+        if ($monitor['type'] == 'SERVER' and $monitor['state'] == 0) {
+            $availability = $this->getAvailabilityReport($site24x7Url, $monitor_id, $zaaid, $refresh_token, "?period={$this->period_report}");
+            $performance = $this->getPerformance($site24x7Url, $monitor_id, $zaaid, $refresh_token, "?unit_of_time=3&period={$this->period_report}");
+            $performance_disk = $this->getPerformance($site24x7Url, $monitor_id, $zaaid, $refresh_token, "?unit_of_time=3&period={$this->period_report}&report_attribute=DISK");
+            $customers = [
+                'customer' => [
+                    'name' => $customer_name,
+                    'zaaid' => $zaaid,
+                    'monitor' => $monitor,
+                    'availability' => $this->getUptimeDownTimeAndMaintenance($availability),
+                    'performance' =>  $this->applyFormatToPerformance($performance),
+                    'performance_disk' => $this->applyFormatToPerformanceDisk($performance_disk),
+                ]
+            ];
+            $path_reports = $this->createFolderToCustomer($last_month, $customer_name, $monitor);
+            $this->getJasperReport($customers,  $customer_name, $monitor['display_name'], $path_reports, $monitor_id, $monitor['type']);
+        } else if ($monitor['type'] == 'AGENTLESSSERVER' and $monitor['state'] == 0) {
+            $availability = $this->getAvailabilityReport($site24x7Url, $monitor_id, $zaaid, $refresh_token, "?period={$this->period_report}");
+            $performance = $this->getPerformance($site24x7Url, $monitor_id, $zaaid, $refresh_token, "?unit_of_time=3&period={$this->period_report}");
+            $performance_disk = $this->getPerformanceCharts($site24x7Url, $monitor_id, $zaaid, $refresh_token, "/AllDiskUsedChart?granularity=3&period={$this->period_report}");
+            $customers = [
+                'customer' => [
+                    'name' => $customer_name,
+                    'zaaid' => $zaaid,
+                    'monitor' => $monitor,
+                    'availability' => $this->getUptimeDownTimeAndMaintenance($availability),
+                    'performance' =>  $this->applyFormatToPerformance($performance),
+                    'performance_disk' => $this->applyFormatToPerformanceDiskCharts($performance_disk),
+                ]
+            ];
+            $path_reports = $this->createFolderToCustomer($last_month, $customer_name, $monitor);
+            $this->getJasperReport($customers,  $customer_name, $monitor['display_name'], $path_reports, $monitor_id, $monitor['type']);
+        }
     }
 
     public function applyFormatToPerformance($performance)

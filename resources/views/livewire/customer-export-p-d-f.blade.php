@@ -1,10 +1,8 @@
 <div class="w-full">
     <div class="p-6 max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
-        <a href="#">
-            <h5 class="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">
-                {{ $customer['name'] }} - {{ $customer['zaaid'] }}
-            </h5>
-        </a>
+        <h5 class="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">
+            {{ $customer['name'] }} - {{ $customer['zaaid'] }}
+        </h5>
         <small class="mb-3 font-normal text-gray-700 dark:text-gray-400">
             <i class="fas fa-info-circle mr-2"></i> Mes a consultar: {{ $last_month }}
         </small>
@@ -38,13 +36,6 @@
                     ${progress}% (${completed_reports} de ${total_monitors} monitores)
                 `;
             });
-
-            // Livewire.on('uPeriodWithNewValue', (data) => {
-            //     // @this.set('period_report', data);
-            //     @this.uPeriodWithNewValue(data);
-            // })
         });
-
-        // Enable pusher logging - don't include this in production
     </script>
 </div>

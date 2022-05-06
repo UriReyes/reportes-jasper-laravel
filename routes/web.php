@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/',  [JasperController::class, 'index'])->name('home');
+Route::get('/export-all',  [JasperController::class, 'exportAll'])->name('export-all');
 
 Route::get('/compilar', [JasperController::class, 'compilar'])->name('compilar');
 Route::get('/reporte', [JasperController::class, 'reporte'])->name('reporte');
