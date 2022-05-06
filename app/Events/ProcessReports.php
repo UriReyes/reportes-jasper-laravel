@@ -10,29 +10,21 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class ProcessReport implements ShouldBroadcast
+class ProcessReports implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    /**
-     * Create a new event instance.
-     *
-     * @return void
-     */
-
-    public $total_monitors;
+    public $total_customers;
     public $progress;
-    public $completed_reports;
-    public $zaaid;
-    public $customer;
+    public $completed_customers;
+    public $customer_id;
 
-    public function __construct($total_monitors, $progress, $completed_reports, $zaaid, $customer = null)
+    public function __construct($total_customers, $progress, $completed_customers, $customer_id)
     {
-        $this->customer = $customer;
-        $this->total_monitors = $total_monitors;
+        $this->total_customers = $total_customers;
         $this->progress = $progress;
-        $this->completed_reports = $completed_reports;
-        $this->zaaid = $zaaid;
+        $this->completed_customers = $completed_customers;
+        $this->customer_id = $customer_id;
     }
 
     /**
@@ -42,11 +34,11 @@ class ProcessReport implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return 'progress-report';
+        return 'progress-reports';
     }
 
     public function broadcastAs()
     {
-        return 'process-report';
+        return 'process-reports';
     }
 }

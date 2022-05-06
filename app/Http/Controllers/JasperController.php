@@ -22,6 +22,11 @@ class JasperController extends Controller
         return view('welcome', compact('customers_its'));
     }
 
+    public function exportAll()
+    {
+        return view('exportAll');
+    }
+
     public function reporteParametros($customer = null, $zaaid = null)
     {
         // CONSUMO API SITE24x7
@@ -41,7 +46,7 @@ class JasperController extends Controller
         foreach ($monitors as $monitor) {
             $monitor_id = $monitor['monitor_id'];
             if ($monitor['type'] == 'SERVER' and $monitor['state'] == 0) {
-                $availability = $this->getAvailabilityReport($site24x7Url, $monitor_id, $zaaid, $refresh_token);
+                $availability = $this->getAvailabilityReport($site24x7Url, $monitor_id, $zaaid, $refresh_token, "?period=7");
                 $performance = $this->getPerformance($site24x7Url, $monitor_id, $zaaid, $refresh_token, 'unit_of_time=3&period=7');
                 $performance_disk = $this->getPerformance($site24x7Url, $monitor_id, $zaaid, $refresh_token, 'unit_of_time=3&period=7&report_attribute=DISK');
                 $customers = [
