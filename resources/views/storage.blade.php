@@ -231,7 +231,7 @@
     <div class="h-screen pb-14 bg-right bg-cover">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
-                <a href="{{url('/')}}" class="flex items-center">
+                <a href="{{ url('/') }}" class="flex items-center">
                     <img src="{{ asset('assets/img/logo-KIO.webp') }}" class="mr-3 h-6 sm:h-9" alt="Flowbite Logo">
                     <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">KIO
                         NETWORKS</span>
