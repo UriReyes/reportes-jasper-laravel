@@ -22,3 +22,4 @@ Route::get('/listarParametros', [JasperController::class, 'listarParametros'])->
 Route::get('/compilarConParametros', [JasperController::class, 'compilarConParametros'])->name('compilarConParametros');
 //Generar pdf en automatico
 Route::get('/reporteParametros/{customer?}/{zaaid?}', [JasperController::class, 'reporteParametros'])->name('reporteParametros');
+Route::view('/pdfs', 'storage')->name('pdfs');

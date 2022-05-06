@@ -179,6 +179,8 @@ return [
         Jenssegers\Date\DateServiceProvider::class,
         //insert jasper service provider here
         // JasperPHP\JasperPHPServiceProvider::class
+        Alexusmai\LaravelFileManager\FileManagerServiceProvider::class,
+
     ],
 
     /*
@@ -195,6 +197,7 @@ return [
     'aliases' => Facade::defaultAliases()->merge([
         // 'ExampleClass' => App\Example\ExampleClass::class,
         'Date' => Jenssegers\Date\Date::class,
+
     ])->toArray(),
 
 ];
