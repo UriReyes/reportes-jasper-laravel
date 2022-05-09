@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.19.0.final using JasperReports Library version 6.19.0-646c68931cebf1a58bc65c4359d1f0ca223c5e94  -->
+<!-- Created with Jaspersoft Studio version 6.19.1.final using JasperReports Library version 6.19.1-867c00bf88cd4d784d404379d6c05e1b419e8a4c  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Resumen" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="26a00adc-4d12-40ea-85f4-32fe1a249089">
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="MonitorAgentServerLessAdapter"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Adapter API - KIO"/>
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
@@ -108,39 +108,32 @@
 				<subreportExpression><![CDATA["C:\\laragon\\www\\reportes-jasper-laravel\\public\\jasperreports\\AGENTLESSSERVER\\graficas.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
-		<band height="45">
-			<subreport>
-				<reportElement x="3" y="0" width="550" height="40" uuid="1001d9c5-f135-4d05-8081-0d04500f1d98"/>
-				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("performance.data.chart_data.ResponseTimeChart")]]></dataSourceExpression>
-				<subreportExpression><![CDATA["C:\\laragon\\www\\reportes-jasper-laravel\\public\\jasperreports\\AGENTLESSSERVER\\performanceResponseTimeChart.jasper"]]></subreportExpression>
-			</subreport>
-		</band>
 		<band height="50">
 			<subreport>
 				<reportElement x="3" y="5" width="550" height="40" uuid="6d15a5ec-ef48-43ea-90d8-ea17016b4ab5"/>
 				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("performance.data.chart_data.CpuUtilChart")]]></dataSourceExpression>
-				<subreportExpression><![CDATA["C:\\laragon\\www\\reportes-jasper-laravel\\public\\jasperreports\\AGENTLESSSERVER\\performanceResponseTimeChart.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA["C:\\laragon\\www\\reportes-jasper-laravel\\public\\jasperreports\\AGENTLESSSERVER\\performanceCpuUtilChart.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
 		<band height="50">
 			<subreport>
 				<reportElement x="0" y="10" width="550" height="40" uuid="f80fd167-48cf-4635-9d91-443d6fa9ddd4"/>
 				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("performance.data.chart_data.MemoryUtilChart")]]></dataSourceExpression>
-				<subreportExpression><![CDATA["C:\\laragon\\www\\reportes-jasper-laravel\\public\\jasperreports\\AGENTLESSSERVER\\performanceResponseTimeChart.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA["C:\\laragon\\www\\reportes-jasper-laravel\\public\\jasperreports\\AGENTLESSSERVER\\performanceMemoryUtilChart.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
 		<band height="61">
 			<subreport>
 				<reportElement x="3" y="10" width="550" height="40" uuid="cedada46-c982-42ff-860e-9a9b9845b569"/>
 				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("performance.data.chart_data.DiskUtilChart")]]></dataSourceExpression>
-				<subreportExpression><![CDATA["C:\\laragon\\www\\reportes-jasper-laravel\\public\\jasperreports\\AGENTLESSSERVER\\performanceResponseTimeChart.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA["C:\\laragon\\www\\reportes-jasper-laravel\\public\\jasperreports\\AGENTLESSSERVER\\performanceDiskUtilChart.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
 		<band height="60">
 			<subreport>
 				<reportElement x="3" y="4" width="547" height="53" uuid="7d085891-c81d-47d1-b33d-8a717835c66d"/>
 				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("performance_disk.data.AllDiskUsedChart")]]></dataSourceExpression>
-				<subreportExpression><![CDATA["C:\\laragon\\www\\reportes-jasper-laravel\\public\\jasperreports\\AGENTLESSSERVER\\performanceDiskAllDiskUsedChart.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA["C:\\laragon\\www\\reportes-jasper-laravel\\public\\jasperreports\\AGENTLESSSERVER\\performanceAllDiskUsedChart.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
 	</detail>

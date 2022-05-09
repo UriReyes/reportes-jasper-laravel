@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.19.1.final using JasperReports Library version 6.19.1-867c00bf88cd4d784d404379d6c05e1b419e8a4c  -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="performanceCpuUtilChart" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="d5b5301d-fde4-4896-8fc4-06d194f09c15">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="performance_overallcpuchart" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="d5b5301d-fde4-4896-8fc4-06d194f09c15">
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
@@ -11,9 +11,8 @@
 	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Adapter API - KIO"/>
-	<property name="com.jaspersoft.studio.report.description" value=""/>
 	<queryString language="json">
-		<![CDATA[customer.performance.data.chart_data.CpuUtilChart]]>
+		<![CDATA[customer.performance.data.chart_data.OverallCPUChart]]>
 	</queryString>
 	<field name="95_percentile" class="java.lang.String">
 		<property name="net.sf.jasperreports.json.field.expression" value="95_percentile"/>
@@ -26,6 +25,10 @@
 	<field name="min" class="java.lang.String">
 		<property name="net.sf.jasperreports.json.field.expression" value="min"/>
 		<fieldDescription><![CDATA[min]]></fieldDescription>
+	</field>
+	<field name="chart_data" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="chart_data"/>
+		<fieldDescription><![CDATA[chart_data]]></fieldDescription>
 	</field>
 	<field name="max" class="java.lang.String">
 		<property name="net.sf.jasperreports.json.field.expression" value="max"/>
@@ -70,9 +73,9 @@
 				<textFieldExpression><![CDATA[$F{max}.replace( "[","").replace( "]","")  + " %"]]></textFieldExpression>
 			</textField>
 			<subreport>
-				<reportElement x="10" y="40" width="521" height="80" uuid="d6681919-726f-45c9-8781-2a6db53f50ee"/>
+				<reportElement x="10" y="40" width="521" height="70" uuid="d6681919-726f-45c9-8781-2a6db53f50ee"/>
 				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("chart_data")]]></dataSourceExpression>
-				<subreportExpression><![CDATA["C:\\laragon\\www\\reportes-jasper-laravel\\public\\jasperreports\\AGENTLESSSERVER\\performanceCpuUtilChartCharts.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA["C:\\Users\\David Orozco\\JaspersoftWorkspace\\Informes KIO - Final\\SERVER\\performance_overallcpuchart_charts.jasper"]]></subreportExpression>
 			</subreport>
 			<staticText>
 				<reportElement x="12" y="15" width="110" height="23" uuid="066a1159-1a54-4047-82e2-70d2ee752812"/>

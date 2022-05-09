@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.19.1.final using JasperReports Library version 6.19.1-867c00bf88cd4d784d404379d6c05e1b419e8a4c  -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="performanceCpuUtilChartCharts" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="fe5f42c9-00fa-4c1e-8412-d7c61d619a21">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="performance_overallcpuchart_charts" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="fe5f42c9-00fa-4c1e-8412-d7c61d619a21">
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
@@ -11,24 +11,32 @@
 	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Adapter API - KIO"/>
-	<property name="com.jaspersoft.studio.report.description" value=""/>
 	<queryString language="json">
-		<![CDATA[customer.performance.data.chart_data.CpuUtilChart.chart_data]]>
+		<![CDATA[customer.performance.data.chart_data.OverallCPUChart.chart_data]]>
 	</queryString>
 	<field name="date" class="java.lang.String">
 		<property name="net.sf.jasperreports.json.field.expression" value="date"/>
 		<fieldDescription><![CDATA[date]]></fieldDescription>
 	</field>
-	<field name="value1" class="java.math.BigDecimal">
-		<property name="net.sf.jasperreports.json.field.expression" value="value1"/>
-		<fieldDescription><![CDATA[value1]]></fieldDescription>
+	<field name="value" class="java.math.BigDecimal">
+		<property name="net.sf.jasperreports.json.field.expression" value="value"/>
+		<fieldDescription><![CDATA[value]]></fieldDescription>
 	</field>
 	<sortField name="date"/>
+	<variable name="value1" class="java.math.BigDecimal" calculation="Average">
+		<variableExpression><![CDATA[$F{value}]]></variableExpression>
+	</variable>
+	<variable name="value2" class="java.math.BigDecimal" calculation="Lowest">
+		<variableExpression><![CDATA[$F{value}]]></variableExpression>
+	</variable>
+	<variable name="value3" class="java.math.BigDecimal" calculation="Highest">
+		<variableExpression><![CDATA[$F{value}]]></variableExpression>
+	</variable>
 	<title>
 		<band height="222" splitType="Stretch">
 			<lineChart>
 				<chart evaluationTime="Report">
-					<reportElement x="20" y="10" width="512" height="200" uuid="170ba754-5d88-4254-9f52-daea29808fcb">
+					<reportElement x="20" y="0" width="512" height="210" uuid="be347b05-ecd1-46b7-8f4c-357cac5db362">
 						<property name="net.sf.jasperreports.customizer.0.selectionMode" value="itemSeries"/>
 						<property name="net.sf.jasperreports.customizer.0.shapeType" value="polygon"/>
 						<property name="net.sf.jasperreports.customizer.class.0" value="net.sf.jasperreports.customizers.shape.LineDotShapeCustomizer"/>
@@ -42,7 +50,7 @@
 					<categorySeries>
 						<seriesExpression><![CDATA["CPU Utilization %"]]></seriesExpression>
 						<categoryExpression><![CDATA[LEFT($F{date},10)]]></categoryExpression>
-						<valueExpression><![CDATA[$F{value1}]]></valueExpression>
+						<valueExpression><![CDATA[$F{value}]]></valueExpression>
 					</categorySeries>
 				</categoryDataset>
 				<linePlot isShowLines="true" isShowShapes="false">
@@ -66,4 +74,21 @@
 			</lineChart>
 		</band>
 	</title>
+	<summary>
+		<band height="23">
+			<property name="com.jaspersoft.studio.layout"/>
+			<textField>
+				<reportElement x="320" y="5" width="100" height="15" uuid="21c45be8-a12d-44d5-919e-1409319fd20d"/>
+				<textFieldExpression><![CDATA[new DecimalFormat("##.##").format($V{value1}) + " %"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="220" y="5" width="80" height="15" uuid="0a5a1d1f-8526-438b-8c7c-6441a3837f22"/>
+				<textFieldExpression><![CDATA[new DecimalFormat("##.##").format($V{value2}) + " %"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="430" y="5" width="100" height="15" uuid="bbb1b7af-7d6b-4d4a-ae8d-b8836356b581"/>
+				<textFieldExpression><![CDATA[new DecimalFormat("##.##").format($V{value3}) + " %"]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
 </jasperReport>

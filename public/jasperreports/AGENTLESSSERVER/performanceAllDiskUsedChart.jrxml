@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.19.1.final using JasperReports Library version 6.19.1-867c00bf88cd4d784d404379d6c05e1b419e8a4c  -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="performanceAllDiskUsedChart" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="efca14a9-7822-486d-b105-6e5f9e942063">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="performance_disk_individualdiskutilizationtimechart" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="efca14a9-7822-486d-b105-6e5f9e942063">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="SITE_API_SERVER"/>
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
@@ -10,14 +11,12 @@
 	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
-	<property name="com.jaspersoft.studio.report.description" value=""/>
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Adapter API - KIO"/>
 	<queryString language="json">
-		<![CDATA[customer.performance_disk.data.AllDiskUsedChart]]>
+		<![CDATA[customer.performance_disk.data.chart_data.IndividualDiskUtilizationTimeChart]]>
 	</queryString>
-	<field name="label" class="java.lang.String">
-		<property name="net.sf.jasperreports.json.field.expression" value="label"/>
-		<fieldDescription><![CDATA[label]]></fieldDescription>
+	<field name="95_percentile" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="95_percentile"/>
+		<fieldDescription><![CDATA[95_percentile]]></fieldDescription>
 	</field>
 	<field name="average" class="java.lang.String">
 		<property name="net.sf.jasperreports.json.field.expression" value="average"/>
@@ -27,9 +26,17 @@
 		<property name="net.sf.jasperreports.json.field.expression" value="min"/>
 		<fieldDescription><![CDATA[min]]></fieldDescription>
 	</field>
+	<field name="chart_data" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="chart_data"/>
+		<fieldDescription><![CDATA[chart_data]]></fieldDescription>
+	</field>
 	<field name="max" class="java.lang.String">
 		<property name="net.sf.jasperreports.json.field.expression" value="max"/>
 		<fieldDescription><![CDATA[max]]></fieldDescription>
+	</field>
+	<field name="label" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="label"/>
+		<fieldDescription><![CDATA[label]]></fieldDescription>
 	</field>
 	<background>
 		<band splitType="Stretch"/>
@@ -37,7 +44,7 @@
 	<title>
 		<band height="50">
 			<staticText>
-				<reportElement x="10" y="20" width="250" height="25" uuid="4e2fcafd-bca0-4ab0-af8b-b9b28e2b89b4"/>
+				<reportElement x="10" y="20" width="158" height="25" uuid="4e2fcafd-bca0-4ab0-af8b-b9b28e2b89b4"/>
 				<textElement>
 					<font size="14" isBold="true"/>
 				</textElement>
@@ -50,7 +57,7 @@
 			<subreport>
 				<reportElement x="10" y="50" width="571" height="30" uuid="3ba3392d-6fd5-4fdd-90df-102976c827c4"/>
 				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("chart_data")]]></dataSourceExpression>
-				<subreportExpression><![CDATA["C:\\laragon\\www\\reportes-jasper-laravel\\public\\jasperreports\\AGENTLESSSERVER\\performanceAllDiskUsedChart_charts.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA["C:\\Users\\David Orozco\\JaspersoftWorkspace\\Informes KIO - Final\\SERVER\\performance_disk_individualdiskutilizationtimechart_charts.jasper"]]></subreportExpression>
 			</subreport>
 			<textField>
 				<reportElement x="191" y="20" width="100" height="20" uuid="5a41684c-b961-420c-8e75-d4c6b70d9c24"/>

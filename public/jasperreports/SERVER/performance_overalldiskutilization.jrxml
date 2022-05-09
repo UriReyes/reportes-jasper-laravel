@@ -78,7 +78,7 @@
 			</staticText>
 			<pieChart>
 				<chart isShowLegend="false" evaluationTime="Report">
-					<reportElement x="47" y="60" width="233" height="130" uuid="34ab9ab2-f737-4be5-a7ca-f9bb251e404f"/>
+					<reportElement x="47" y="60" width="233" height="130" uuid="3e0d7efe-1334-48b0-9986-7a1a0e400785"/>
 					<chartTitle/>
 					<chartSubtitle/>
 					<chartLegend>

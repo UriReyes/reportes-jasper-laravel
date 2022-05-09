@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.19.1.final using JasperReports Library version 6.19.1-867c00bf88cd4d784d404379d6c05e1b419e8a4c  -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="performanceMemoryUtilChart_charts" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="eeb40769-bb28-4d8b-93d2-9503cc370a0b">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="performance_disk_individualdiskutilizationtimechart_charts" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="eeb40769-bb28-4d8b-93d2-9503cc370a0b">
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
@@ -11,17 +11,16 @@
 	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Adapter API - KIO"/>
-	<property name="com.jaspersoft.studio.report.description" value=""/>
 	<queryString language="json">
-		<![CDATA[customer.performance_disk.data.AllDiskUsedChart.chart_data]]>
+		<![CDATA[customer.performance_disk.data.chart_data.IndividualDiskUtilizationTimeChart.chart_data]]>
 	</queryString>
+	<field name="disk" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="disk"/>
+		<fieldDescription><![CDATA[disk]]></fieldDescription>
+	</field>
 	<field name="value1" class="java.math.BigDecimal">
 		<property name="net.sf.jasperreports.json.field.expression" value="value1"/>
 		<fieldDescription><![CDATA[value1]]></fieldDescription>
-	</field>
-	<field name="date" class="java.lang.String">
-		<property name="net.sf.jasperreports.json.field.expression" value="date"/>
-		<fieldDescription><![CDATA[date]]></fieldDescription>
 	</field>
 	<background>
 		<band splitType="Stretch"/>
@@ -30,7 +29,7 @@
 		<band height="152" splitType="Stretch">
 			<lineChart>
 				<chart evaluationTime="Report">
-					<reportElement x="10" y="0" width="530" height="140" uuid="69307104-5423-4057-8c98-b3a064621a21"/>
+					<reportElement x="10" y="0" width="530" height="140" uuid="2c627060-0fec-406b-9fec-660179239129"/>
 					<chartTitle/>
 					<chartSubtitle/>
 					<chartLegend/>
@@ -39,7 +38,7 @@
 					<dataset resetType="Report"/>
 					<categorySeries>
 						<seriesExpression><![CDATA["Disk Usage %"]]></seriesExpression>
-						<categoryExpression><![CDATA[LEFT($F{date},10)]]></categoryExpression>
+						<categoryExpression><![CDATA[LEFT($F{disk},10)]]></categoryExpression>
 						<valueExpression><![CDATA[$F{value1}]]></valueExpression>
 					</categorySeries>
 				</categoryDataset>

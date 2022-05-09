@@ -52,10 +52,6 @@
 		<property name="net.sf.jasperreports.json.field.expression" value="customer.availability.data.info.period_name"/>
 		<fieldDescription><![CDATA[customer.availability.data.info.period_name]]></fieldDescription>
 	</field>
-	<field name="device_type" class="java.lang.String">
-		<property name="net.sf.jasperreports.json.field.expression" value="device_type"/>
-		<fieldDescription><![CDATA[device_type]]></fieldDescription>
-	</field>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -73,13 +69,13 @@
 				<text><![CDATA[Monitor name:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="80" y="32" width="350" height="16" uuid="96ff1d59-dae8-40cc-90b5-9f230e75c0e9">
+				<reportElement x="80" y="32" width="190" height="16" uuid="96ff1d59-dae8-40cc-90b5-9f230e75c0e9">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{type} + " / " +$F{device_type}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{type} + " / " + $F{server_type}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="9" y="32" width="71" height="16" uuid="d5afd775-9b45-424e-98ae-89729146ac84">
