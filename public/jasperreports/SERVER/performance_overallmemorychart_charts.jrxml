@@ -20,10 +20,10 @@
 	</field>
 	<sortField name="date"/>
 	<title>
-		<band height="225" splitType="Stretch">
+		<band height="178" splitType="Stretch">
 			<lineChart>
 				<chart evaluationTime="Report">
-					<reportElement x="10" y="0" width="510" height="220" uuid="d6cb30e3-6d93-476a-9ae4-deae6e423626"/>
+					<reportElement x="10" y="0" width="510" height="170" uuid="d6cb30e3-6d93-476a-9ae4-deae6e423626"/>
 					<chartTitle/>
 					<chartSubtitle/>
 					<chartLegend/>

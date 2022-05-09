@@ -67,7 +67,7 @@
 			<subreport>
 				<reportElement x="10" y="130" width="571" height="200" uuid="2c9e37cf-a16b-444d-80cc-9e0a73117046"/>
 				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("chart_data")]]></dataSourceExpression>
-				<subreportExpression><![CDATA["C:\\laragon\\www\\reportes-jasper-laravel\\public\\jasperreports\\SERVER\\performance_disk_diskio_charts.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA["C:\\Users\\uriel.santiago\\JaspersoftWorkspace\\KIO-Jasper\\performance_disk_diskio_charts.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
 	</detail>

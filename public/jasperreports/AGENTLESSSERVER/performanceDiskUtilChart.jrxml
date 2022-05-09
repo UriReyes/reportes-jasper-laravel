@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.19.1.final using JasperReports Library version 6.19.1-867c00bf88cd4d784d404379d6c05e1b419e8a4c  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="performanceDiskUtilChart" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="b645b865-25f1-4b82-a60a-d631c3055657">
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Adapter API - KIO"/>
+	<property name="com.jaspersoft.studio.report.description" value=""/>
+	<queryString language="json">
+		<![CDATA[customer.performance.data.chart_data.DiskUtilChart]]>
+	</queryString>
+	<field name="95_percentile" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="95_percentile"/>
+		<fieldDescription><![CDATA[95_percentile]]></fieldDescription>
+	</field>
+	<field name="average" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="average"/>
+		<fieldDescription><![CDATA[average]]></fieldDescription>
+	</field>
+	<field name="min" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="min"/>
+		<fieldDescription><![CDATA[min]]></fieldDescription>
+	</field>
+	<field name="max" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="max"/>
+		<fieldDescription><![CDATA[max]]></fieldDescription>
+	</field>
+	<title>
+		<band height="304" splitType="Stretch">
+			<subreport>
+				<reportElement x="12" y="215" width="520" height="80" uuid="b484856c-7df0-4c39-9c65-b413d6165ad7"/>
+				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("chart_data")]]></dataSourceExpression>
+				<subreportExpression><![CDATA["C:\\laragon\\www\\reportes-jasper-laravel\\public\\jasperreports\\AGENTLESSSERVER\\performanceDiskUtilChart_charts.jasper"]]></subreportExpression>
+			</subreport>
+			<staticText>
+				<reportElement x="12" y="27" width="150" height="23" uuid="5933e348-74e9-48ea-9b76-c3dd9a5dd362"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Disk Utilization (%)]]></text>
+			</staticText>
+			<pieChart>
+				<chart isShowLegend="false" evaluationTime="Report">
+					<reportElement x="60" y="60" width="280" height="150" uuid="68029cb9-a08e-47cc-a38f-332cba52a8df"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend>
+						<font isBold="false"/>
+					</chartLegend>
+				</chart>
+				<pieDataset maxCount="2">
+					<dataset resetType="Report"/>
+					<pieSeries>
+						<keyExpression><![CDATA["Used Space"]]></keyExpression>
+						<valueExpression><![CDATA[FLOAT_VALUE(RIGHT(LEFT($F{average},3),2))]]></valueExpression>
+						<labelExpression><![CDATA["Used Space \n" + $F{average}.replace( "[","").replace( "]","")  + " %"]]></labelExpression>
+					</pieSeries>
+					<pieSeries>
+						<keyExpression><![CDATA["Free Space"]]></keyExpression>
+						<valueExpression><![CDATA[100 - INTEGER_VALUE(RIGHT(LEFT($F{average},3),2))]]></valueExpression>
+						<labelExpression><![CDATA["Free Space \n" + TEXT(100 - INTEGER_VALUE(RIGHT(LEFT($F{average},3),2)),"#,##0.00" ) + " %"]]></labelExpression>
+					</pieSeries>
+				</pieDataset>
+				<piePlot isShowLabels="true">
+					<plot>
+						<seriesColor seriesOrder="0" color="#DF4B3C"/>
+						<seriesColor seriesOrder="1" color="#2EC36E"/>
+					</plot>
+					<itemLabel>
+						<font size="7"/>
+					</itemLabel>
+				</piePlot>
+			</pieChart>
+			<textField>
+				<reportElement x="190" y="20" width="100" height="20" uuid="4fa151b6-9258-450f-8d40-b5bd6912831e"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{average}.replace( "[","").replace( "]","")  + " %"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="190" y="0" width="100" height="20" uuid="881b84c5-c1d1-4fe7-b970-e0385b967004"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Average]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="310" y="0" width="100" height="20" uuid="5815fe91-ba14-425e-8d1c-2b171805b6a8"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Minimum]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="310" y="20" width="100" height="20" uuid="2c7b3107-6851-4adf-be91-5bde7f81e02a"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{min}.replace( "[","").replace( "]","")  + " %"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="430" y="0" width="100" height="20" uuid="0b9861e2-cc5c-4fa4-85d3-542498b0be71"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Maximum]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="430" y="20" width="100" height="20" uuid="cd8e9f36-b59f-4d9c-8e89-ad73c9317a18"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{max}.replace( "[","").replace( "]","")  + " %"]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+</jasperReport>

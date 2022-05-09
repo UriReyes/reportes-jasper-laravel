@@ -54,12 +54,12 @@
 					</categorySeries>
 				</categoryDataset>
 				<barPlot isShowLabels="true">
-					<plot>
+					<plot labelRotation="74.0">
 						<seriesColor seriesOrder="0" color="#2EC36E"/>
 						<seriesColor seriesOrder="1" color="#DF4B3C"/>
 					</plot>
 					<itemLabel/>
-					<categoryAxisFormat>
+					<categoryAxisFormat labelRotation="74.0">
 						<axisFormat labelColor="#000000" tickLabelColor="#000000" axisLineColor="#000000"/>
 					</categoryAxisFormat>
 					<valueAxisFormat>

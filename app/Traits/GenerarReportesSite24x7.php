@@ -12,8 +12,8 @@ trait GenerarReportesSite24x7
 
     public function getJasperReport($data, $folder_name, $file_name = "Resumen", $path_reports, $monitor_id, $type = "SERVER")
     {
-        $public = public_path("jasperreports/{$type}/");
-        $xmlTmpfilePath = $public . "Resumen.jrxml";
+        //$public = public_path("jasperreports/{$type}/");
+        $xmlTmpfilePath = 'C:\Users\David Orozco\JaspersoftWorkspace\Informes KIO - Final'.DIRECTORY_SEPARATOR .$type.DIRECTORY_SEPARATOR .'Resumen.jrxml';
         // $textoRemplazar = "C:\\\Users\\\uriel.santiago\\\JaspersoftWorkspace\\\KIO-Jasper\\\\";
         // $contenido = file_get_contents("C:\\laragon\\www\\reportes-jasper-laravel\\public\\jasperreports\\Resumen.jrxml");
         // $templateRuta = str_replace($textoRemplazar, str_replace('\\', '\\\\', (string)$public), (string)$contenido);
@@ -82,7 +82,8 @@ trait GenerarReportesSite24x7
             ];
             $path_reports = $this->createFolderToCustomer($last_month, $customer_name, $monitor);
             $this->getJasperReport($customers,  $customer_name, $monitor['display_name'], $path_reports, $monitor_id, $monitor['type']);
-        } else if ($monitor['type'] == 'AGENTLESSSERVER' and $monitor['state'] == 0) {
+        } 
+        else if ($monitor['type'] == 'AGENTLESSSERVER' and $monitor['state'] == 0) {
             $availability = $this->getAvailabilityReport($site24x7Url, $monitor_id, $zaaid, $refresh_token, "?period={$this->period_report}");
             $performance = $this->getPerformance($site24x7Url, $monitor_id, $zaaid, $refresh_token, "?unit_of_time=3&period={$this->period_report}");
             $performance_disk = $this->getPerformanceCharts($site24x7Url, $monitor_id, $zaaid, $refresh_token, "/AllDiskUsedChart?granularity=3&period={$this->period_report}");
@@ -145,6 +146,9 @@ trait GenerarReportesSite24x7
             $newPerformances = [];
             foreach ($performance['data']['chart_data'] as $pfms) {
                 foreach ($pfms as $pfm) {
+                    if (array_key_exists('OverallDiskUtilization', $pfm)) {
+                        $newPerformances['OverallDiskUtilization'] = $this->getOverallDiskUtilization($pfm['OverallDiskUtilization']);
+                    }
                     if (array_key_exists('OverallDiskUsedChart', $pfm)) {
                         $newPerformances['OverallDiskUsedChart'] = $this->getOverallDiskUsedChart($pfm['OverallDiskUsedChart']);
                     }
