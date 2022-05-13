@@ -160,4 +160,18 @@ trait ReestructurarDatosAPISite24x7
             return $DiskIO;
         }
     }
+
+    public function getFormattedResponsePlugin($item,$key)
+    {
+        if (array_key_exists('chart_data', $item)) {
+            $item['chart_data'] = array_map(function ($item) {
+                return [
+                    'date' => array_key_exists(0, $item) ? Carbon::parse($item[0])->format('d F Y') : null,
+                    'value1' => array_key_exists(1, $item) ? $item[1] : null,
+                ];
+            }, $item['chart_data']);
+            $item['metric']=$key;
+            return $item;
+        }
+    }
 }
