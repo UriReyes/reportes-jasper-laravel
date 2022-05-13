@@ -12,26 +12,22 @@
 	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
 	<queryString language="json">
-		<![CDATA[customer.performance.data.chart_data.OverallDiskUtilization.chart_data]]>
+		<![CDATA[customer.performance.data.chart_data.DiskUtilChart.chart_data]]>
 	</queryString>
 	<field name="date" class="java.lang.String">
 		<property name="net.sf.jasperreports.json.field.expression" value="date"/>
 		<fieldDescription><![CDATA[date]]></fieldDescription>
 	</field>
-	<field name="performance1" class="java.math.BigDecimal">
-		<property name="net.sf.jasperreports.json.field.expression" value="performance1"/>
-		<fieldDescription><![CDATA[performance1]]></fieldDescription>
-	</field>
-	<field name="performance2" class="java.math.BigDecimal">
-		<property name="net.sf.jasperreports.json.field.expression" value="performance2"/>
-		<fieldDescription><![CDATA[performance2]]></fieldDescription>
+	<field name="value1" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="value1"/>
+		<fieldDescription><![CDATA[value1]]></fieldDescription>
 	</field>
 	<sortField name="date"/>
 	<title>
 		<band height="204" splitType="Stretch">
 			<stackedBarChart>
 				<chart evaluationTime="Report">
-					<reportElement x="10" y="0" width="520" height="200" uuid="cd363bad-8623-496e-8d96-13a35dca7a32"/>
+					<reportElement x="10" y="0" width="520" height="200" uuid="f49ceef0-b645-4ac5-831e-ffd922932cee"/>
 					<chartTitle/>
 					<chartSubtitle/>
 					<chartLegend/>
@@ -41,13 +37,13 @@
 					<categorySeries>
 						<seriesExpression><![CDATA["Used Space %"]]></seriesExpression>
 						<categoryExpression><![CDATA[LEFT($F{date},10)]]></categoryExpression>
-						<valueExpression><![CDATA[$F{performance1}]]></valueExpression>
+						<valueExpression><![CDATA[FLOAT_VALUE($F{value1})]]></valueExpression>
 						<labelExpression><![CDATA[$F{date}]]></labelExpression>
 					</categorySeries>
 					<categorySeries>
 						<seriesExpression><![CDATA["Free Space %"]]></seriesExpression>
 						<categoryExpression><![CDATA[LEFT($F{date},10)]]></categoryExpression>
-						<valueExpression><![CDATA[$F{performance2}]]></valueExpression>
+						<valueExpression><![CDATA[100-FLOAT_VALUE($F{value1})]]></valueExpression>
 						<labelExpression><![CDATA[$F{date}]]></labelExpression>
 					</categorySeries>
 				</categoryDataset>

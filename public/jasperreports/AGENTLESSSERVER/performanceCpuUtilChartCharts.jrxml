@@ -12,31 +12,22 @@
 	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Adapter API - KIO"/>
 	<queryString language="json">
-		<![CDATA[customer.performance.data.chart_data.OverallCPUChart.chart_data]]>
+		<![CDATA[customer.performance.data.chart_data.CpuUtilChart.chart_data]]>
 	</queryString>
 	<field name="date" class="java.lang.String">
 		<property name="net.sf.jasperreports.json.field.expression" value="date"/>
 		<fieldDescription><![CDATA[date]]></fieldDescription>
 	</field>
-	<field name="value" class="java.math.BigDecimal">
-		<property name="net.sf.jasperreports.json.field.expression" value="value"/>
-		<fieldDescription><![CDATA[value]]></fieldDescription>
+	<field name="value1" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="value1"/>
+		<fieldDescription><![CDATA[value1]]></fieldDescription>
 	</field>
 	<sortField name="date"/>
-	<variable name="value1" class="java.math.BigDecimal" calculation="Average">
-		<variableExpression><![CDATA[$F{value}]]></variableExpression>
-	</variable>
-	<variable name="value2" class="java.math.BigDecimal" calculation="Lowest">
-		<variableExpression><![CDATA[$F{value}]]></variableExpression>
-	</variable>
-	<variable name="value3" class="java.math.BigDecimal" calculation="Highest">
-		<variableExpression><![CDATA[$F{value}]]></variableExpression>
-	</variable>
 	<title>
 		<band height="222" splitType="Stretch">
 			<lineChart>
 				<chart evaluationTime="Report">
-					<reportElement x="20" y="0" width="512" height="210" uuid="be347b05-ecd1-46b7-8f4c-357cac5db362">
+					<reportElement x="20" y="0" width="512" height="210" uuid="073eff1e-bb72-4394-93ee-20f8cf6705c3">
 						<property name="net.sf.jasperreports.customizer.0.selectionMode" value="itemSeries"/>
 						<property name="net.sf.jasperreports.customizer.0.shapeType" value="polygon"/>
 						<property name="net.sf.jasperreports.customizer.class.0" value="net.sf.jasperreports.customizers.shape.LineDotShapeCustomizer"/>
@@ -50,7 +41,7 @@
 					<categorySeries>
 						<seriesExpression><![CDATA["CPU Utilization %"]]></seriesExpression>
 						<categoryExpression><![CDATA[LEFT($F{date},10)]]></categoryExpression>
-						<valueExpression><![CDATA[$F{value}]]></valueExpression>
+						<valueExpression><![CDATA[FLOAT_VALUE($F{value1})]]></valueExpression>
 					</categorySeries>
 				</categoryDataset>
 				<linePlot isShowLines="true" isShowShapes="false">
@@ -74,21 +65,4 @@
 			</lineChart>
 		</band>
 	</title>
-	<summary>
-		<band height="23">
-			<property name="com.jaspersoft.studio.layout"/>
-			<textField>
-				<reportElement x="320" y="5" width="100" height="15" uuid="21c45be8-a12d-44d5-919e-1409319fd20d"/>
-				<textFieldExpression><![CDATA[new DecimalFormat("##.##").format($V{value1}) + " %"]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="220" y="5" width="80" height="15" uuid="0a5a1d1f-8526-438b-8c7c-6441a3837f22"/>
-				<textFieldExpression><![CDATA[new DecimalFormat("##.##").format($V{value2}) + " %"]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="430" y="5" width="100" height="15" uuid="bbb1b7af-7d6b-4d4a-ae8d-b8836356b581"/>
-				<textFieldExpression><![CDATA[new DecimalFormat("##.##").format($V{value3}) + " %"]]></textFieldExpression>
-			</textField>
-		</band>
-	</summary>
 </jasperReport>

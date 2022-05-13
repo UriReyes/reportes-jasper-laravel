@@ -22,14 +22,15 @@
 		<property name="net.sf.jasperreports.json.field.expression" value="value1"/>
 		<fieldDescription><![CDATA[value1]]></fieldDescription>
 	</field>
+	<sortField name="disk"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<summary>
-		<band height="152" splitType="Stretch">
+		<band height="140" splitType="Stretch">
 			<lineChart>
 				<chart evaluationTime="Report">
-					<reportElement x="10" y="0" width="530" height="140" uuid="2c627060-0fec-406b-9fec-660179239129"/>
+					<reportElement x="10" y="0" width="530" height="130" uuid="2c627060-0fec-406b-9fec-660179239129"/>
 					<chartTitle/>
 					<chartSubtitle/>
 					<chartLegend/>

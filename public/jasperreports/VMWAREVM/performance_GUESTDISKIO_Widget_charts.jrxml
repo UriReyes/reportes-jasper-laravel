@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.19.1.final using JasperReports Library version 6.19.1-867c00bf88cd4d784d404379d6c05e1b419e8a4c  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="performance_GUESTDISKIO_Widget_charts" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="2c46b3df-1997-4372-8cd7-96415e2625a4">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Adapter API - KIO"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<property name="com.jaspersoft.studio.report.description" value=""/>
+	<queryString language="json">
+		<![CDATA[customer.performance_disk.data.widgets]]>
+	</queryString>
+	<field name="monitor_id" class="java.lang.Long">
+		<property name="net.sf.jasperreports.json.field.expression" value="monitor_id"/>
+		<fieldDescription><![CDATA[monitor_id]]></fieldDescription>
+	</field>
+	<field name="partition_id" class="java.lang.Long">
+		<property name="net.sf.jasperreports.json.field.expression" value="partition_id"/>
+		<fieldDescription><![CDATA[partition_id]]></fieldDescription>
+	</field>
+	<field name="partition_used" class="java.lang.Integer">
+		<property name="net.sf.jasperreports.json.field.expression" value="partition_used"/>
+		<fieldDescription><![CDATA[partition_used]]></fieldDescription>
+	</field>
+	<field name="partition" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="partition"/>
+		<fieldDescription><![CDATA[partition]]></fieldDescription>
+	</field>
+	<field name="partition_free_percent" class="java.lang.Integer">
+		<property name="net.sf.jasperreports.json.field.expression" value="partition_free_percent"/>
+		<fieldDescription><![CDATA[partition_free_percent]]></fieldDescription>
+	</field>
+	<field name="partition_capacity" class="java.lang.Integer">
+		<property name="net.sf.jasperreports.json.field.expression" value="partition_capacity"/>
+		<fieldDescription><![CDATA[partition_capacity]]></fieldDescription>
+	</field>
+	<field name="partition_free" class="java.lang.Integer">
+		<property name="net.sf.jasperreports.json.field.expression" value="partition_free"/>
+		<fieldDescription><![CDATA[partition_free]]></fieldDescription>
+	</field>
+	<field name="partition_used_percent" class="java.lang.Integer">
+		<property name="net.sf.jasperreports.json.field.expression" value="partition_used_percent"/>
+		<fieldDescription><![CDATA[partition_used_percent]]></fieldDescription>
+	</field>
+	<title>
+		<band height="231" splitType="Stretch">
+			<stackedBarChart>
+				<chart evaluationTime="Report">
+					<reportElement x="10" y="36" width="520" height="174" uuid="da4c8a30-3c49-4fe8-8b6c-3a3867c94673"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend position="Right">
+						<font size="8"/>
+					</chartLegend>
+				</chart>
+				<categoryDataset>
+					<dataset resetType="Report"/>
+					<categorySeries>
+						<seriesExpression><![CDATA["Used Space %"]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{partition}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{partition_used_percent}]]></valueExpression>
+					</categorySeries>
+					<categorySeries>
+						<seriesExpression><![CDATA["Free Space %"]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{partition}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{partition_free_percent}]]></valueExpression>
+					</categorySeries>
+				</categoryDataset>
+				<barPlot isShowLabels="true">
+					<plot backgroundAlpha="0.98" foregroundAlpha="0.98" labelRotation="74.0">
+						<seriesColor seriesOrder="0" color="#DF4B3C"/>
+						<seriesColor seriesOrder="1" color="#2EC36E"/>
+					</plot>
+					<itemLabel>
+						<font size="8"/>
+					</itemLabel>
+					<categoryAxisFormat labelRotation="74.0">
+						<axisFormat labelColor="#000000" tickLabelColor="#000000" axisLineColor="#000000">
+							<labelFont>
+								<font size="7"/>
+							</labelFont>
+							<tickLabelFont>
+								<font size="9" isBold="false"/>
+							</tickLabelFont>
+						</axisFormat>
+					</categoryAxisFormat>
+					<valueAxisFormat>
+						<axisFormat labelColor="#000000" tickLabelColor="#000000" axisLineColor="#000000"/>
+					</valueAxisFormat>
+				</barPlot>
+			</stackedBarChart>
+			<staticText>
+				<reportElement x="12" y="12" width="308" height="20" uuid="8c26c130-bea0-4156-8ae2-b659da88fb49">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Current Individual Disk Utilization (%) in Guest OS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="211" width="150" height="18" uuid="fe9f8948-739e-4402-82ed-8d298ec99841">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Guest Disk I/O Details]]></text>
+			</staticText>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="22">
+			<staticText>
+				<reportElement x="178" y="6" width="55" height="16" uuid="54bdb74d-afc6-4591-899b-d9e0c7e9bb0e">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Capacity (GB)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="29" y="6" width="70" height="16" uuid="3f4543a0-f7ee-4107-ad58-fb8dc9769ea3">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Partition Name
+]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="239" y="6" width="63" height="16" uuid="ab44f515-fade-4aa5-a6d1-b03ff60aaae7">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Free Space (GB)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="310" y="6" width="66" height="16" uuid="9cf73277-edeb-49b8-9102-babdd607c960">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Free Space (%)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="382" y="6" width="72" height="16" uuid="5b2a9d89-aae7-4344-ba96-605da7be4e51">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Used Space (GB)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="460" y="6" width="70" height="16" uuid="a49a345c-410e-4b77-96e7-4cc988bad951">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Used Space (%)]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="19">
+			<textField textAdjust="StretchHeight">
+				<reportElement x="29" y="3" width="141" height="16" uuid="1e460103-01bf-4ae5-91e6-04b1508894b8">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{partition}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="178" y="3" width="55" height="16" uuid="872750ab-2363-487e-bef1-92d71c9e852d">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{partition_capacity}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="239" y="3" width="63" height="16" uuid="358be84c-0ecd-4601-9e6f-88698d9ad843">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{partition_free}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="310" y="3" width="66" height="16" uuid="4b1c386d-4db6-4b44-929e-c2311c512c3e">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{partition_free_percent}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="382" y="3" width="72" height="16" uuid="7b5f598d-8605-4418-a7e4-dac706dedfa2">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{partition_used}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="460" y="3" width="70" height="16" uuid="da259a2d-e6b0-432c-bdcb-97617ed7b043">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{partition_used_percent}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

@@ -12,24 +12,22 @@
 	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Adapter API - KIO"/>
 	<queryString language="json">
-		<![CDATA[customer.performance_disk.data.chart_data.IndividualDiskUtilizationTimeChart.chart_data]]>
+		<![CDATA[customer.performance_disk.data.AllDiskUsedChart.chart_data]]>
 	</queryString>
-	<field name="disk" class="java.lang.String">
-		<property name="net.sf.jasperreports.json.field.expression" value="disk"/>
-		<fieldDescription><![CDATA[disk]]></fieldDescription>
+	<field name="date" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="date"/>
+		<fieldDescription><![CDATA[date]]></fieldDescription>
 	</field>
-	<field name="value1" class="java.math.BigDecimal">
+	<field name="value1" class="java.lang.String">
 		<property name="net.sf.jasperreports.json.field.expression" value="value1"/>
 		<fieldDescription><![CDATA[value1]]></fieldDescription>
 	</field>
-	<background>
-		<band splitType="Stretch"/>
-	</background>
+	<sortField name="date"/>
 	<summary>
-		<band height="152" splitType="Stretch">
+		<band height="164" splitType="Stretch">
 			<lineChart>
 				<chart evaluationTime="Report">
-					<reportElement x="10" y="0" width="530" height="140" uuid="2c627060-0fec-406b-9fec-660179239129"/>
+					<reportElement x="10" y="10" width="530" height="150" uuid="742736a2-caf2-49d9-a4ed-eadb4d32eedb"/>
 					<chartTitle/>
 					<chartSubtitle/>
 					<chartLegend/>
@@ -38,8 +36,8 @@
 					<dataset resetType="Report"/>
 					<categorySeries>
 						<seriesExpression><![CDATA["Disk Usage %"]]></seriesExpression>
-						<categoryExpression><![CDATA[LEFT($F{disk},10)]]></categoryExpression>
-						<valueExpression><![CDATA[$F{value1}]]></valueExpression>
+						<categoryExpression><![CDATA[LEFT($F{date},10)]]></categoryExpression>
+						<valueExpression><![CDATA[FLOAT_VALUE($F{value1})]]></valueExpression>
 					</categorySeries>
 				</categoryDataset>
 				<linePlot isShowLines="true" isShowShapes="false">

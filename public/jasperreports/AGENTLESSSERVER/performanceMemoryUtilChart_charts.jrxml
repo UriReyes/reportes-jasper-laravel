@@ -10,20 +10,24 @@
 	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Test"/>
-	<queryString>
-		<![CDATA[]]>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Adapter API - KIO"/>
+	<queryString language="JSON">
+		<![CDATA[customer.performance.data.chart_data.MemoryUtilChart.chart_data]]>
 	</queryString>
-	<field name="date" class="java.lang.String"/>
-	<field name="value" class="java.math.BigDecimal">
-		<fieldDescription><![CDATA[value]]></fieldDescription>
+	<field name="date" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="date"/>
+		<fieldDescription><![CDATA[date]]></fieldDescription>
+	</field>
+	<field name="value1" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="value1"/>
+		<fieldDescription><![CDATA[value1]]></fieldDescription>
 	</field>
 	<sortField name="date"/>
 	<title>
 		<band height="225" splitType="Stretch">
 			<lineChart>
 				<chart evaluationTime="Report">
-					<reportElement x="10" y="0" width="510" height="220" uuid="d6cb30e3-6d93-476a-9ae4-deae6e423626"/>
+					<reportElement x="10" y="0" width="510" height="220" uuid="be116ecc-3ab3-46ff-8810-0047e7f80527"/>
 					<chartTitle/>
 					<chartSubtitle/>
 					<chartLegend/>
@@ -33,7 +37,7 @@
 					<categorySeries>
 						<seriesExpression><![CDATA["Memory Utilization %"]]></seriesExpression>
 						<categoryExpression><![CDATA[LEFT($F{date},10)]]></categoryExpression>
-						<valueExpression><![CDATA[$F{value}]]></valueExpression>
+						<valueExpression><![CDATA[FLOAT_VALUE($F{value1})]]></valueExpression>
 						<labelExpression><![CDATA[$F{date}]]></labelExpression>
 					</categorySeries>
 				</categoryDataset>

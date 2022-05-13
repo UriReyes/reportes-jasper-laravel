@@ -100,6 +100,55 @@ trait GenerarReportesSite24x7
             $path_reports = $this->createFolderToCustomer($last_month, $customer_name, $monitor);
             $this->getJasperReport($customers,  $customer_name, $monitor['display_name'], $path_reports, $monitor_id, $monitor['type']);
         }
+        else if ($monitor['type'] == 'VMWAREVM' and $monitor['state'] == 0) {
+            $availability = $this->getAvailabilityReport($site24x7Url, $monitor_id, $zaaid, $refresh_token, "?period={$this->period_report}");
+            $performance = $this->getPerformance($site24x7Url, $monitor_id, $zaaid, $refresh_token, "?unit_of_time=3&period={$this->period_report}");
+            $performance_disk = $this->getPerformanceVMDisk($site24x7Url, $monitor_id, $zaaid, $refresh_token, "?period={$this->period_report}&widget_name=GUESTDISKIO");
+            $customers = [
+                'customer' => [
+                    'name' => $customer_name,
+                    'zaaid' => $zaaid,
+                    'monitor' => $monitor,
+                    'availability' => $this->getUptimeDownTimeAndMaintenance($availability),
+                    'performance' =>  $this->applyFormatToPerformance($performance),
+                    'performance_disk' => $performance_disk,
+                ]
+            ];
+            $path_reports = $this->createFolderToCustomer($last_month, $customer_name, $monitor);
+            $this->getJasperReport($customers,  $customer_name, $monitor['display_name'], $path_reports, $monitor_id, $monitor['type']);
+        } 
+        else if ($monitor['type'] == 'VMWAREESX' and $monitor['state'] == 0) {
+            $availability = $this->getAvailabilityReport($site24x7Url, $monitor_id, $zaaid, $refresh_token, "?period={$this->period_report}");
+            $performance = $this->getPerformance($site24x7Url, $monitor_id, $zaaid, $refresh_token, "?unit_of_time=3&period={$this->period_report}");
+            //dd($performance);
+            $customers = [
+                'customer' => [
+                    'name' => $customer_name,
+                    'zaaid' => $zaaid,
+                    'monitor' => $monitor,
+                    'availability' => $this->getUptimeDownTimeAndMaintenance($availability),
+                    'performance' =>  $this->applyFormatToPerformance($performance),
+                ]
+            ];
+            $path_reports = $this->createFolderToCustomer($last_month, $customer_name, $monitor);
+            $this->getJasperReport($customers,  $customer_name, $monitor['display_name'], $path_reports, $monitor_id, $monitor['type']);
+        } 
+        else if ($monitor['type'] == 'PLUGIN' and $monitor['state'] == 0) {
+            $availability = $this->getAvailabilityReport($site24x7Url, $monitor_id, $zaaid, $refresh_token, "?period={$this->period_report}");
+            $performance = $this->getPerformance($site24x7Url, $monitor_id, $zaaid, $refresh_token, "?unit_of_time=3&period={$this->period_report}");
+            //dd($performance);
+            $customers = [
+                'customer' => [
+                    'name' => $customer_name,
+                    'zaaid' => $zaaid,
+                    'monitor' => $monitor,
+                    'availability' => $this->getUptimeDownTimeAndMaintenance($availability),
+                    'performance' =>  $this->applyFormatToPerformancePlugin($performance),
+                ]
+            ];
+            $path_reports = $this->createFolderToCustomer($last_month, $customer_name, $monitor);
+            $this->getJasperReport($customers,  $customer_name, $monitor['display_name'], $path_reports, $monitor_id, $monitor['type']);
+        } 
     }
 
     public function applyFormatToPerformance($performance)
@@ -132,6 +181,21 @@ trait GenerarReportesSite24x7
                     if (array_key_exists('DiskUtilChart', $pfm)) {
                         $newPerformances['DiskUtilChart'] = $this->getFormattedResponse($pfm['DiskUtilChart']);
                     }
+                    if (array_key_exists('CPUUtilizationChart', $pfm)) {
+                        $newPerformances['CPUUtilizationChart'] = $this->getFormattedResponse($pfm['CPUUtilizationChart']);
+                    }
+                    if (array_key_exists('MEMORYUtilizationChart', $pfm)) {
+                        $newPerformances['MEMORYUtilizationChart'] = $this->getFormattedResponse($pfm['MEMORYUtilizationChart']);
+                    }
+                    if (array_key_exists('DISKSpacePercentageChart', $pfm)) {
+                        $newPerformances['DISKSpacePercentageChart'] = $this->getFormattedResponse($pfm['DISKSpacePercentageChart']);
+                    }
+                    if (array_key_exists('NETUtilizationChart', $pfm)) {
+                        $newPerformances['NETUtilizationChart'] = $this->getFormattedResponse($pfm['NETUtilizationChart']);
+                    }
+                    if (array_key_exists('NETWORKUsageChart', $pfm)) {
+                        $newPerformances['NETWORKUsageChart'] = $this->getFormattedResponse($pfm['NETWORKUsageChart']);
+                    }
                 }
             }
             $performance['data']['chart_data'] = $newPerformances;
@@ -141,7 +205,6 @@ trait GenerarReportesSite24x7
 
     public function applyFormatToPerformanceDisk($performance)
     {
-
         if (array_key_exists('data', $performance)) {
             $newPerformances = [];
             foreach ($performance['data']['chart_data'] as $pfms) {
@@ -167,9 +230,9 @@ trait GenerarReportesSite24x7
             return $performance;
         }
     }
+
     public function applyFormatToPerformanceDiskCharts($performance)
     {
-
         if (array_key_exists('data', $performance)) {
             if (array_key_exists('AllDiskUsedChart', $performance['data'])) {
                 $newPerformances = [];
@@ -178,6 +241,24 @@ trait GenerarReportesSite24x7
                         array_push($newPerformances, $this->getFormattedResponse($disk));
                     }
                     $performance['data']['AllDiskUsedChart'] = $newPerformances;
+                    return $performance;
+                }
+            }
+        }
+        return [];
+    }
+
+    public function applyFormatToPerformancePlugin($performance)
+    {
+        if (array_key_exists('data', $performance)) {
+            if (array_key_exists('chart_data', $performance['data'])) {
+                $newPerformances = [];
+                foreach ($performance['data']['chart_data'] as $plugins) {
+                    dd($plugins);
+                    foreach ($plugins as $plugin) {
+                        array_push($newPerformances, $this->getFormattedResponse($plugin));
+                    }
+                    $performance['data']['chart_data'] = $newPerformances;
                     return $performance;
                 }
             }
