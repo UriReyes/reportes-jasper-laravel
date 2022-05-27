@@ -46,8 +46,9 @@ trait GenerarReportesSite24x7
         )->output();
         //Compilando el reporte graficas.jrxml
         // shell_exec('jasperstarter compile "C:/Users/uriel.santiago/JaspersoftWorkspace/KIO-Jasper/graficas.jrxml"');
+        //dd($output);
         shell_exec($output);
-        // dd($output);
+        //dd($output);
         // $pathToFile = base_path() .
         //     '/resources/reports/pdf/Resumen.pdf';
         // return response()->file($pathToFile);
@@ -65,96 +66,164 @@ trait GenerarReportesSite24x7
 
     public function processSite24x7Monitors($monitor, $site24x7Url, $refresh_token, $zaaid, $customer_name, $last_month)
     {
+        //and $monitor['monitor_id'] == "417536000001287157"
         $monitor_id = $monitor['monitor_id'];
         if ($monitor['type'] == 'SERVER' and $monitor['state'] == 0) {
             $availability = $this->getAvailabilityReport($site24x7Url, $monitor_id, $zaaid, $refresh_token, "?period={$this->period_report}");
             $performance = $this->getPerformance($site24x7Url, $monitor_id, $zaaid, $refresh_token, "?unit_of_time=3&period={$this->period_report}");
             $performance_disk = $this->getPerformance($site24x7Url, $monitor_id, $zaaid, $refresh_token, "?unit_of_time=3&period={$this->period_report}&report_attribute=DISK");
+            $ServerUptime = $this->getPerformanceCharts($site24x7Url, $monitor_id, $zaaid, $refresh_token, "/ServerUptimeChart?granularity=3&period={$this->period_report}");
+            $performance_diskdetail = $this->getPerformanceDiskWidget($site24x7Url, $monitor_id, $zaaid, $refresh_token, "?period={$this->period_report}&widget_name=DiskDetails");
             $customers = [
                 'customer' => [
                     'name' => $customer_name,
                     'zaaid' => $zaaid,
                     'monitor' => $monitor,
                     'availability' => $this->getUptimeDownTimeAndMaintenance($availability),
+                    'ServerUptime' =>  $this->applyFormatToPerformanceServerUpTime($ServerUptime),
                     'performance' =>  $this->applyFormatToPerformance($performance),
                     'performance_disk' => $this->applyFormatToPerformanceDisk($performance_disk),
-                ]
-            ];
-            $path_reports = $this->createFolderToCustomer($last_month, $customer_name, $monitor);
-            $this->getJasperReport($customers,  str_replace(" ","_",$customer_name), $monitor['display_name'], $path_reports, $monitor_id, $monitor['type']);
-        } 
-        else if ($monitor['type'] == 'AGENTLESSSERVER' and $monitor['state'] == 0) {
-            $availability = $this->getAvailabilityReport($site24x7Url, $monitor_id, $zaaid, $refresh_token, "?period={$this->period_report}");
-            $performance = $this->getPerformance($site24x7Url, $monitor_id, $zaaid, $refresh_token, "?unit_of_time=3&period={$this->period_report}");
-            $performance_disk = $this->getPerformanceCharts($site24x7Url, $monitor_id, $zaaid, $refresh_token, "/AllDiskUsedChart?granularity=3&period={$this->period_report}");
-            $customers = [
-                'customer' => [
-                    'name' => $customer_name,
-                    'zaaid' => $zaaid,
-                    'monitor' => $monitor,
-                    'availability' => $this->getUptimeDownTimeAndMaintenance($availability),
-                    'performance' =>  $this->applyFormatToPerformance($performance),
-                    'performance_disk' => $this->applyFormatToPerformanceDiskCharts($performance_disk),
-                ]
-            ];
-            $path_reports = $this->createFolderToCustomer($last_month, $customer_name, $monitor);
-            $this->getJasperReport($customers,  str_replace(" ","_",$customer_name), $monitor['display_name'], $path_reports, $monitor_id, $monitor['type']);
-        }
-        else if ($monitor['type'] == 'VMWAREVM' and $monitor['state'] == 0) {
-            $availability = $this->getAvailabilityReport($site24x7Url, $monitor_id, $zaaid, $refresh_token, "?period={$this->period_report}");
-            $performance = $this->getPerformance($site24x7Url, $monitor_id, $zaaid, $refresh_token, "?unit_of_time=3&period={$this->period_report}");
-            $performance_disk = $this->getPerformanceVMDisk($site24x7Url, $monitor_id, $zaaid, $refresh_token, "?period={$this->period_report}&widget_name=GUESTDISKIO");
-            $customers = [
-                'customer' => [
-                    'name' => $customer_name,
-                    'zaaid' => $zaaid,
-                    'monitor' => $monitor,
-                    'availability' => $this->getUptimeDownTimeAndMaintenance($availability),
-                    'performance' =>  $this->applyFormatToPerformance($performance),
-                    'performance_disk' => $performance_disk,
-                ]
-            ];
-            $path_reports = $this->createFolderToCustomer($last_month, $customer_name, $monitor);
-            $this->getJasperReport($customers,  str_replace(" ","_",$customer_name), $monitor['display_name'], $path_reports, $monitor_id, $monitor['type']);
-        } 
-        else if ($monitor['type'] == 'VMWAREESX' and $monitor['state'] == 0) {
-            $availability = $this->getAvailabilityReport($site24x7Url, $monitor_id, $zaaid, $refresh_token, "?period={$this->period_report}");
-            $performance = $this->getPerformance($site24x7Url, $monitor_id, $zaaid, $refresh_token, "?unit_of_time=3&period={$this->period_report}");
-            //dd($performance);
-            $customers = [
-                'customer' => [
-                    'name' => $customer_name,
-                    'zaaid' => $zaaid,
-                    'monitor' => $monitor,
-                    'availability' => $this->getUptimeDownTimeAndMaintenance($availability),
-                    'performance' =>  $this->applyFormatToPerformance($performance),
-                ]
-            ];
-            $path_reports = $this->createFolderToCustomer($last_month, $customer_name, $monitor);
-            $this->getJasperReport($customers,  str_replace(" ","_",$customer_name), $monitor['display_name'], $path_reports, $monitor_id, $monitor['type']);
-        } 
-        else if ($monitor['type'] == 'PLUGIN' and $monitor['state'] == 0) {
-            $availability = $this->getAvailabilityReport($site24x7Url, $monitor_id, $zaaid, $refresh_token, "?period={$this->period_report}");
-            $performance = $this->getPerformance($site24x7Url, $monitor_id, $zaaid, $refresh_token, "?unit_of_time=3&period={$this->period_report}");
-            $customers = [
-                'customer' => [
-                    'name' => $customer_name,
-                    'zaaid' => $zaaid,
-                    'monitor' => $monitor,
-                    'availability' => $this->getUptimeDownTimeAndMaintenance($availability),
-                    'performance' =>  $this->applyFormatToPerformancePlugin($performance),
+                    'performance_diskdetail' => $performance_diskdetail,
                 ]
             ];
             //dd($customers);
             $path_reports = $this->createFolderToCustomer($last_month, $customer_name, $monitor);
             $this->getJasperReport($customers,  str_replace(" ","_",$customer_name), $monitor['display_name'], $path_reports, $monitor_id, $monitor['type']);
         } 
+        // else if ($monitor['type'] == 'AGENTLESSSERVER' and $monitor['state'] == 0) {
+        //     $availability = $this->getAvailabilityReport($site24x7Url, $monitor_id, $zaaid, $refresh_token, "?period={$this->period_report}");
+        //     $performance = $this->getPerformance($site24x7Url, $monitor_id, $zaaid, $refresh_token, "?unit_of_time=3&period={$this->period_report}");
+        //     $performance_disk = $this->getPerformanceCharts($site24x7Url, $monitor_id, $zaaid, $refresh_token, "/AllDiskUsedChart?granularity=3&period={$this->period_report}");
+        //     $performance_diskdetail = $this->getPerformanceDiskWidget($site24x7Url, $monitor_id, $zaaid, $refresh_token, "?period={$this->period_report}&widget_name=DiskDetails");
+        //     $customers = [
+        //         'customer' => [
+        //             'name' => $customer_name,
+        //             'zaaid' => $zaaid,
+        //             'monitor' => $monitor,
+        //             'availability' => $this->getUptimeDownTimeAndMaintenance($availability),
+        //             'performance' =>  $this->applyFormatToPerformance($performance),
+        //             'performance_disk' => $this->applyFormatToPerformanceDiskCharts($performance_disk),
+        //             'performance_diskdetail' => $performance_diskdetail,
+        //         ]
+        //     ];
+        //     //dd($customers);
+        //     $path_reports = $this->createFolderToCustomer($last_month, $customer_name, $monitor);
+        //     $this->getJasperReport($customers,  str_replace(" ","_",$customer_name), $monitor['display_name'], $path_reports, $monitor_id, $monitor['type']);
+        // }
+        // else if ($monitor['type'] == 'VMWAREVM' and $monitor['state'] == 0) {
+        //     $availability = $this->getAvailabilityReport($site24x7Url, $monitor_id, $zaaid, $refresh_token, "?period={$this->period_report}");
+        //     $performance = $this->getPerformance($site24x7Url, $monitor_id, $zaaid, $refresh_token, "?unit_of_time=3&period={$this->period_report}");
+        //     $performance_disk = $this->getPerformanceDiskWidget($site24x7Url, $monitor_id, $zaaid, $refresh_token, "?period={$this->period_report}&widget_name=GUESTDISKIO");
+        //     $customers = [
+        //         'customer' => [
+        //             'name' => $customer_name,
+        //             'zaaid' => $zaaid,
+        //             'monitor' => $monitor,
+        //             'availability' => $this->getUptimeDownTimeAndMaintenance($availability),
+        //             'performance' =>  $this->applyFormatToPerformance($performance),
+        //             'performance_disk' => $performance_disk,
+        //         ]
+        //     ];
+        //     $path_reports = $this->createFolderToCustomer($last_month, $customer_name, $monitor);
+        //     $this->getJasperReport($customers,  str_replace(" ","_",$customer_name), $monitor['display_name'], $path_reports, $monitor_id, $monitor['type']);
+        // } 
+        // else if ($monitor['type'] == 'VMWAREESX' and $monitor['state'] == 0) {
+        //     $availability = $this->getAvailabilityReport($site24x7Url, $monitor_id, $zaaid, $refresh_token, "?period={$this->period_report}");
+        //     $performance = $this->getPerformance($site24x7Url, $monitor_id, $zaaid, $refresh_token, "?unit_of_time=3&period={$this->period_report}");
+        //     //dd($performance);
+        //     $customers = [
+        //         'customer' => [
+        //             'name' => $customer_name,
+        //             'zaaid' => $zaaid,
+        //             'monitor' => $monitor,
+        //             'availability' => $this->getUptimeDownTimeAndMaintenance($availability),
+        //             'performance' =>  $this->applyFormatToPerformance($performance),
+        //         ]
+        //     ];
+        //     $path_reports = $this->createFolderToCustomer($last_month, $customer_name, $monitor);
+        //     $this->getJasperReport($customers,  str_replace(" ","_",$customer_name), $monitor['display_name'], $path_reports, $monitor_id, $monitor['type']);
+        // } 
+        // else if ($monitor['type'] == 'PLUGIN' and $monitor['state'] == 0) {
+        //     $availability = $this->getAvailabilityReport($site24x7Url, $monitor_id, $zaaid, $refresh_token, "?period={$this->period_report}");
+        //     $performance = $this->getPerformance($site24x7Url, $monitor_id, $zaaid, $refresh_token, "?unit_of_time=3&period={$this->period_report}");
+        //     $customers = [
+        //         'customer' => [
+        //             'name' => $customer_name,
+        //             'zaaid' => $zaaid,
+        //             'monitor' => $monitor,
+        //             'availability' => $this->getUptimeDownTimeAndMaintenance($availability),
+        //             'performance' =>  $this->applyFormatToPerformancePlugin($performance),
+        //         ]
+        //     ];
+        //     //dd($customers);
+        //     $path_reports = $this->createFolderToCustomer($last_month, $customer_name, $monitor);
+        //     $this->getJasperReport($customers,  str_replace(" ","_",$customer_name), $monitor['display_name'], $path_reports, $monitor_id, $monitor['type']);
+        // } 
+        // else if ($monitor['type'] == 'SQLSERVER' and $monitor['state'] == 0) {
+        //     $availability = $this->getAvailabilityReport($site24x7Url, $monitor_id, $zaaid, $refresh_token, "?period={$this->period_report}");
+        //     $performance = $this->getPerformance($site24x7Url, $monitor_id, $zaaid, $refresh_token, "?unit_of_time=3&period={$this->period_report}");
+        //     $performance_page = $this->getPerformance($site24x7Url, $monitor_id, $zaaid, $refresh_token, "?period={$this->period_report}&report_attribute=PAGEREADS");
+        //     $performance_db = $this->getPerformanceDiskWidget($site24x7Url, $monitor_id, $zaaid, $refresh_token, "?period={$this->period_report}&widget_name=DBDETAILS");
+        //     $customers = [
+        //         'customer' => [
+        //             'name' => $customer_name,
+        //             'zaaid' => $zaaid,
+        //             'monitor' => $monitor,
+        //             'availability' => $this->getUptimeDownTimeAndMaintenance($availability),
+        //             'performance' =>  $this->applyFormatToPerformance($performance),
+        //             'performance_page' => $this->applyFormatToPerformance($performance_page),
+        //             'performance_db' => $performance_db,
+        //         ]
+        //     ];
+        //     //dd($customers);
+        //     $path_reports = $this->createFolderToCustomer($last_month, $customer_name, $monitor);
+        //     $this->getJasperReport($customers,  str_replace(" ","_",$customer_name), $monitor['display_name'], $path_reports, $monitor_id, $monitor['type']);
+        // } 
+        // else if ($monitor['type'] == 'NETWORKDEVICE' and $monitor['state'] == 0) {
+        //     $availability = $this->getAvailabilityReport($site24x7Url, $monitor_id, $zaaid, $refresh_token, "?period={$this->period_report}");
+        //     $performance = $this->getPerformance($site24x7Url, $monitor_id, $zaaid, $refresh_token, "?unit_of_time=3&period={$this->period_report}");
+        //     $performance_intraffic = $this->getPerformance($site24x7Url, $monitor_id, $zaaid, $refresh_token, "?period={$this->period_report}&report_attribute=INTRAFFIC");
+        //     $performance_outtraffic = $this->getPerformance($site24x7Url, $monitor_id, $zaaid, $refresh_token, "?period={$this->period_report}&report_attribute=OUTTRAFFIC");
+        //     $formated_performance_intraffic=$this->applyFormatToPerformanceInterface($performance_intraffic);
+        //     $formated_performance_outtraffic=$this->applyFormatToPerformanceInterface($performance_outtraffic);
+        //     $performance_traffic = $this->getPerformanceTraffic($formated_performance_intraffic,$formated_performance_outtraffic);
+        //     $customers = [
+        //         'customer' => [
+        //             'name' => $customer_name,
+        //             'zaaid' => $zaaid,
+        //             'monitor' => $monitor,
+        //             'availability' => $this->getUptimeDownTimeAndMaintenance($availability),
+        //             'performance' =>  $this->applyFormatToPerformance($performance),
+        //             'performance_traffic' => $performance_traffic,
+        //         ]
+        //     ];
+        //     $path_reports = $this->createFolderToCustomer($last_month, $customer_name, $monitor);
+        //     $this->getJasperReport($customers,  str_replace(" ","_",$customer_name), $monitor['display_name'], $path_reports, $monitor_id, $monitor['type']);
+        // }
+        // if ($monitor['type'] == 'DATASTORE' and $monitor['state'] == 0) {
+        //     $availability = $this->getAvailabilityReport($site24x7Url, $monitor_id, $zaaid, $refresh_token, "?period={$this->period_report}");
+        //     $performance = $this->getPerformance($site24x7Url, $monitor_id, $zaaid, $refresh_token, "?unit_of_time=3&period={$this->period_report}");
+        //     $performance_store = $this->getPerformanceDiskWidget($site24x7Url, $monitor_id, $zaaid, $refresh_token, "?period={$this->period_report}&widget_name=VMSTORAGE");
+        //     $customers = [
+        //         'customer' => [
+        //             'name' => $customer_name,
+        //             'zaaid' => $zaaid,
+        //             'monitor' => $monitor,
+        //             'availability' => $this->getUptimeDownTimeAndMaintenance($availability),
+        //             'performance' =>  $this->applyFormatToPerformance($performance),
+        //             'performance_store' => $performance_store,
+        //         ]
+        //     ];
+        //     $path_reports = $this->createFolderToCustomer($last_month, $customer_name, $monitor);
+        //     $this->getJasperReport($customers,  str_replace(" ","_",$customer_name), $monitor['display_name'], $path_reports, $monitor_id, $monitor['type']);
+        // }  
     }
 
     public function applyFormatToPerformance($performance)
     {
         if (array_key_exists('data', $performance)) {
             $newPerformances = [];
+            $newPerformancesTable = [];
             foreach ($performance['data']['chart_data'] as $pfms) {
                 foreach ($pfms as $pfm) {
                     if (array_key_exists('OverallCPUChart', $pfm)) {
@@ -196,9 +265,48 @@ trait GenerarReportesSite24x7
                     if (array_key_exists('NETWORKUsageChart', $pfm)) {
                         $newPerformances['NETWORKUsageChart'] = $this->getFormattedResponse($pfm['NETWORKUsageChart']);
                     }
+                    if (array_key_exists('ConnectionChart', $pfm)) {
+                        $newPerformances['ConnectionChart'] = $this->getFormattedResponse($pfm['ConnectionChart']);
+                    }
+                    if (array_key_exists('RequestChart', $pfm)) {
+                        $newPerformances['RequestChart'] = $this->getFormattedResponse($pfm['RequestChart']);
+                    }
+                    if (array_key_exists('BufferCacheHitChart', $pfm)) {
+                        $newPerformances['BufferCacheHitChart'] = $this->getFormattedResponse($pfm['BufferCacheHitChart']);
+                    }
+                    if (array_key_exists('PlanCacheHitChart', $pfm)) {
+                        $newPerformances['PlanCacheHitChart'] = $this->getFormattedResponse($pfm['PlanCacheHitChart']);
+                    }
+                    if (array_key_exists('PageOperationChart', $pfm)) {
+                        $newPerformances['PageOperationChart'] = $this->getFormattedResponseWithTwoValues($pfm['PageOperationChart']);
+                    }
+                    if (array_key_exists('MemoryChart', $pfm)) {
+                        $newPerformances['MemoryChart'] = $this->getFormattedResponseMemorySQL($pfm['MemoryChart']);
+                    }
+                    if (array_key_exists('CpuUsageChart', $pfm)) {
+                        $newPerformances['CpuUsageChart'] = $this->getFormattedResponse($pfm['CpuUsageChart']);
+                    }
+                    if (array_key_exists('MemoryUsageChart', $pfm)) {
+                        $newPerformances['MemoryUsageChart'] = $this->getFormattedResponse($pfm['MemoryUsageChart']);
+                    }
+                    if (array_key_exists('ResponseTimeChart', $pfm)) {
+                        $newPerformances['ResponseTimeChart'] = $this->getFormattedResponse($pfm['ResponseTimeChart']);
+                    }
+                    if (array_key_exists('PacketLossChart', $pfm)) {
+                        $newPerformances['PacketLossChart'] = $this->getFormattedResponse($pfm['PacketLossChart']);
+                    }
+                    if (array_key_exists('DS-STORAGE', $pfm)) {
+                        $newPerformances['DS-STORAGE'] = $this->getFormattedResponseDatastore($pfm['DS-STORAGE']);
+                    }
                 }
             }
             $performance['data']['chart_data'] = $newPerformances;
+            foreach ($performance['data']['table_data'] as $pfm) {
+                if (array_key_exists('CAPACITY', $pfm)) {
+                    $newPerformancesTable['CAPACITY'] = $this->getFormattedResponse($pfm['CAPACITY']);
+                }
+            }
+            $performance['data']['table_data'] = $newPerformancesTable;
             return $performance;
         }
     }
@@ -240,10 +348,27 @@ trait GenerarReportesSite24x7
                     foreach ($disks as $disk) {
                         array_push($newPerformances, $this->getFormattedResponse($disk));
                     }
-                    $performance['data']['AllDiskUsedChart'] = $newPerformances;
-                    return $performance;
+                }
+                $performance['data']['AllDiskUsedChart'] = $newPerformances;
+                return $performance;
+            }
+        }
+        return [];
+    }
+
+    public function applyFormatToPerformanceServerUpTime($performance)
+    {
+        if (array_key_exists('data', $performance)) {
+            $newPerformances = [];
+            foreach ($performance['data'] as $pfms) {
+                foreach ($pfms as $pfm) {
+                    if (array_key_exists('chart_data', $pfm)) {
+                        array_push($newPerformances, $this->getFormattedResponse($pfm));
+                    }
                 }
             }
+            $performance['data']['chart_data'] = $newPerformances;
+            return $performance;
         }
         return [];
     }
@@ -268,10 +393,47 @@ trait GenerarReportesSite24x7
         return [];
     }
 
+    public function applyFormatToPerformanceInterface($performance)
+    {
+        if (array_key_exists('data', $performance)) {
+            if (array_key_exists('chart_data', $performance['data'])) {
+            $newPerformances = [];
+                foreach ($performance['data']['chart_data'] as $pfms) 
+                {
+                    if (array_key_exists('InterfaceTrafficInChart', $pfms)) {
+                        $newPerformances['InterfaceTrafficInChart'] = $this->getFormattedResponseTraffic($pfms['InterfaceTrafficInChart']);
+                    }
+                    if (array_key_exists('InterfaceTrafficOutChart', $pfms)) {
+                        $newPerformances['InterfaceTrafficOutChart'] = $this->getFormattedResponseTraffic($pfms['InterfaceTrafficOutChart']);
+                    }
+                }
+            $performance['data']['chart_data'] = $newPerformances;
+            return $performance;
+            }
+        }
+    }
+
     function getPercentage($cantidad, $total)
     {
         $porcentaje = ($cantidad * 100) / $total; // Regla de tres
         // $porcentaje = round($porcentaje, 0);  // Quitar los decimalesreturn $porcentaje;
         return round($porcentaje);
+    }
+
+    function getPerformanceTraffic($intraffic,$outtraffic){
+        $performance_traffic_array=[];
+        foreach($intraffic['data']['chart_data']['InterfaceTrafficInChart'] as $intraffic_it){
+            foreach($outtraffic['data']['chart_data']['InterfaceTrafficOutChart'] as $outtraffic_it){
+                if($intraffic_it['label']==$outtraffic_it['label']){
+                    array_push($performance_traffic_array,[
+                    'label'=>$intraffic_it['label'],
+                    'intraffic'=>$intraffic_it,
+                    'outtraffic'=>$outtraffic_it,
+                    ]);
+                }
+            }
+        }
+        sort($performance_traffic_array);
+        return $performance_traffic_array;
     }
 }

@@ -31,7 +31,7 @@
 		<band height="193" splitType="Stretch">
 			<stackedBarChart>
 				<chart evaluationTime="Report">
-					<reportElement x="10" y="0" width="520" height="190" uuid="cd363bad-8623-496e-8d96-13a35dca7a32"/>
+					<reportElement x="10" y="0" width="520" height="190" uuid="20f7718e-6990-4f59-9a4b-593ea20a2a14"/>
 					<chartTitle/>
 					<chartSubtitle/>
 					<chartLegend/>
@@ -40,13 +40,13 @@
 					<dataset resetType="Report"/>
 					<categorySeries>
 						<seriesExpression><![CDATA["Used Space %"]]></seriesExpression>
-						<categoryExpression><![CDATA[LEFT($F{date},10)]]></categoryExpression>
+						<categoryExpression><![CDATA[$F{date}]]></categoryExpression>
 						<valueExpression><![CDATA[$F{performance1}]]></valueExpression>
 						<labelExpression><![CDATA[$F{date}]]></labelExpression>
 					</categorySeries>
 					<categorySeries>
 						<seriesExpression><![CDATA["Free Space %"]]></seriesExpression>
-						<categoryExpression><![CDATA[LEFT($F{date},10)]]></categoryExpression>
+						<categoryExpression><![CDATA[$F{date}]]></categoryExpression>
 						<valueExpression><![CDATA[$F{performance2}]]></valueExpression>
 						<labelExpression><![CDATA[$F{date}]]></labelExpression>
 					</categorySeries>
@@ -63,7 +63,7 @@
 								<font size="9"/>
 							</labelFont>
 							<tickLabelFont>
-								<font size="9" isBold="false"/>
+								<font size="8" isBold="false"/>
 							</tickLabelFont>
 						</axisFormat>
 					</categoryAxisFormat>

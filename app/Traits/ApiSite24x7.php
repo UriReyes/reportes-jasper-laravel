@@ -59,6 +59,20 @@ trait ApiSite24x7
         return $response['data'];
     }
 
+    public function getCurrentStatus($url, $zaaid, $refresh_token, $monitor_id)
+    {
+        $authorization = "Zoho-oauthtoken {$refresh_token}";
+        $cookie = "zaaid={$zaaid}";
+        $response = Http::withHeaders([
+            'Content-Type' => 'application/json;charset=UTF-8',
+            'Accept' => 'application/json; version=2.0',
+            'Authorization' => $authorization,
+            'Cookie' => $cookie
+        ])->get("{$url}/current_status/{$monitor_id}");
+        $response = $response->json();
+        return $response['data'];
+    }
+
     public function getAvailabilityReport($url, $monitor_id, $zaaid, $refresh_token, $atributos)
     {
         $authorization = "Zoho-oauthtoken {$refresh_token}";
@@ -96,7 +110,7 @@ trait ApiSite24x7
         $response = $response->json();
         return $response;
     }
-    public function getPerformanceVMDisk($url, $monitor_id, $zaaid, $refresh_token, $attributos)
+    public function getPerformanceDiskWidget($url, $monitor_id, $zaaid, $refresh_token, $attributos)
     {
         $authorization = "Zoho-oauthtoken {$refresh_token}";
         $cookie = "zaaid={$zaaid}";

@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.19.1.final using JasperReports Library version 6.19.1-867c00bf88cd4d784d404379d6c05e1b419e8a4c  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="performance_MemoryChart_charts" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="fe5f42c9-00fa-4c1e-8412-d7c61d619a21">
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Adapter API - KIO"/>
+	<property name="com.jaspersoft.studio.report.description" value=""/>
+	<queryString language="json">
+		<![CDATA[customer.performance.data.chart_data.MemoryChart.chart_data]]>
+	</queryString>
+	<field name="date" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="date"/>
+		<fieldDescription><![CDATA[date]]></fieldDescription>
+	</field>
+	<field name="TotalSM" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="TotalSM"/>
+		<fieldDescription><![CDATA[TotalSM]]></fieldDescription>
+	</field>
+	<field name="TargetSM" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="TargetSM"/>
+		<fieldDescription><![CDATA[TargetSM]]></fieldDescription>
+	</field>
+	<field name="SQLCache" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="SQLCache"/>
+		<fieldDescription><![CDATA[SQLCache]]></fieldDescription>
+	</field>
+	<field name="OptimizerM" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="OptimizerM"/>
+		<fieldDescription><![CDATA[OptimizerM]]></fieldDescription>
+	</field>
+	<field name="ConnectionM" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="ConnectionM"/>
+		<fieldDescription><![CDATA[ConnectionM]]></fieldDescription>
+	</field>
+	<field name="LockM" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="LockM"/>
+		<fieldDescription><![CDATA[LockM]]></fieldDescription>
+	</field>
+	<field name="GrantedWorkspaceM" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="GrantedWorkspaceM"/>
+		<fieldDescription><![CDATA[GrantedWorkspaceM]]></fieldDescription>
+	</field>
+	<sortField name="date"/>
+	<title>
+		<band height="214" splitType="Stretch">
+			<lineChart>
+				<chart evaluationTime="Report">
+					<reportElement x="20" y="0" width="512" height="210" uuid="7b688af0-fec1-49e0-a1cc-d15524d1dcfa">
+						<property name="net.sf.jasperreports.customizer.0.selectionMode" value="itemSeries"/>
+						<property name="net.sf.jasperreports.customizer.0.shapeType" value="polygon"/>
+						<property name="net.sf.jasperreports.customizer.class.0" value="net.sf.jasperreports.customizers.shape.LineDotShapeCustomizer"/>
+					</reportElement>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<categoryDataset>
+					<dataset resetType="Report"/>
+					<categorySeries>
+						<seriesExpression><![CDATA["Total Server Memory"]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{date}]]></categoryExpression>
+						<valueExpression><![CDATA[FLOAT_VALUE($F{TotalSM})]]></valueExpression>
+					</categorySeries>
+					<categorySeries>
+						<seriesExpression><![CDATA["Target Server Memory"]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{date}]]></categoryExpression>
+						<valueExpression><![CDATA[FLOAT_VALUE($F{TargetSM})]]></valueExpression>
+						<labelExpression><![CDATA["GB"]]></labelExpression>
+					</categorySeries>
+					<categorySeries>
+						<seriesExpression><![CDATA["SQL Cache Memory"]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{date}]]></categoryExpression>
+						<valueExpression><![CDATA[FLOAT_VALUE($F{SQLCache})]]></valueExpression>
+					</categorySeries>
+					<categorySeries>
+						<seriesExpression><![CDATA["Optimizer Memory"]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{date}]]></categoryExpression>
+						<valueExpression><![CDATA[FLOAT_VALUE($F{OptimizerM})]]></valueExpression>
+					</categorySeries>
+					<categorySeries>
+						<seriesExpression><![CDATA["Connection Memory"]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{date}]]></categoryExpression>
+						<valueExpression><![CDATA[FLOAT_VALUE($F{ConnectionM})]]></valueExpression>
+					</categorySeries>
+					<categorySeries>
+						<seriesExpression><![CDATA["Lock Memory"]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{date}]]></categoryExpression>
+						<valueExpression><![CDATA[FLOAT_VALUE($F{LockM})]]></valueExpression>
+					</categorySeries>
+					<categorySeries>
+						<seriesExpression><![CDATA["Granted Workspace Memory"]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{date}]]></categoryExpression>
+						<valueExpression><![CDATA[FLOAT_VALUE($F{GrantedWorkspaceM})]]></valueExpression>
+					</categorySeries>
+				</categoryDataset>
+				<linePlot isShowLines="true" isShowShapes="false">
+					<plot labelRotation="74.0">
+						<seriesColor seriesOrder="0" color="#43B8C6"/>
+						<seriesColor seriesOrder="1" color="#2C9479"/>
+						<seriesColor seriesOrder="2" color="#0C5AF7"/>
+						<seriesColor seriesOrder="3" color="#A84FF2"/>
+						<seriesColor seriesOrder="4" color="#8B00AA"/>
+						<seriesColor seriesOrder="5" color="#C84B76"/>
+						<seriesColor seriesOrder="6" color="#EFDE00"/>
+					</plot>
+					<categoryAxisFormat labelRotation="74.0">
+						<axisFormat labelColor="#000000" tickLabelColor="#000000" axisLineColor="#000000">
+							<labelFont>
+								<font size="10"/>
+							</labelFont>
+							<tickLabelFont>
+								<font size="8"/>
+							</tickLabelFont>
+						</axisFormat>
+					</categoryAxisFormat>
+					<valueAxisFormat>
+						<axisFormat labelColor="#000000" tickLabelColor="#000000" verticalTickLabels="true" axisLineColor="#000000"/>
+					</valueAxisFormat>
+				</linePlot>
+			</lineChart>
+			<textField>
+				<reportElement x="8" y="10" width="16" height="140" uuid="5dd44740-2dc3-4666-912d-4adf7cb3f6a0">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" rotation="Left">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["GB"]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+</jasperReport>

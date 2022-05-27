@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.19.1.final using JasperReports Library version 6.19.1-867c00bf88cd4d784d404379d6c05e1b419e8a4c  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="performance_disk_table" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="5e907d2e-699f-45d9-97ec-28eb09c774dc">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Adapter API - KIO"/>
+	<queryString language="json">
+		<![CDATA[customer.performance_disk.data.chart_data.OverallDiskUsedChart]]>
+	</queryString>
+	<field name="average" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="average"/>
+		<fieldDescription><![CDATA[average]]></fieldDescription>
+	</field>
+	<field name="min" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="min"/>
+		<fieldDescription><![CDATA[min]]></fieldDescription>
+	</field>
+	<field name="max" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="max"/>
+		<fieldDescription><![CDATA[max]]></fieldDescription>
+	</field>
+	<variable name="max_usage" class="java.lang.String">
+		<initialValueExpression><![CDATA[TEXT(FLOAT_VALUE(LEFT($F{max},FIND($F{max},",")).replace( "[","").replace( ",","")),"#,##0.00" )]]></initialValueExpression>
+	</variable>
+	<variable name="min_usage" class="java.lang.String">
+		<initialValueExpression><![CDATA[TEXT(FLOAT_VALUE(LEFT($F{min},FIND($F{min},",")).replace( "[","").replace( ",","")),"#,##0.00" )]]></initialValueExpression>
+	</variable>
+	<variable name="avg_usage" class="java.lang.String">
+		<initialValueExpression><![CDATA[TEXT(FLOAT_VALUE(LEFT($F{average},FIND($F{average},",")).replace( "[","").replace( ",","")),"#,##0.00" )]]></initialValueExpression>
+	</variable>
+	<variable name="avg_free" class="java.lang.String">
+		<initialValueExpression><![CDATA[TEXT(FLOAT_VALUE(RIGHT($F{average},LEN($F{average})-FIND($F{average},",")).replace( "]","").replace( ",","")),"#,##0.00" )]]></initialValueExpression>
+	</variable>
+	<variable name="max_free" class="java.lang.String">
+		<initialValueExpression><![CDATA[TEXT(FLOAT_VALUE(RIGHT($F{max},LEN($F{max})-FIND($F{max},",")).replace( "]","").replace( ",","")),"#,##0.00" )]]></initialValueExpression>
+	</variable>
+	<variable name="min_free" class="java.lang.String">
+		<initialValueExpression><![CDATA[TEXT(FLOAT_VALUE(RIGHT($F{min},LEN($F{min})-FIND($F{min},",")).replace( "]","").replace( ",","")),"#,##0.00" )]]></initialValueExpression>
+	</variable>
+	<title>
+		<band height="79" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value=""/>
+			<rectangle radius="5">
+				<reportElement x="50" y="43" width="405" height="18" forecolor="#EBEBEB" backcolor="#EBEBEB" uuid="d303b2a5-17c7-42e9-8b46-3047520cb7cd">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="0.0" lineStyle="Solid"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle radius="5">
+				<reportElement x="49" y="20" width="405" height="18" forecolor="#EBEBEB" backcolor="#EBEBEB" uuid="cf645b77-31b2-4275-901d-fe9cccbc3e69">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="0.0" lineStyle="Solid"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="268" y="5" width="100" height="20" uuid="3c3d287c-945e-4190-8b53-81c60a9c75df"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Minimum]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="188" y="5" width="100" height="20" uuid="440befc6-ab28-4d59-ac6c-308db2023d20"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Average]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="350" y="5" width="100" height="20" uuid="586ca1ce-eb5e-4d31-9fd7-5d76ebf28135"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Maximum]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="59" y="23" width="120" height="20" uuid="52026b8d-9e8a-43d8-8077-ed088d627ef6"/>
+				<textElement textAlignment="Left"/>
+				<text><![CDATA[Overall Disk Usage (MB) :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="59" y="45" width="143" height="20" uuid="54532f99-95f9-47fd-87ac-dba14da0d14c"/>
+				<textElement textAlignment="Left"/>
+				<text><![CDATA[Overall Disk Free Space (MB) :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="297" y="46" width="88" height="20" uuid="e89b8cf5-f6ea-450c-b4e8-3f9bd80edc8d"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{min_free}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="212" y="46" width="88" height="20" uuid="49cb5f5a-a1dc-41de-8212-5f88726d8119"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{avg_free}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="375" y="46" width="88" height="20" uuid="e70ad59d-543b-49d5-acd0-f1892a115624"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{max_free}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="212" y="24" width="89" height="20" uuid="5e8cc21e-ed96-4b07-b53d-2b18b1921518"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{avg_usage}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="297" y="24" width="89" height="20" uuid="a5d2e6c0-7b1c-40b3-a3ad-fbd4cdf33d6d"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{min_usage}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="375" y="24" width="89" height="20" uuid="462914de-a1fb-4acd-99b8-03cbadbcbd6e"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{max_usage}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+</jasperReport>

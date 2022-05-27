@@ -36,7 +36,7 @@
 		<band height="214" splitType="Stretch">
 			<lineChart>
 				<chart evaluationTime="Report">
-					<reportElement x="20" y="0" width="512" height="210" uuid="be347b05-ecd1-46b7-8f4c-357cac5db362">
+					<reportElement x="20" y="0" width="512" height="210" uuid="fcb2bba9-2c20-4e34-95dd-f84c1263897f">
 						<property name="net.sf.jasperreports.customizer.0.selectionMode" value="itemSeries"/>
 						<property name="net.sf.jasperreports.customizer.0.shapeType" value="polygon"/>
 						<property name="net.sf.jasperreports.customizer.class.0" value="net.sf.jasperreports.customizers.shape.LineDotShapeCustomizer"/>
@@ -49,7 +49,7 @@
 					<dataset resetType="Report"/>
 					<categorySeries>
 						<seriesExpression><![CDATA["CPU Utilization %"]]></seriesExpression>
-						<categoryExpression><![CDATA[LEFT($F{date},10)]]></categoryExpression>
+						<categoryExpression><![CDATA[$F{date}]]></categoryExpression>
 						<valueExpression><![CDATA[$F{value}]]></valueExpression>
 					</categorySeries>
 				</categoryDataset>
@@ -63,7 +63,7 @@
 								<font size="10"/>
 							</labelFont>
 							<tickLabelFont>
-								<font size="9"/>
+								<font size="8"/>
 							</tickLabelFont>
 						</axisFormat>
 					</categoryAxisFormat>

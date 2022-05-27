@@ -15,7 +15,7 @@ trait ReestructurarDatosAPISite24x7
                 if ($item['key'] == 'percentage_chart') {
                     $item['data']['uptimes'] = array_map(function ($item) {
                         return [
-                            'date' => Carbon::parse($item[0])->format('Y-m-d H:i:s'),
+                            'date' => Carbon::parse($item[0])->format('d M Y'),
                             'uptime' => $item[1],
                             'downtime' => $item[2],
                             'maintenance' => $item[3],
@@ -36,7 +36,7 @@ trait ReestructurarDatosAPISite24x7
 
             $OverallCPUChart['chart_data'] = array_map(function ($item) {
                 return [
-                    'date' => array_key_exists(0, $item) ? Carbon::parse($item[0])->format('Y-m-d H:i:s') : null,
+                    'date' => array_key_exists(0, $item) ? Carbon::parse($item[0])->format('d M Y') : null,
                     'value' => array_key_exists(1, $item) ? $item[1] : null,
                 ];
             },  $OverallCPUChart['chart_data']);
@@ -50,7 +50,7 @@ trait ReestructurarDatosAPISite24x7
         if (array_key_exists('chart_data', $OverallMemoryChart)) {
             $OverallMemoryChart['chart_data'] = array_map(function ($item) {
                 return [
-                    'date' => array_key_exists(0, $item) ? Carbon::parse($item[0])->format('Y-m-d H:i:s') : null,
+                    'date' => array_key_exists(0, $item) ? Carbon::parse($item[0])->format('d M Y') : null,
                     'value' => array_key_exists(1, $item) ? $item[1] : null,
                 ];
             }, $OverallMemoryChart['chart_data']);
@@ -63,7 +63,7 @@ trait ReestructurarDatosAPISite24x7
         if (array_key_exists('chart_data', $OverallDiskUtilization)) {
             $OverallDiskUtilization['chart_data'] = array_map(function ($item) {
                 return [
-                    'date' => array_key_exists(0, $item) ? Carbon::parse($item[0])->format('Y-m-d H:i:s') : null,
+                    'date' => array_key_exists(0, $item) ? Carbon::parse($item[0])->format('d M Y') : null,
                     'performance1' => array_key_exists(1, $item) ? $item[1] : null,
                     'performance2' => array_key_exists(2, $item) ? $item[2] : null,
                 ];
@@ -76,21 +76,41 @@ trait ReestructurarDatosAPISite24x7
         if (array_key_exists('chart_data', $item)) {
             $item['chart_data'] = array_map(function ($item) {
                 return [
-                    'date' => array_key_exists(0, $item) ? Carbon::parse($item[0])->format('Y-m-d H:i:s') : null,
+                    'date' => array_key_exists(0, $item) ? Carbon::parse($item[0])->format('d M Y') : null,
                     'value1' => array_key_exists(1, $item) ? $item[1] : null,
                 ];
             }, $item['chart_data']);
             return $item;
         }
     }
+
     public function getFormattedResponseWithTwoValues($item)
     {
         if (array_key_exists('chart_data', $item)) {
             $item['chart_data'] = array_map(function ($item) {
                 return [
-                    'date' => array_key_exists(0, $item) ? Carbon::parse($item[0])->format('Y-m-d H:i:s') : null,
+                    'date' => array_key_exists(0, $item) ? Carbon::parse($item[0])->format('d M Y') : null,
                     'value1' => array_key_exists(1, $item) ? $item[1] : null,
                     'value2' => array_key_exists(2, $item) ? $item[2] : null,
+                ];
+            }, $item['chart_data']);
+            return $item;
+        }
+    }
+
+    public function getFormattedResponseMemorySQL($item)
+    {
+        if (array_key_exists('chart_data', $item)) {
+            $item['chart_data'] = array_map(function ($item) {
+                return [
+                    'date' => array_key_exists(0, $item) ? Carbon::parse($item[0])->format('d M Y') : null,
+                    'TotalSM' => array_key_exists(1, $item) ? $item[1] : null,
+                    'TargetSM' => array_key_exists(2, $item) ? $item[2] : null,
+                    'SQLCache' => array_key_exists(3, $item) ? $item[3] : null,
+                    'OptimizerM' => array_key_exists(4, $item) ? $item[4] : null,
+                    'ConnectionM' => array_key_exists(5, $item) ? $item[5] : null,
+                    'LockM' => array_key_exists(6, $item) ? $item[6] : null,
+                    'GrantedWorkspaceM' => array_key_exists(7, $item) ? $item[7] : null,
                 ];
             }, $item['chart_data']);
             return $item;
@@ -120,7 +140,7 @@ trait ReestructurarDatosAPISite24x7
                 if (array_key_exists('chart_data', $item)) {
                     $item['chart_data'] = array_map(function ($item) {
                         return [
-                            'disk' => array_key_exists(0, $item) ? $item[0] : null,
+                            'date' => array_key_exists(0, $item) ? Carbon::parse($item[0])->format('d M Y') : null,
                             'value1' => array_key_exists(1, $item) ? $item[1] : null,
                             'value2' => array_key_exists(2, $item) ? $item[2] : null,
                         ];
@@ -138,7 +158,7 @@ trait ReestructurarDatosAPISite24x7
         if (array_key_exists('chart_data', $OverallDiskUsedChart)) {
             $OverallDiskUsedChart['chart_data'] = array_map(function ($item) {
                 return [
-                    'date' => array_key_exists(0, $item) ? Carbon::parse($item[0])->format('Y-m-d H:i:s') : null,
+                    'date' => array_key_exists(0, $item) ? Carbon::parse($item[0])->format('d M Y') : null,
                     'value1' => array_key_exists(1, $item) ? $item[1] : null,
                     'value2' => array_key_exists(2, $item) ? $item[2] : null,
                 ];
@@ -152,7 +172,7 @@ trait ReestructurarDatosAPISite24x7
         if (array_key_exists('chart_data', $DiskIO)) {
             $DiskIO['chart_data'] = array_map(function ($item) {
                 return [
-                    'date' => array_key_exists(0, $item) ? Carbon::parse($item[0])->format('Y-m-d H:i:s') : null,
+                    'date' => array_key_exists(0, $item) ? Carbon::parse($item[0])->format('d M Y') : null,
                     'value1' => array_key_exists(1, $item) ? $item[1] : null,
                     'value2' => array_key_exists(2, $item) ? $item[2] : null,
                 ];
@@ -166,11 +186,48 @@ trait ReestructurarDatosAPISite24x7
         if (array_key_exists('chart_data', $item)) {
             $item['chart_data'] = array_map(function ($item) {
                 return [
-                    'date' => array_key_exists(0, $item) ? Carbon::parse($item[0])->format('d F Y') : null,
+                    'date' => array_key_exists(0, $item) ? Carbon::parse($item[0])->format('d M Y') : null,
                     'value1' => array_key_exists(1, $item) ? $item[1] : null,
                 ];
             }, $item['chart_data']);
             $item['metric']=$key;
+            return $item;
+        }
+    }
+
+    public function getFormattedResponseTraffic($traffic)
+    {
+        $trafficArray=[];
+        foreach($traffic as $traffic_it){
+            foreach($traffic_it as $item){
+                if (array_key_exists('chart_data', $item)) {
+                    $item['chart_data'] = array_map(function ($item) {
+                        return [
+                            'date' => array_key_exists(0, $item) ? Carbon::parse($item[0])->format('d M Y') : null,
+                            'value1' => array_key_exists(1, $item) ? $item[1] : null,
+                        ];
+                    }, $item['chart_data']);
+                    array_push($trafficArray,$item);
+                }
+            }
+        }
+        return $trafficArray;
+    }
+
+    public function getFormattedResponseDatastore($item)
+    {
+        if (array_key_exists('chart_data', $item)) {
+            $item['chart_data'] = array_map(function ($item) {
+                return [
+                    'date' => array_key_exists(0, $item) ? Carbon::parse($item[0])->format('d M Y') : null,
+                    'Snapshots Size' => array_key_exists(1, $item) ? $item[1] : null,
+                    'Swap File Size' => array_key_exists(2, $item) ? $item[2] : null,
+                    'Disk Files Size' => array_key_exists(3, $item) ? $item[3] : null,
+                    'Other VM Space' => array_key_exists(4, $item) ? $item[4] : null,
+                    'Other Space' => array_key_exists(5, $item) ? $item[5] : null,
+                    'Free Space' => array_key_exists(6, $item) ? $item[6] : null,
+                ];
+            }, $item['chart_data']);
             return $item;
         }
     }

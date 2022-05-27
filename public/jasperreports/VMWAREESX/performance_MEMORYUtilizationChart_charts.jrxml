@@ -27,7 +27,7 @@
 		<band height="225" splitType="Stretch">
 			<lineChart>
 				<chart evaluationTime="Report">
-					<reportElement x="10" y="0" width="510" height="220" uuid="be116ecc-3ab3-46ff-8810-0047e7f80527"/>
+					<reportElement x="10" y="0" width="510" height="220" uuid="0738c0d5-fc10-43c0-8cc9-616cddccce97"/>
 					<chartTitle/>
 					<chartSubtitle/>
 					<chartLegend/>
@@ -36,7 +36,7 @@
 					<dataset resetType="Report"/>
 					<categorySeries>
 						<seriesExpression><![CDATA["Memory Utilization %"]]></seriesExpression>
-						<categoryExpression><![CDATA[LEFT($F{date},10)]]></categoryExpression>
+						<categoryExpression><![CDATA[$F{date}]]></categoryExpression>
 						<valueExpression><![CDATA[FLOAT_VALUE($F{value1})]]></valueExpression>
 						<labelExpression><![CDATA[$F{date}]]></labelExpression>
 					</categorySeries>
@@ -48,7 +48,7 @@
 					<categoryAxisFormat labelRotation="74.0">
 						<axisFormat labelColor="#000000" tickLabelColor="#000000" axisLineColor="#000000">
 							<tickLabelFont>
-								<font size="9"/>
+								<font size="8"/>
 							</tickLabelFont>
 						</axisFormat>
 					</categoryAxisFormat>

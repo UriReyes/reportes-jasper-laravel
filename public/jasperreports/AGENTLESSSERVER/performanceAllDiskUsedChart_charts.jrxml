@@ -27,7 +27,7 @@
 		<band height="164" splitType="Stretch">
 			<lineChart>
 				<chart evaluationTime="Report">
-					<reportElement x="10" y="10" width="530" height="150" uuid="742736a2-caf2-49d9-a4ed-eadb4d32eedb"/>
+					<reportElement x="10" y="10" width="530" height="150" uuid="bb30f13d-bd65-4d5d-ab0c-972a63252208"/>
 					<chartTitle/>
 					<chartSubtitle/>
 					<chartLegend/>
@@ -36,7 +36,7 @@
 					<dataset resetType="Report"/>
 					<categorySeries>
 						<seriesExpression><![CDATA["Disk Usage %"]]></seriesExpression>
-						<categoryExpression><![CDATA[LEFT($F{date},10)]]></categoryExpression>
+						<categoryExpression><![CDATA[$F{date}]]></categoryExpression>
 						<valueExpression><![CDATA[FLOAT_VALUE($F{value1})]]></valueExpression>
 					</categorySeries>
 				</categoryDataset>

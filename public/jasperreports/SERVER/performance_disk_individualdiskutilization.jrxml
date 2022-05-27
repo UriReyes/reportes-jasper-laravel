@@ -33,7 +33,7 @@
 		<band height="256">
 			<stackedBarChart>
 				<chart evaluationTime="Report">
-					<reportElement x="10" y="37" width="528" height="213" uuid="59e1d834-41e2-4176-902b-8f42a9344640"/>
+					<reportElement x="10" y="37" width="528" height="213" uuid="c4f0f255-57e2-4e1f-9a1f-516f6138603e"/>
 					<chartTitle/>
 					<chartSubtitle/>
 					<chartLegend/>
@@ -67,7 +67,7 @@
 								<font size="9"/>
 							</labelFont>
 							<tickLabelFont>
-								<font size="9"/>
+								<font size="8"/>
 							</tickLabelFont>
 						</axisFormat>
 					</categoryAxisFormat>

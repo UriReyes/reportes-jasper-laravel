@@ -28,7 +28,7 @@
 		<band height="178" splitType="Stretch">
 			<lineChart>
 				<chart evaluationTime="Report">
-					<reportElement x="10" y="0" width="510" height="170" uuid="53aacfa6-2a69-4525-a26d-d8f882c7e84e"/>
+					<reportElement x="10" y="0" width="510" height="170" uuid="657cdefb-381f-4d2e-97ad-9dcb6c48f0f1"/>
 					<chartTitle/>
 					<chartSubtitle/>
 					<chartLegend/>
@@ -37,7 +37,7 @@
 					<dataset resetType="Report"/>
 					<categorySeries>
 						<seriesExpression><![CDATA["Network Usage (kbps)"]]></seriesExpression>
-						<categoryExpression><![CDATA[LEFT($F{date},10)]]></categoryExpression>
+						<categoryExpression><![CDATA[$F{date}]]></categoryExpression>
 						<valueExpression><![CDATA[FLOAT_VALUE($F{value1})]]></valueExpression>
 						<labelExpression><![CDATA[$F{date}]]></labelExpression>
 					</categorySeries>
@@ -49,7 +49,7 @@
 					<categoryAxisFormat labelRotation="74.0">
 						<axisFormat labelColor="#000000" tickLabelColor="#000000" axisLineColor="#000000">
 							<tickLabelFont>
-								<font size="9"/>
+								<font size="8"/>
 							</tickLabelFont>
 						</axisFormat>
 					</categoryAxisFormat>

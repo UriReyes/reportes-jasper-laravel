@@ -14,15 +14,15 @@
 	<queryString language="json">
 		<![CDATA[customer.performance_disk.data.chart_data.IndividualDiskUtilizationTimeChart.chart_data]]>
 	</queryString>
-	<field name="disk" class="java.lang.String">
-		<property name="net.sf.jasperreports.json.field.expression" value="disk"/>
-		<fieldDescription><![CDATA[disk]]></fieldDescription>
-	</field>
 	<field name="value1" class="java.math.BigDecimal">
 		<property name="net.sf.jasperreports.json.field.expression" value="value1"/>
 		<fieldDescription><![CDATA[value1]]></fieldDescription>
 	</field>
-	<sortField name="disk"/>
+	<field name="date" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="date"/>
+		<fieldDescription><![CDATA[date]]></fieldDescription>
+	</field>
+	<sortField name="date"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -30,7 +30,7 @@
 		<band height="140" splitType="Stretch">
 			<lineChart>
 				<chart evaluationTime="Report">
-					<reportElement x="10" y="0" width="530" height="130" uuid="2c627060-0fec-406b-9fec-660179239129"/>
+					<reportElement x="10" y="0" width="530" height="130" uuid="85c7bc2f-713b-4a5f-9052-bded3e22e7dd"/>
 					<chartTitle/>
 					<chartSubtitle/>
 					<chartLegend/>
@@ -39,7 +39,7 @@
 					<dataset resetType="Report"/>
 					<categorySeries>
 						<seriesExpression><![CDATA["Disk Usage %"]]></seriesExpression>
-						<categoryExpression><![CDATA[LEFT($F{disk},10)]]></categoryExpression>
+						<categoryExpression><![CDATA[$F{date}]]></categoryExpression>
 						<valueExpression><![CDATA[$F{value1}]]></valueExpression>
 					</categorySeries>
 				</categoryDataset>

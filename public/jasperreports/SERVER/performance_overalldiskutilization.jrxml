@@ -78,7 +78,7 @@
 			</staticText>
 			<pieChart>
 				<chart isShowLegend="false" evaluationTime="Report">
-					<reportElement x="47" y="60" width="233" height="130" uuid="306a8d3e-522b-4f2a-92af-b4cba67ac858"/>
+					<reportElement x="47" y="60" width="233" height="130" uuid="a78adb2b-680e-4135-bc3e-ba7e3eef7f74"/>
 					<chartTitle/>
 					<chartSubtitle/>
 					<chartLegend>
@@ -89,7 +89,7 @@
 					<dataset resetType="Report"/>
 					<pieSeries>
 						<keyExpression><![CDATA["Used Space"]]></keyExpression>
-						<valueExpression><![CDATA[INTEGER_VALUE(RIGHT(LEFT($F{average},3),2))]]></valueExpression>
+						<valueExpression><![CDATA[FLOAT_VALUE(LEFT($F{average},FIND($F{average},",")).replace( "[",""))]]></valueExpression>
 						<labelExpression><![CDATA["Used Space \n" + LEFT($F{average},FIND($F{average},",")).replace( "[","") + " %"]]></labelExpression>
 					</pieSeries>
 					<pieSeries>

@@ -85,7 +85,7 @@
 								<font size="7"/>
 							</labelFont>
 							<tickLabelFont>
-								<font size="9" isBold="false"/>
+								<font size="8" isBold="false"/>
 							</tickLabelFont>
 						</axisFormat>
 					</categoryAxisFormat>
