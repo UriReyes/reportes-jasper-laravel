@@ -9,6 +9,7 @@ use App\Traits\GenerarReportesSite24x7;
 use App\Traits\ReestructurarDatosAPISite24x7;
 use Livewire\Component;
 use Jenssegers\Date\Date;
+use Carbon\Carbon;
 
 class ExportAllReports extends Component
 {
@@ -21,12 +22,12 @@ class ExportAllReports extends Component
     public $completed_reports = 0;
     public $percentage_customers = 0;
     public $completed_customers = 0;
-    public $period_report;
+    public $period_report = 7;
 
     public function mount()
     {
         Date::setLocale('es');
-        $this->last_month = ucfirst(Date::now()->subMonth()->format('F'));
+        $this->last_month = ucfirst(Date::now()->firstOfMonth()->subMonth()->format('F'));
     }
 
     public function render()
@@ -43,6 +44,7 @@ class ExportAllReports extends Component
         $refresh_token = $this->getRefreshToken();
 
         $customers_its = $this->getCustomers($site24x7Url, $refresh_token);
+        $start_time = microtime(true);
         foreach ($customers_its as $customer_it) {
             $customer_id = $customer_it['user_id'];
             $customer = $customer_it['name'];
@@ -56,8 +58,15 @@ class ExportAllReports extends Component
                 $this->processSite24x7Monitors($monitor, $site24x7Url, $refresh_token, $zaaid, $customer, $this->last_month);
                 $this->completed_reports++;
                 $this->percentage = $this->getPercentage($this->completed_reports, $this->totalMonitors);
-                event(new ProcessReport($this->totalMonitors, $this->percentage, $this->completed_reports, $zaaid, $customer));
+                event(new ProcessReport($this->totalMonitors, $this->percentage, $this->completed_reports, $zaaid, $customer, $refresh_token));
+                $finish_time = microtime(true);
+                $time = $finish_time - $start_time;
+                if($time > 3500){
+                    $refresh_token = $this->getRefreshToken();
+                    $start_time = microtime(true);
+                }
             }
+    
             $this->completed_customers++;
             $this->percentage_customers = $this->getPercentage($this->completed_customers, count($customers_its));
             event(new ProcessReports(count($customers_its), $this->percentage_customers, $this->completed_customers, $customer_id));

@@ -68,6 +68,10 @@ trait GenerarReportesSite24x7
     {
         //and $monitor['monitor_id'] == "417536000001287157"
         $monitor_id = $monitor['monitor_id'];
+        $current_status = $this->getCurrentStatus($site24x7Url,$zaaid,$refresh_token,$monitor_id);
+        $current_status = array_key_exists('status',$current_status) ? $current_status['status'] : 10;
+        if($this->isPermitedEstatus($current_status))
+        {
         if ($monitor['type'] == 'SERVER' and $monitor['state'] == 0) {
             $availability = $this->getAvailabilityReport($site24x7Url, $monitor_id, $zaaid, $refresh_token, "?period={$this->period_report}");
             $performance = $this->getPerformance($site24x7Url, $monitor_id, $zaaid, $refresh_token, "?unit_of_time=3&period={$this->period_report}");
@@ -200,7 +204,7 @@ trait GenerarReportesSite24x7
         //     $path_reports = $this->createFolderToCustomer($last_month, $customer_name, $monitor);
         //     $this->getJasperReport($customers,  str_replace(" ","_",$customer_name), $monitor['display_name'], $path_reports, $monitor_id, $monitor['type']);
         // }
-        // if ($monitor['type'] == 'DATASTORE' and $monitor['state'] == 0) {
+        // else if ($monitor['type'] == 'DATASTORE' and $monitor['state'] == 0) {
         //     $availability = $this->getAvailabilityReport($site24x7Url, $monitor_id, $zaaid, $refresh_token, "?period={$this->period_report}");
         //     $performance = $this->getPerformance($site24x7Url, $monitor_id, $zaaid, $refresh_token, "?unit_of_time=3&period={$this->period_report}");
         //     $performance_store = $this->getPerformanceDiskWidget($site24x7Url, $monitor_id, $zaaid, $refresh_token, "?period={$this->period_report}&widget_name=VMSTORAGE");
@@ -217,6 +221,23 @@ trait GenerarReportesSite24x7
         //     $path_reports = $this->createFolderToCustomer($last_month, $customer_name, $monitor);
         //     $this->getJasperReport($customers,  str_replace(" ","_",$customer_name), $monitor['display_name'], $path_reports, $monitor_id, $monitor['type']);
         // }  
+        // else if ($monitor['type'] == 'MSEXCHANGE' and $monitor['state'] == 0 and $monitor['monitor_id'] == "425201000000406079") {
+        //     $availability = $this->getAvailabilityReport($site24x7Url, $monitor_id, $zaaid, $refresh_token, "?period={$this->period_report}");
+        //     $performance = $this->getPerformance($site24x7Url, $monitor_id, $zaaid, $refresh_token, "?unit_of_time=3&period={$this->period_report}");
+        //     //dd($performance);
+        //     $customers = [
+        //         'customer' => [
+        //             'name' => $customer_name,
+        //             'zaaid' => $zaaid,
+        //             'monitor' => $monitor,
+        //             'availability' => $this->getUptimeDownTimeAndMaintenance($availability),
+        //             'performance' =>  $this->applyFormatToPerformance($performance),
+        //         ]
+        //     ];
+        //     $path_reports = $this->createFolderToCustomer($last_month, $customer_name, $monitor);
+        //     $this->getJasperReport($customers,  str_replace(" ","_",$customer_name), $monitor['display_name'], $path_reports, $monitor_id, $monitor['type']);
+        // } 
+        }
     }
 
     public function applyFormatToPerformance($performance)
@@ -297,6 +318,21 @@ trait GenerarReportesSite24x7
                     }
                     if (array_key_exists('DS-STORAGE', $pfm)) {
                         $newPerformances['DS-STORAGE'] = $this->getFormattedResponseDatastore($pfm['DS-STORAGE']);
+                    }
+                    if (array_key_exists('EdgeSMTPChart', $pfm)) {
+                        $newPerformances['EdgeSMTPChart'] = $this->getFormattedResponseWithTwoValues($pfm['EdgeSMTPChart']);
+                    }
+                    if (array_key_exists('ISCASRPCResponseChart', $pfm)) {
+                        $newPerformances['ISCASRPCResponseChart'] = $this->getFormattedResponseWithFourValues($pfm['ISCASRPCResponseChart']);
+                    }
+                    if (array_key_exists('HubSMTPChart', $pfm)) {
+                        $newPerformances['HubSMTPChart'] = $this->getFormattedResponseWithTwoValues($pfm['HubSMTPChart']);
+                    }
+                    if (array_key_exists('CASRespChart', $pfm)) {
+                        $newPerformances['CASRespChart'] = $this->getFormattedResponseWithTwoValues($pfm['CASRespChart']);
+                    }
+                    if (array_key_exists('UMAvailChart', $pfm)) {
+                        $newPerformances['UMAvailChart'] = $this->getFormattedResponseWithThreeValues($pfm['UMAvailChart']);
                     }
                 }
             }
@@ -435,5 +471,14 @@ trait GenerarReportesSite24x7
         }
         sort($performance_traffic_array);
         return $performance_traffic_array;
+    }
+
+    function isPermitedEstatus($current_status){
+        $permited_estatus=[0,1,2,3,7];
+        if(in_array(intval($current_status),$permited_estatus))
+        {
+            return true;
+        }
+        return false;
     }
 }

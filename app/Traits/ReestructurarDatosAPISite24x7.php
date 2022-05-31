@@ -98,6 +98,37 @@ trait ReestructurarDatosAPISite24x7
         }
     }
 
+    public function getFormattedResponseWithThreeValues($item)
+    {
+        if (array_key_exists('chart_data', $item)) {
+            $item['chart_data'] = array_map(function ($item) {
+                return [
+                    'date' => array_key_exists(0, $item) ? Carbon::parse($item[0])->format('d M Y') : null,
+                    'value1' => array_key_exists(1, $item) ? $item[1] : null,
+                    'value2' => array_key_exists(2, $item) ? $item[2] : null,
+                    'value3' => array_key_exists(3, $item) ? $item[3] : null,
+                ];
+            }, $item['chart_data']);
+            return $item;
+        }
+    }
+
+    public function getFormattedResponseWithFourValues($item)
+    {
+        if (array_key_exists('chart_data', $item)) {
+            $item['chart_data'] = array_map(function ($item) {
+                return [
+                    'date' => array_key_exists(0, $item) ? Carbon::parse($item[0])->format('d M Y') : null,
+                    'value1' => array_key_exists(1, $item) ? $item[1] : null,
+                    'value2' => array_key_exists(2, $item) ? $item[2] : null,
+                    'value3' => array_key_exists(3, $item) ? $item[3] : null,
+                    'value4' => array_key_exists(4, $item) ? $item[4] : null,
+                ];
+            }, $item['chart_data']);
+            return $item;
+        }
+    }
+
     public function getFormattedResponseMemorySQL($item)
     {
         if (array_key_exists('chart_data', $item)) {

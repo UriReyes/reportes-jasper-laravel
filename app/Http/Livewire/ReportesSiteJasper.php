@@ -15,14 +15,14 @@ class ReportesSiteJasper extends Component
     {
         Date::setLocale('es');
         $this->customers_its = $customers_its;
-        $this->last_month = ucfirst(Date::now()->subMonth()->format('F'));
+        $this->last_month = ucfirst(Date::now()->firstOfMonth()->subMonth()->format('F'));
     }
 
     public function updatedPeriod($value)
     {
         Date::setLocale('es');
         if ($value == 7) {
-            $this->last_month = ucfirst(Date::now()->subMonth()->format('F'));
+            $this->last_month = ucfirst(Date::now()->firstOfMonth()->subMonth()->format('F'));
         } else if ($value == 13) {
             $this->last_month = ucfirst(Date::now()->format('F'));
         }

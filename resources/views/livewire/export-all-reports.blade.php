@@ -48,7 +48,7 @@
                     </span>`
             });
             Livewire.on('current-percentage-customers', (data) => {
-                console.log(data);
+                //console.log(data);
                 let {
                     total_customers,
                     progress,
