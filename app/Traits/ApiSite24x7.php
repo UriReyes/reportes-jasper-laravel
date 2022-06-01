@@ -9,7 +9,7 @@ trait ApiSite24x7
     public function getRefreshToken()
     {
         $url = env('ZOHO_API_URL');
-        $response = Http::asForm()->post("{$url}/token", [
+        $response = Http::timeout(seconds:60)->asForm()->post("{$url}/token", data: [
             'client_id' => env('ZOHO_CLIENT_ID'),
             'client_secret' => env('ZOHO_CLIENT_SECRET'),
             'refresh_token' => env('ZOHO_REFRESH_TOKEN'),

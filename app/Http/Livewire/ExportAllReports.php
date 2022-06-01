@@ -58,7 +58,7 @@ class ExportAllReports extends Component
                 $this->processSite24x7Monitors($monitor, $site24x7Url, $refresh_token, $zaaid, $customer, $this->last_month);
                 $this->completed_reports++;
                 $this->percentage = $this->getPercentage($this->completed_reports, $this->totalMonitors);
-                event(new ProcessReport($this->totalMonitors, $this->percentage, $this->completed_reports, $zaaid, $customer, $refresh_token));
+                event(new ProcessReport($this->totalMonitors, $this->percentage, $this->completed_reports, $zaaid, $customer));
                 $finish_time = microtime(true);
                 $time = $finish_time - $start_time;
                 if($time > 3500){
