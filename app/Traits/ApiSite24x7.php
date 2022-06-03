@@ -9,7 +9,7 @@ trait ApiSite24x7
     public function getRefreshToken()
     {
         $url = env('ZOHO_API_URL');
-        $response = Http::timeout(300)->asForm()->post("{$url}/token", data: [
+        $response = Http::timeout(360)->asForm()->post("{$url}/token", data: [
             'client_id' => env('ZOHO_CLIENT_ID'),
             'client_secret' => env('ZOHO_CLIENT_SECRET'),
             'refresh_token' => env('ZOHO_REFRESH_TOKEN'),
@@ -22,7 +22,7 @@ trait ApiSite24x7
     public function getCustomers($url, $refresh_token)
     {
         $authorization = "Zoho-oauthtoken {$refresh_token}";
-        $response = Http::timeout(300)->withHeaders([
+        $response = Http::timeout(360)->withHeaders([
             'Content-Type' => 'application/json;charset=UTF-8',
             'Accept' => 'application/json; version=2.0',
             'Authorization' => $authorization
@@ -35,7 +35,7 @@ trait ApiSite24x7
     {
         $authorization = "Zoho-oauthtoken {$refresh_token}";
         $cookie = "zaaid={$zaaid}";
-        $response = Http::timeout(300)->withHeaders([
+        $response = Http::timeout(360)->withHeaders([
             'Content-Type' => 'application/json;charset=UTF-8',
             'Accept' => 'application/json; version=2.0',
             'Authorization' => $authorization,
@@ -49,7 +49,7 @@ trait ApiSite24x7
     {
         $authorization = "Zoho-oauthtoken {$refresh_token}";
         $cookie = "zaaid={$zaaid}";
-        $response = Http::timeout(300)->withHeaders([
+        $response = Http::timeout(360)->withHeaders([
             'Content-Type' => 'application/json;charset=UTF-8',
             'Accept' => 'application/json; version=2.0',
             'Authorization' => $authorization,
@@ -63,7 +63,7 @@ trait ApiSite24x7
     {
         $authorization = "Zoho-oauthtoken {$refresh_token}";
         $cookie = "zaaid={$zaaid}";
-        $response = Http::timeout(300)->withHeaders([
+        $response = Http::timeout(360)->withHeaders([
             'Content-Type' => 'application/json;charset=UTF-8',
             'Accept' => 'application/json; version=2.0',
             'Authorization' => $authorization,
@@ -77,7 +77,7 @@ trait ApiSite24x7
     {
         $authorization = "Zoho-oauthtoken {$refresh_token}";
         $cookie = "zaaid={$zaaid}";
-        $response = Http::timeout(300)->withHeaders([
+        $response = Http::timeout(360)->withHeaders([
             'Accept' => 'application/json; version=2.0',
             'Authorization' => $authorization,
             'Cookie' => $cookie
@@ -90,7 +90,7 @@ trait ApiSite24x7
     {
         $authorization = "Zoho-oauthtoken {$refresh_token}";
         $cookie = "zaaid={$zaaid}";
-        $response = Http::timeout(300)->withHeaders([
+        $response = Http::timeout(360)->withHeaders([
             'Accept' => 'application/json; version=2.0',
             'Authorization' => $authorization,
             'Cookie' => $cookie
@@ -102,7 +102,7 @@ trait ApiSite24x7
     {
         $authorization = "Zoho-oauthtoken {$refresh_token}";
         $cookie = "zaaid={$zaaid}";
-        $response = Http::timeout(300)->withHeaders([
+        $response = Http::timeout(360)->withHeaders([
             'Accept' => 'application/json; version=2.0',
             'Authorization' => $authorization,
             'Cookie' => $cookie
@@ -114,7 +114,7 @@ trait ApiSite24x7
     {
         $authorization = "Zoho-oauthtoken {$refresh_token}";
         $cookie = "zaaid={$zaaid}";
-        $response = Http::timeout(300)->withHeaders([
+        $response = Http::timeout(360)->withHeaders([
             'Accept' => 'application/json; version=2.0',
             'Authorization' => $authorization,
             'Cookie' => $cookie
