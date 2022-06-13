@@ -40,7 +40,9 @@ trait ReestructurarDatosAPISite24x7
                     'value' => array_key_exists(1, $item) ? $item[1] : null,
                 ];
             },  $OverallCPUChart['chart_data']);
-
+            usort($OverallCPUChart['chart_data'], function ($a, $b) {
+                return strtotime($a['date']) - strtotime($b['date']);
+            });
             return $OverallCPUChart;
         }
     }
@@ -54,6 +56,9 @@ trait ReestructurarDatosAPISite24x7
                     'value' => array_key_exists(1, $item) ? $item[1] : null,
                 ];
             }, $OverallMemoryChart['chart_data']);
+            usort($OverallMemoryChart['chart_data'], function ($a, $b) {
+                return strtotime($a['date']) - strtotime($b['date']);
+            });
             return $OverallMemoryChart;
         }
     }
@@ -68,9 +73,13 @@ trait ReestructurarDatosAPISite24x7
                     'performance2' => array_key_exists(2, $item) ? $item[2] : null,
                 ];
             }, $OverallDiskUtilization['chart_data']);
+            usort($OverallDiskUtilization['chart_data'], function ($a, $b) {
+                return strtotime($a['date']) - strtotime($b['date']);
+            });
             return $OverallDiskUtilization;
         }
     }
+    
     public function getFormattedResponse($item)
     {
         if (array_key_exists('chart_data', $item)) {
@@ -80,7 +89,11 @@ trait ReestructurarDatosAPISite24x7
                     'value1' => array_key_exists(1, $item) ? $item[1] : null,
                 ];
             }, $item['chart_data']);
+            usort($item['chart_data'], function ($a, $b) {
+                return strtotime($a['date']) - strtotime($b['date']);
+            });
             return $item;
+            
         }
     }
 
@@ -94,6 +107,9 @@ trait ReestructurarDatosAPISite24x7
                     'value2' => array_key_exists(2, $item) ? $item[2] : null,
                 ];
             }, $item['chart_data']);
+            usort($item['chart_data'], function ($a, $b) {
+                return strtotime($a['date']) - strtotime($b['date']);
+            });
             return $item;
         }
     }
@@ -109,6 +125,9 @@ trait ReestructurarDatosAPISite24x7
                     'value3' => array_key_exists(3, $item) ? $item[3] : null,
                 ];
             }, $item['chart_data']);
+            usort($item['chart_data'], function ($a, $b) {
+                return strtotime($a['date']) - strtotime($b['date']);
+            });
             return $item;
         }
     }
@@ -125,6 +144,9 @@ trait ReestructurarDatosAPISite24x7
                     'value4' => array_key_exists(4, $item) ? $item[4] : null,
                 ];
             }, $item['chart_data']);
+            usort($item['chart_data'], function ($a, $b) {
+                return strtotime($a['date']) - strtotime($b['date']);
+            });
             return $item;
         }
     }
@@ -144,6 +166,9 @@ trait ReestructurarDatosAPISite24x7
                     'GrantedWorkspaceM' => array_key_exists(7, $item) ? $item[7] : null,
                 ];
             }, $item['chart_data']);
+            usort($item['chart_data'], function ($a, $b) {
+                return strtotime($a['date']) - strtotime($b['date']);
+            });
             return $item;
         }
     }
@@ -176,6 +201,9 @@ trait ReestructurarDatosAPISite24x7
                             'value2' => array_key_exists(2, $item) ? $item[2] : null,
                         ];
                     }, $item['chart_data']);
+                    usort($item['chart_data'], function ($a, $b) {
+                        return strtotime($a['date']) - strtotime($b['date']);
+                    });
                     return $item;
                 }
             }
@@ -194,6 +222,9 @@ trait ReestructurarDatosAPISite24x7
                     'value2' => array_key_exists(2, $item) ? $item[2] : null,
                 ];
             }, $OverallDiskUsedChart['chart_data']);
+            usort($OverallDiskUsedChart['chart_data'], function ($a, $b) {
+                return strtotime($a['date']) - strtotime($b['date']);
+            });
             return $OverallDiskUsedChart;
         }
     }
@@ -208,6 +239,9 @@ trait ReestructurarDatosAPISite24x7
                     'value2' => array_key_exists(2, $item) ? $item[2] : null,
                 ];
             }, $DiskIO['chart_data']);
+            usort($DiskIO['chart_data'], function ($a, $b) {
+                return strtotime($a['date']) - strtotime($b['date']);
+            });
             return $DiskIO;
         }
     }
@@ -222,6 +256,9 @@ trait ReestructurarDatosAPISite24x7
                 ];
             }, $item['chart_data']);
             $item['metric']=$key;
+            usort($item['chart_data'], function ($a, $b) {
+                return strtotime($a['date']) - strtotime($b['date']);
+            });
             return $item;
         }
     }
@@ -238,6 +275,9 @@ trait ReestructurarDatosAPISite24x7
                             'value1' => array_key_exists(1, $item) ? $item[1] : null,
                         ];
                     }, $item['chart_data']);
+                    usort($item['chart_data'], function ($a, $b) {
+                        return strtotime($a['date']) - strtotime($b['date']);
+                    });
                     array_push($trafficArray,$item);
                 }
             }
@@ -259,7 +299,52 @@ trait ReestructurarDatosAPISite24x7
                     'Free Space' => array_key_exists(6, $item) ? $item[6] : null,
                 ];
             }, $item['chart_data']);
+            usort($item['chart_data'], function ($a, $b) {
+                return strtotime($a['date']) - strtotime($b['date']);
+            });
             return $item;
         }
+    }
+
+    public function getFormattedResponseTimeReportURL($item)
+    {
+        if (array_key_exists('chart_data', $item)) {
+            $item['chart_data'] = array_map(function ($item) {
+                return [
+                    'date' => array_key_exists(0, $item) ? Carbon::parse($item[0])->format('d M Y') : null,
+                    'DNSTime' => array_key_exists(1, $item) ? $item[1] : null,
+                    'ConnectionTime' => array_key_exists(2, $item) ? $item[2] : null,
+                    'SSLHandshakeTime' => array_key_exists(3, $item) ? $item[3] : null,
+                    'FirstByteTime' => array_key_exists(4, $item) ? $item[4] : null,
+                    'DownloadTime' => array_key_exists(5, $item) ? $item[5] : null,
+                ];
+            }, $item['chart_data']);
+            usort($item['chart_data'], function ($a, $b) {
+                return strtotime($a['date']) - strtotime($b['date']);
+            });
+            return $item;
+        }
+    }
+
+    public function getFormattedLocationResponseTime($locationResponse)
+    {
+        $locationResponse = array_map(function ($items) {
+            foreach ($items as $item) {
+                if (array_key_exists('chart_data', $item)) {
+                    $item['chart_data'] = array_map(function ($item) {
+                        return [
+                            'date' => array_key_exists(0, $item) ? Carbon::parse($item[0])->format('d M Y') : null,
+                            'value1' => array_key_exists(1, $item) ? $item[1] : null,
+                        ];
+                    }, $item['chart_data']);
+                    usort($item['chart_data'], function ($a, $b) {
+                        return strtotime($a['date']) - strtotime($b['date']);
+                    });
+                    return $item;
+                }
+            }
+        }, $locationResponse);
+
+        return $locationResponse;
     }
 }
