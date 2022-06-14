@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.19.1.final using JasperReports Library version 6.19.1-867c00bf88cd4d784d404379d6c05e1b419e8a4c  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="performance_DBDetails_Widget_charts" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="2c46b3df-1997-4372-8cd7-96415e2625a4">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Adapter API - KIO"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<property name="com.jaspersoft.studio.report.description" value=""/>
+	<queryString language="json">
+		<![CDATA[customer.performance_db.data.widgets]]>
+	</queryString>
+	<field name="ACTIVETRANSACTIONS" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="ACTIVETRANSACTIONS"/>
+		<fieldDescription><![CDATA[ACTIVETRANSACTIONS]]></fieldDescription>
+	</field>
+	<field name="LOGFILESIZE" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="LOGFILESIZE"/>
+		<fieldDescription><![CDATA[LOGFILESIZE]]></fieldDescription>
+	</field>
+	<field name="LOGSHRINK" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="LOGSHRINK"/>
+		<fieldDescription><![CDATA[LOGSHRINK]]></fieldDescription>
+	</field>
+	<field name="LOGCACHEHIT" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="LOGCACHEHIT"/>
+		<fieldDescription><![CDATA[LOGCACHEHIT]]></fieldDescription>
+	</field>
+	<field name="TRANSACTIONS" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="TRANSACTIONS"/>
+		<fieldDescription><![CDATA[TRANSACTIONS]]></fieldDescription>
+	</field>
+	<field name="DATAFILESIZE" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="DATAFILESIZE"/>
+		<fieldDescription><![CDATA[DATAFILESIZE]]></fieldDescription>
+	</field>
+	<field name="LOGGROWTH" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="LOGGROWTH"/>
+		<fieldDescription><![CDATA[LOGGROWTH]]></fieldDescription>
+	</field>
+	<field name="DBNAME" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="DBNAME"/>
+		<fieldDescription><![CDATA[DBNAME]]></fieldDescription>
+	</field>
+	<field name="LOGFILEUSEDSIZE" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="LOGFILEUSEDSIZE"/>
+		<fieldDescription><![CDATA[LOGFILEUSEDSIZE]]></fieldDescription>
+	</field>
+	<sortField name="DATAFILESIZE" order="Descending"/>
+	<title>
+		<band height="255" splitType="Stretch">
+			<stackedBarChart>
+				<chart evaluationTime="Report">
+					<reportElement x="10" y="36" width="520" height="174" uuid="489751af-388a-4742-a269-d4e167a9f2c2"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend>
+						<font size="7"/>
+					</chartLegend>
+				</chart>
+				<categoryDataset>
+					<dataset resetType="Report"/>
+					<categorySeries>
+						<seriesExpression><![CDATA["GB"]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{DBNAME}]]></categoryExpression>
+						<valueExpression><![CDATA[FLOAT_VALUE($F{DATAFILESIZE})]]></valueExpression>
+					</categorySeries>
+				</categoryDataset>
+				<barPlot isShowLabels="true">
+					<plot labelRotation="74.0">
+						<seriesColor seriesOrder="0" color="#2EC36E"/>
+					</plot>
+					<itemLabel>
+						<font size="8"/>
+					</itemLabel>
+					<categoryAxisFormat labelRotation="74.0">
+						<axisFormat labelColor="#000000" tickLabelColor="#000000" axisLineColor="#000000">
+							<labelFont>
+								<font size="9"/>
+							</labelFont>
+							<tickLabelFont>
+								<font size="7" isBold="false"/>
+							</tickLabelFont>
+						</axisFormat>
+					</categoryAxisFormat>
+					<valueAxisFormat>
+						<axisFormat labelColor="#000000" tickLabelColor="#000000" axisLineColor="#000000">
+							<labelFont>
+								<font size="8"/>
+							</labelFont>
+							<tickLabelFont>
+								<font size="9"/>
+							</tickLabelFont>
+						</axisFormat>
+					</valueAxisFormat>
+				</barPlot>
+			</stackedBarChart>
+			<staticText>
+				<reportElement x="12" y="12" width="308" height="20" uuid="8c26c130-bea0-4156-8ae2-b659da88fb49">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Data Space Utilization]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="211" width="150" height="20" uuid="fe9f8948-739e-4402-82ed-8d298ec99841">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Database Details]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="100" y="240" width="58" height="12" forecolor="#424242" uuid="db108ef6-2659-492b-83be-0d4b2daadadd">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Data File Size (GB)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="20" y="240" width="70" height="12" forecolor="#424242" uuid="4f2f8d19-8775-4e32-8789-7ea59419720e"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Database Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="162" y="240" width="58" height="12" forecolor="#424242" uuid="d0c0afa6-91b0-471f-8a4f-75eca932fc77">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Log Cache Hit Ratio (%)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="224" y="240" width="58" height="12" forecolor="#424242" uuid="1b6e9091-fdc9-4e28-bcae-bac6a5afed7f">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Log File Size (GB)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="284" y="240" width="58" height="12" forecolor="#424242" uuid="faad7af9-891a-4e13-b34e-383db679151b">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Log File Used Size (GB)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="345" y="240" width="58" height="12" forecolor="#424242" uuid="f4cc1441-9393-4d72-8667-e734f3d0dcdf">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Log Growths]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="406" y="240" width="58" height="12" forecolor="#424242" uuid="dd1c9e03-ef2f-4f54-bb44-17e09d19264e">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Log Shrinks]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="466" y="240" width="73" height="12" forecolor="#424242" uuid="b28d6cc5-2d1b-425b-bfc2-cefae8fc1954">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Transaction / sec]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="20">
+			<textField>
+				<reportElement x="20" y="3" width="70" height="13" uuid="1e460103-01bf-4ae5-91e6-04b1508894b8">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DBNAME}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="103" y="3" width="55" height="13" uuid="872750ab-2363-487e-bef1-92d71c9e852d">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DATAFILESIZE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="165" y="3" width="55" height="13" uuid="358be84c-0ecd-4601-9e6f-88698d9ad843">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{LOGCACHEHIT}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="227" y="3" width="55" height="13" uuid="4b1c386d-4db6-4b44-929e-c2311c512c3e">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{LOGFILESIZE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="287" y="3" width="55" height="13" uuid="7b5f598d-8605-4418-a7e4-dac706dedfa2">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{LOGFILEUSEDSIZE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="348" y="3" width="55" height="13" uuid="da259a2d-e6b0-432c-bdcb-97617ed7b043">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{LOGGROWTH}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="409" y="3" width="55" height="13" uuid="c4d9b912-42e0-4269-b205-17b15d00b22c">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{LOGSHRINK}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="484" y="3" width="55" height="13" uuid="167c46c3-bee5-44f1-b9f8-19ff51715dce">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TRANSACTIONS}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

@@ -87,79 +87,114 @@
 		</band>
 	</title>
 	<detail>
-		<band height="47" splitType="Stretch">
+		<band height="38" splitType="Stretch">
 			<subreport>
-				<reportElement x="3" y="10" width="550" height="27" uuid="22b32f6d-4f26-4cc0-8493-7a1f6fdb311f"/>
+				<reportElement x="3" y="5" width="550" height="27" uuid="22b32f6d-4f26-4cc0-8493-7a1f6fdb311f"/>
 				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("monitor")]]></dataSourceExpression>
 				<subreportExpression><![CDATA["C:\\Users\\David Orozco\\JaspersoftWorkspace\\Informes KIO - Final\\SERVER\\monitor.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
-		<band height="43">
+		<band height="41">
 			<subreport>
-				<reportElement x="3" y="5" width="551" height="35" uuid="ab05a58c-2638-48a0-94b5-95c2f22773fb"/>
+				<reportElement x="1" y="4" width="551" height="30" uuid="ab05a58c-2638-48a0-94b5-95c2f22773fb">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
 				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("availability.data")]]></dataSourceExpression>
 				<subreportExpression><![CDATA["C:\\Users\\David Orozco\\JaspersoftWorkspace\\Informes KIO - Final\\SERVER\\availability.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
-		<band height="50">
+		<band height="39">
 			<subreport overflowType="Stretch">
-				<reportElement x="2" y="10" width="551" height="30" uuid="734ae9e1-1be9-4b35-b670-5d575fbfa187"/>
+				<reportElement x="2" y="4" width="551" height="30" uuid="afc1c42d-ab12-48d0-8e8d-e28b7cc23e7e"/>
+				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("ServerUptime.data.chart_data.chart_data")]]></dataSourceExpression>
+				<subreportExpression><![CDATA["C:\\Users\\David Orozco\\JaspersoftWorkspace\\Informes KIO - Final\\SERVER\\performance_uptimechart.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="39">
+			<subreport overflowType="Stretch">
+				<reportElement x="2" y="5" width="551" height="30" uuid="734ae9e1-1be9-4b35-b670-5d575fbfa187"/>
 				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("availability.data.charts.data.uptimes")]]></dataSourceExpression>
 				<subreportExpression><![CDATA["C:\\Users\\David Orozco\\JaspersoftWorkspace\\Informes KIO - Final\\SERVER\\graficas.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
-		<band height="50">
+		<band height="37">
 			<subreport>
-				<reportElement x="2" y="4" width="551" height="40" uuid="41fa938e-2d9d-438c-af4e-52c02ce1dfd2"/>
+				<reportElement x="2" y="4" width="551" height="30" uuid="41fa938e-2d9d-438c-af4e-52c02ce1dfd2">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
 				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("performance.data.chart_data.OverallCPUChart")]]></dataSourceExpression>
 				<subreportExpression><![CDATA["C:\\Users\\David Orozco\\JaspersoftWorkspace\\Informes KIO - Final\\SERVER\\performance_overallcpuchart.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
-		<band height="50">
+		<band height="42">
 			<subreport>
-				<reportElement x="2" y="10" width="549" height="30" uuid="5f307152-bbae-4bde-81d1-842fe94f3239"/>
+				<reportElement x="2" y="6" width="549" height="30" uuid="5f307152-bbae-4bde-81d1-842fe94f3239"/>
 				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("performance.data.chart_data.OverallMemoryChart")]]></dataSourceExpression>
 				<subreportExpression><![CDATA["C:\\Users\\David Orozco\\JaspersoftWorkspace\\Informes KIO - Final\\SERVER\\performance_overallmemorychart.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
-		<band height="50">
+		<band height="45">
 			<subreport>
-				<reportElement x="2" y="8" width="551" height="35" uuid="fd4cc73e-f486-4104-91a6-2e36ee5e8601"/>
+				<reportElement x="2" y="8" width="551" height="30" uuid="fd4cc73e-f486-4104-91a6-2e36ee5e8601">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
 				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("performance.data.chart_data.OverallDiskUtilization")]]></dataSourceExpression>
 				<subreportExpression><![CDATA["C:\\Users\\David Orozco\\JaspersoftWorkspace\\Informes KIO - Final\\SERVER\\performance_overalldiskutilization.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
-		<band height="62">
+		<band height="43">
 			<subreport>
-				<reportElement x="2" y="10" width="552" height="40" uuid="3a1fbcf6-7253-4d2e-bad5-9561ed95800b"/>
+				<reportElement x="2" y="6" width="552" height="30" uuid="3a1fbcf6-7253-4d2e-bad5-9561ed95800b">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
 				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("performance_disk.data.chart_data.OverallDiskUsedChart")]]></dataSourceExpression>
 				<subreportExpression><![CDATA["C:\\Users\\David Orozco\\JaspersoftWorkspace\\Informes KIO - Final\\SERVER\\performance_disk_table.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
-		<band height="61">
+		<band height="42">
 			<subreport>
-				<reportElement x="2" y="10" width="552" height="40" uuid="adb1612a-9d0f-42b7-92ba-142bdfaefb8b"/>
+				<reportElement x="2" y="7" width="552" height="30" uuid="adb1612a-9d0f-42b7-92ba-142bdfaefb8b">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
 				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("performance_disk.data.chart_data.IndividualDiskUtilization.chart_data")]]></dataSourceExpression>
 				<subreportExpression><![CDATA["C:\\Users\\David Orozco\\JaspersoftWorkspace\\Informes KIO - Final\\SERVER\\performance_disk_individualdiskutilization.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
-		<band height="57">
+		<band height="42">
 			<subreport>
-				<reportElement x="3" y="10" width="550" height="38" uuid="8c3890e4-d28d-41b0-9d3b-5315324d0488"/>
+				<reportElement x="3" y="6" width="550" height="30" uuid="8c3890e4-d28d-41b0-9d3b-5315324d0488">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
 				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("performance_disk.data.chart_data.IndividualDiskUtilizationTimeChart")]]></dataSourceExpression>
 				<subreportExpression><![CDATA["C:\\Users\\David Orozco\\JaspersoftWorkspace\\Informes KIO - Final\\SERVER\\performance_disk_individualdiskutilizationtimechart.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
+		<band height="50">
+			<subreport>
+				<reportElement x="4" y="13" width="550" height="30" uuid="d3e54d8d-0efb-440f-b87d-5ee7528a9c82">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("performance_diskdetail.data.widgets")]]></dataSourceExpression>
+				<subreportExpression><![CDATA["C:\\Users\\David Orozco\\JaspersoftWorkspace\\Informes KIO - Final\\SERVER\\performance_DiskDetail_Widget_charts.jasper"]]></subreportExpression>
+			</subreport>
+			<break>
+				<reportElement x="0" y="4" width="100" height="1" uuid="b2c59553-4c87-44d4-bdfc-025a0537de45"/>
+			</break>
+		</band>
 	</detail>
 	<pageFooter>
-		<band height="41">
+		<band height="29">
 			<textField>
-				<reportElement x="388" y="7" width="100" height="30" uuid="c775df85-51c6-4594-aa78-02179ab4f669"/>
+				<reportElement x="300" y="7" width="188" height="20" uuid="c775df85-51c6-4594-aa78-02179ab4f669">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA["Page " + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report">
-				<reportElement x="488" y="7" width="66" height="30" uuid="15da5835-70e8-4610-9f3b-1c408fc24957"/>
+				<reportElement x="488" y="7" width="66" height="20" uuid="15da5835-70e8-4610-9f3b-1c408fc24957">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
 				<textElement textAlignment="Left"/>
 				<textFieldExpression><![CDATA[" of " + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>

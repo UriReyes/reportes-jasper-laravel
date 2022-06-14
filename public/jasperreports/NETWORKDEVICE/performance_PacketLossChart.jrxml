@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.19.1.final using JasperReports Library version 6.19.1-867c00bf88cd4d784d404379d6c05e1b419e8a4c  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="performance_PacketLossChart" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="769bcdef-003b-4415-9efa-412203ab8dd9">
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Adapter API - KIO"/>
+	<property name="com.jaspersoft.studio.report.description" value=""/>
+	<property name="net.sf.jasperreports.export.pdf.compressed" value="true"/>
+	<queryString language="json">
+		<![CDATA[customer.performance.data.chart_data.PacketLossChart]]>
+	</queryString>
+	<field name="95_percentile" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="95_percentile"/>
+		<fieldDescription><![CDATA[95_percentile]]></fieldDescription>
+	</field>
+	<field name="average" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="average"/>
+		<fieldDescription><![CDATA[average]]></fieldDescription>
+	</field>
+	<field name="min" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="min"/>
+		<fieldDescription><![CDATA[min]]></fieldDescription>
+	</field>
+	<field name="max" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="max"/>
+		<fieldDescription><![CDATA[max]]></fieldDescription>
+	</field>
+	<title>
+		<band height="128" splitType="Stretch">
+			<subreport>
+				<reportElement x="9" y="46" width="521" height="70" uuid="632ff9d4-ed64-4718-9c87-461e90f69d61"/>
+				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("chart_data")]]></dataSourceExpression>
+				<subreportExpression><![CDATA["C:\\Users\\David Orozco\\JaspersoftWorkspace\\Informes KIO - Final\\NETWORKDEVICE\\performance_PacketLossChart_charts.jasper"]]></subreportExpression>
+			</subreport>
+			<textField>
+				<reportElement x="190" y="20" width="100" height="20" uuid="8ddce0d7-a854-4796-b59e-b69cbfd9de3f"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[TEXT(FLOAT_VALUE($F{average}.replace( "[","").replace( "]","")),"#,##0.00") + " %"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="190" y="0" width="100" height="20" uuid="dd99812e-f100-4213-ae1e-453e0e1bf4b4"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Average]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="310" y="0" width="100" height="20" uuid="0d84c31a-5b38-4251-acfa-f6ef3c068d35"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Minimum]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="310" y="20" width="100" height="20" uuid="b70474e4-1dbf-4d0a-a9f5-e387f51b4038"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[TEXT(FLOAT_VALUE($F{min}.replace( "[","").replace( "]","")),"#,##0.00") + " %"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="430" y="0" width="100" height="20" uuid="77b350b5-eede-40a1-81e5-de76ac5f79be"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Maximum]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="430" y="20" width="100" height="20" uuid="01d5fe2d-fccd-4d17-ac9f-b092cbdf9a39"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[TEXT(FLOAT_VALUE($F{max}.replace( "[","").replace( "]","")),"#,##0.00") + " %"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="22" width="170" height="23" uuid="deeb9823-6f21-4aff-9898-bc0df6d02fdc"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Packet Loss (%)]]></text>
+			</staticText>
+		</band>
+	</title>
+</jasperReport>

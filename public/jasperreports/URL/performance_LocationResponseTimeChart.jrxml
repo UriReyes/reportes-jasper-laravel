@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.19.1.final using JasperReports Library version 6.19.1-867c00bf88cd4d784d404379d6c05e1b419e8a4c  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="performance_LocationResponseTimeChart" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="d5b5301d-fde4-4896-8fc4-06d194f09c15">
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Adapter API - KIO"/>
+	<property name="com.jaspersoft.studio.report.description" value=""/>
+	<queryString language="json">
+		<![CDATA[customer.performance.data.chart_data.LocationResponseTimeChart]]>
+	</queryString>
+	<field name="average" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="average"/>
+		<fieldDescription><![CDATA[average]]></fieldDescription>
+	</field>
+	<field name="min" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="min"/>
+		<fieldDescription><![CDATA[min]]></fieldDescription>
+	</field>
+	<field name="max" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="max"/>
+		<fieldDescription><![CDATA[max]]></fieldDescription>
+	</field>
+	<field name="label" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="label"/>
+		<fieldDescription><![CDATA[label]]></fieldDescription>
+	</field>
+	<title>
+		<band height="28" splitType="Stretch">
+			<staticText>
+				<reportElement x="12" y="5" width="287" height="23" uuid="066a1159-1a54-4047-82e2-70d2ee752812"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Response Time By Location]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="107">
+			<textField>
+				<reportElement x="323" y="29" width="65" height="20" uuid="cbdec456-ec70-4b5c-a35e-e1a00ca84b83">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[TEXT(FLOAT_VALUE($F{average}.replace( "[","").replace( "]","")),"##,###")  + " ms"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="323" y="9" width="65" height="20" uuid="93759df6-30f2-4149-8051-6387e6aebed8">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Average]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="394" y="9" width="65" height="20" uuid="34343a2a-04e9-4ede-8a95-24fc0373b467">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Minimum]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="394" y="29" width="65" height="20" uuid="91fa461c-9f61-4dcc-a291-142c6459ce54">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[TEXT(FLOAT_VALUE($F{min}.replace( "[","").replace( "]","")),"##,###")  + " ms"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="464" y="9" width="65" height="20" uuid="1acb6408-30bc-41c2-9de9-14255d1c9f0b">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Maximum]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="464" y="29" width="65" height="20" uuid="6d1ed720-ca1d-4133-8e12-f59d4940e863">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[TEXT(FLOAT_VALUE($F{max}.replace( "[","").replace( "]","")),"##,###")  + " ms"]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement x="11" y="49" width="521" height="51" uuid="d6681919-726f-45c9-8781-2a6db53f50ee"/>
+				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("chart_data")]]></dataSourceExpression>
+				<subreportExpression><![CDATA["C:\\Users\\David Orozco\\JaspersoftWorkspace\\Informes KIO - Final\\URL\\performance_LocationResponseTimeChart_charts.jasper"]]></subreportExpression>
+			</subreport>
+			<textField>
+				<reportElement x="30" y="9" width="260" height="19" uuid="8a5b2027-2746-4c41-9f31-0da9143f6e54"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{label}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

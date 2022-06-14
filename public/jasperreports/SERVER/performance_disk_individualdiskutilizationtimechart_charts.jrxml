@@ -22,7 +22,6 @@
 		<property name="net.sf.jasperreports.json.field.expression" value="date"/>
 		<fieldDescription><![CDATA[date]]></fieldDescription>
 	</field>
-	<sortField name="date"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>

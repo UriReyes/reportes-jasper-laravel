@@ -27,9 +27,9 @@
 		<fieldDescription><![CDATA[max]]></fieldDescription>
 	</field>
 	<title>
-		<band height="128" splitType="Stretch">
+		<band height="100" splitType="Stretch">
 			<subreport>
-				<reportElement x="9" y="46" width="521" height="70" uuid="632ff9d4-ed64-4718-9c87-461e90f69d61"/>
+				<reportElement x="9" y="46" width="521" height="54" uuid="632ff9d4-ed64-4718-9c87-461e90f69d61"/>
 				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("chart_data")]]></dataSourceExpression>
 				<subreportExpression><![CDATA["C:\\Users\\David Orozco\\JaspersoftWorkspace\\Informes KIO - Final\\AGENTLESSSERVER\\performanceMemoryUtilChart_charts.jasper"]]></subreportExpression>
 			</subreport>

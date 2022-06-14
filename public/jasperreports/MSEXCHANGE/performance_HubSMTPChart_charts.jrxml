@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.19.1.final using JasperReports Library version 6.19.1-867c00bf88cd4d784d404379d6c05e1b419e8a4c  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="performance_ResponseTimeReportChart_charts" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="fe5f42c9-00fa-4c1e-8412-d7c61d619a21">
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Adapter API - KIO"/>
+	<property name="com.jaspersoft.studio.report.description" value=""/>
+	<queryString language="json">
+		<![CDATA[customer.performance.data.chart_data.ResponseTimeReportChart.chart_data]]>
+	</queryString>
+	<field name="date" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="date"/>
+		<fieldDescription><![CDATA[date]]></fieldDescription>
+	</field>
+	<field name="DNSTime" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="DNSTime"/>
+		<fieldDescription><![CDATA[DNSTime]]></fieldDescription>
+	</field>
+	<field name="ConnectionTime" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="ConnectionTime"/>
+		<fieldDescription><![CDATA[ConnectionTime]]></fieldDescription>
+	</field>
+	<field name="SSLHandshakeTime" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="SSLHandshakeTime"/>
+		<fieldDescription><![CDATA[SSLHandshakeTime]]></fieldDescription>
+	</field>
+	<field name="FirstByteTime" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="FirstByteTime"/>
+		<fieldDescription><![CDATA[FirstByteTime]]></fieldDescription>
+	</field>
+	<field name="DownloadTime" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="DownloadTime"/>
+		<fieldDescription><![CDATA[DownloadTime]]></fieldDescription>
+	</field>
+	<variable name="Variable_1" class="java.lang.String">
+		<variableExpression><![CDATA[IF($F{DNSTime}.isEmpty(),"0",$F{DNSTime})]]></variableExpression>
+	</variable>
+	<variable name="Variable_2" class="java.lang.String">
+		<variableExpression><![CDATA[IF($F{ConnectionTime}.isEmpty(),"0",$F{ConnectionTime})]]></variableExpression>
+	</variable>
+	<variable name="Variable_3" class="java.lang.String">
+		<variableExpression><![CDATA[IF($F{SSLHandshakeTime}.isEmpty(),"0",$F{SSLHandshakeTime})]]></variableExpression>
+	</variable>
+	<variable name="Variable_4" class="java.lang.String">
+		<variableExpression><![CDATA[IF($F{FirstByteTime}.isEmpty(),"0",$F{FirstByteTime})]]></variableExpression>
+	</variable>
+	<variable name="Variable_5" class="java.lang.String">
+		<variableExpression><![CDATA[IF($F{DownloadTime}.isEmpty(),"0",$F{DownloadTime})]]></variableExpression>
+	</variable>
+	<title>
+		<band height="240" splitType="Stretch">
+			<staticText>
+				<reportElement x="10" y="10" width="20" height="140" uuid="a615a301-9c22-41b3-983d-ee1e224abb58"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="Left"/>
+				<text><![CDATA[(ms)]]></text>
+			</staticText>
+			<stackedAreaChart>
+				<chart evaluationTime="Report">
+					<reportElement x="20" y="0" width="500" height="240" uuid="733f9461-2606-4f4c-8fab-d23e696b7a5d"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<categoryDataset>
+					<dataset resetType="Report"/>
+					<categorySeries>
+						<seriesExpression><![CDATA["DNS Time"]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{date}]]></categoryExpression>
+						<valueExpression><![CDATA[FLOAT_VALUE($V{Variable_1})]]></valueExpression>
+					</categorySeries>
+					<categorySeries>
+						<seriesExpression><![CDATA["Connection Time"]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{date}]]></categoryExpression>
+						<valueExpression><![CDATA[FLOAT_VALUE($V{Variable_2})]]></valueExpression>
+					</categorySeries>
+					<categorySeries>
+						<seriesExpression><![CDATA["SSL Handshake Time"]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{date}]]></categoryExpression>
+						<valueExpression><![CDATA[FLOAT_VALUE($V{Variable_3})]]></valueExpression>
+					</categorySeries>
+					<categorySeries>
+						<seriesExpression><![CDATA["First Byte Time"]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{date}]]></categoryExpression>
+						<valueExpression><![CDATA[FLOAT_VALUE($V{Variable_4})]]></valueExpression>
+					</categorySeries>
+					<categorySeries>
+						<seriesExpression><![CDATA["Download Time"]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{date}]]></categoryExpression>
+						<valueExpression><![CDATA[FLOAT_VALUE($V{Variable_5})]]></valueExpression>
+					</categorySeries>
+				</categoryDataset>
+				<areaPlot>
+					<plot labelRotation="63.0">
+						<seriesColor seriesOrder="0" color="#FF3474"/>
+						<seriesColor seriesOrder="1" color="#05319C"/>
+						<seriesColor seriesOrder="2" color="#C3DF9B"/>
+						<seriesColor seriesOrder="3" color="#0074D7"/>
+						<seriesColor seriesOrder="4" color="#2CC4DB"/>
+					</plot>
+					<categoryAxisFormat labelRotation="63.0">
+						<axisFormat>
+							<labelFont>
+								<font size="9"/>
+							</labelFont>
+							<tickLabelFont>
+								<font size="8"/>
+							</tickLabelFont>
+						</axisFormat>
+					</categoryAxisFormat>
+					<valueAxisFormat>
+						<axisFormat>
+							<labelFont>
+								<font size="8"/>
+							</labelFont>
+							<tickLabelFont>
+								<font size="8"/>
+							</tickLabelFont>
+						</axisFormat>
+					</valueAxisFormat>
+				</areaPlot>
+			</stackedAreaChart>
+		</band>
+	</title>
+</jasperReport>

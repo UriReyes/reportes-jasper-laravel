@@ -129,13 +129,6 @@
 				<subreportExpression><![CDATA["C:\\Users\\David Orozco\\JaspersoftWorkspace\\Informes KIO - Final\\VMWAREVM\\performance_NETUtilizationChart.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
-		<band height="50">
-			<subreport>
-				<reportElement x="2" y="8" width="551" height="35" uuid="fd4cc73e-f486-4104-91a6-2e36ee5e8601"/>
-				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("performance.data.chart_data.DISKSpacePercentageChart")]]></dataSourceExpression>
-				<subreportExpression><![CDATA["C:\\Users\\David Orozco\\JaspersoftWorkspace\\Informes KIO - Final\\VMWAREVM\\performance_DISKSpacePercentageChart.jasper"]]></subreportExpression>
-			</subreport>
-		</band>
 		<band height="61">
 			<subreport>
 				<reportElement x="2" y="8" width="551" height="35" uuid="f5f04c04-1e7a-44bc-92a6-d4e793ac6ecc"/>

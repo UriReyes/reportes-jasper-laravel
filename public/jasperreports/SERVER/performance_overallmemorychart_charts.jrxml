@@ -18,7 +18,6 @@
 	<field name="value" class="java.math.BigDecimal">
 		<fieldDescription><![CDATA[value]]></fieldDescription>
 	</field>
-	<sortField name="date"/>
 	<title>
 		<band height="178" splitType="Stretch">
 			<lineChart>

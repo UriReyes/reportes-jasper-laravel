@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.19.1.final using JasperReports Library version 6.19.1-867c00bf88cd4d784d404379d6c05e1b419e8a4c  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Resumen" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="26a00adc-4d12-40ea-85f4-32fe1a249089">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Adapter API - KIO"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<queryString language="JSON">
+		<![CDATA[customer]]>
+	</queryString>
+	<field name="name" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="name"/>
+		<fieldDescription><![CDATA[name]]></fieldDescription>
+	</field>
+	<field name="zaaid" class="java.lang.Integer">
+		<property name="net.sf.jasperreports.json.field.expression" value="zaaid"/>
+		<fieldDescription><![CDATA[zaaid]]></fieldDescription>
+	</field>
+	<field name="monitor" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="monitor"/>
+		<fieldDescription><![CDATA[monitor]]></fieldDescription>
+	</field>
+	<field name="availability" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="availability"/>
+		<fieldDescription><![CDATA[availability]]></fieldDescription>
+	</field>
+	<field name="performance" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="performance"/>
+		<fieldDescription><![CDATA[performance]]></fieldDescription>
+	</field>
+	<field name="period_name" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="availability.data.info.period_name"/>
+		<fieldDescription><![CDATA[availability.data.info.period_name]]></fieldDescription>
+	</field>
+	<background>
+		<band height="802" splitType="Stretch">
+			<rectangle>
+				<reportElement x="2" y="0" width="552" height="802" backcolor="#FAFAFA" uuid="ff848911-9454-4fbb-aac4-c596a8c5c88e">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<graphicElement>
+					<pen lineStyle="Solid" lineColor="#FFFFFF"/>
+				</graphicElement>
+			</rectangle>
+		</band>
+	</background>
+	<title>
+		<band height="57" splitType="Stretch">
+			<image>
+				<reportElement x="2" y="7" width="552" height="30" uuid="f4ce0081-a3e9-4fe6-9d66-8833ba0397be"/>
+				<imageExpression><![CDATA["C:\\Users\\David Orozco\\JaspersoftWorkspace\\Informes KIO - Final\\URL\\informe de rendimiento.png"]]></imageExpression>
+			</image>
+			<textField pattern="MMM d, yyyy h:mm:ss a">
+				<reportElement x="453" y="41" width="100" height="16" uuid="29c02edf-4fbc-4c0b-b755-996a91c67ee9">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="10" y="41" width="180" height="16" uuid="f5ae3159-9bde-4395-b7e8-dd3bf2f3310d">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ea1f57c6-122d-4592-ad0d-38f6943aeeb8"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Calibri" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="396" y="41" width="60" height="16" uuid="0e41824e-311e-4071-a5d9-078445efe928">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Generated On:"]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<detail>
+		<band height="47" splitType="Stretch">
+			<subreport>
+				<reportElement x="3" y="10" width="550" height="27" uuid="22b32f6d-4f26-4cc0-8493-7a1f6fdb311f"/>
+				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("monitor")]]></dataSourceExpression>
+				<subreportExpression><![CDATA["C:\\Users\\David Orozco\\JaspersoftWorkspace\\Informes KIO - Final\\URL\\monitor.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="43">
+			<subreport>
+				<reportElement x="3" y="5" width="551" height="35" uuid="ab05a58c-2638-48a0-94b5-95c2f22773fb"/>
+				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("availability.data")]]></dataSourceExpression>
+				<subreportExpression><![CDATA["C:\\Users\\David Orozco\\JaspersoftWorkspace\\Informes KIO - Final\\MSEXCHANGE\\availability.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="40">
+			<subreport overflowType="Stretch">
+				<reportElement x="2" y="7" width="551" height="30" uuid="734ae9e1-1be9-4b35-b670-5d575fbfa187"/>
+				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("availability.data.charts.data.uptimes")]]></dataSourceExpression>
+				<subreportExpression><![CDATA["C:\\Users\\David Orozco\\JaspersoftWorkspace\\Informes KIO - Final\\MSEXCHANGE\\graficas.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="50">
+			<subreport>
+				<reportElement x="3" y="10" width="549" height="30" uuid="5f307152-bbae-4bde-81d1-842fe94f3239"/>
+				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("performance.data.chart_data.ResponseTimeReportChart")]]></dataSourceExpression>
+				<subreportExpression><![CDATA["C:\\Users\\David Orozco\\JaspersoftWorkspace\\Informes KIO - Final\\URL\\performance_ResponseTimeReportChart.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="50">
+			<subreport>
+				<reportElement x="2" y="5" width="551" height="40" uuid="41fa938e-2d9d-438c-af4e-52c02ce1dfd2"/>
+				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("performance.data.chart_data.ThroughputChart")]]></dataSourceExpression>
+				<subreportExpression><![CDATA["C:\\Users\\David Orozco\\JaspersoftWorkspace\\Informes KIO - Final\\URL\\performance_ThroughputChart.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="50">
+			<subreport>
+				<reportElement x="3" y="5" width="551" height="40" uuid="c5098096-d24f-4073-9e30-77a8f3223e71"/>
+				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("performance.data.chart_data.LocationResponseTimeChart")]]></dataSourceExpression>
+				<subreportExpression><![CDATA["C:\\Users\\David Orozco\\JaspersoftWorkspace\\Informes KIO - Final\\URL\\performance_LocationResponseTimeChart.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="41">
+			<textField>
+				<reportElement x="388" y="7" width="100" height="30" uuid="c775df85-51c6-4594-aa78-02179ab4f669"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="488" y="7" width="66" height="30" uuid="15da5835-70e8-4610-9f3b-1c408fc24957"/>
+				<textElement textAlignment="Left"/>
+				<textFieldExpression><![CDATA[" of " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

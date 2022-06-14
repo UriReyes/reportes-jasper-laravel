@@ -103,6 +103,13 @@
 		</band>
 		<band height="50">
 			<subreport overflowType="Stretch">
+				<reportElement x="3" y="10" width="551" height="30" uuid="f251f2db-cbdc-49fd-b3ee-58c960815625"/>
+				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("performance_ContRendimiento.data.chart_data.DialValueChart")]]></dataSourceExpression>
+				<subreportExpression><![CDATA["C:\\Users\\David Orozco\\JaspersoftWorkspace\\Informes KIO - Final\\AGENTLESSSERVER\\performance_uptimechart.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="50">
+			<subreport overflowType="Stretch">
 				<reportElement x="2" y="10" width="551" height="30" uuid="734ae9e1-1be9-4b35-b670-5d575fbfa187"/>
 				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("availability.data.charts.data.uptimes")]]></dataSourceExpression>
 				<subreportExpression><![CDATA["C:\\Users\\David Orozco\\JaspersoftWorkspace\\Informes KIO - Final\\AGENTLESSSERVER\\graficas.jasper"]]></subreportExpression>
@@ -129,11 +136,20 @@
 				<subreportExpression><![CDATA["C:\\Users\\David Orozco\\JaspersoftWorkspace\\Informes KIO - Final\\AGENTLESSSERVER\\performanceDiskUtilChart.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
-		<band height="60">
+		<band height="50">
 			<subreport>
-				<reportElement x="3" y="4" width="547" height="53" uuid="7d085891-c81d-47d1-b33d-8a717835c66d"/>
+				<reportElement x="4" y="7" width="547" height="36" uuid="7d085891-c81d-47d1-b33d-8a717835c66d"/>
 				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("performance_disk.data.AllDiskUsedChart")]]></dataSourceExpression>
 				<subreportExpression><![CDATA["C:\\Users\\David Orozco\\JaspersoftWorkspace\\Informes KIO - Final\\AGENTLESSSERVER\\performanceAllDiskUsedChart.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="46">
+			<subreport>
+				<reportElement x="4" y="6" width="550" height="30" uuid="37c197dd-8098-42aa-89fe-1cda8d78ef2f">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("performance_diskdetail.data.widgets")]]></dataSourceExpression>
+				<subreportExpression><![CDATA["C:\\Users\\David Orozco\\JaspersoftWorkspace\\Informes KIO - Final\\AGENTLESSSERVER\\performance_DiskDetail_Widget_charts.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
 	</detail>

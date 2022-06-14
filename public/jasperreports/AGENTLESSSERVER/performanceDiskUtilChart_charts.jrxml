@@ -22,7 +22,6 @@
 		<property name="net.sf.jasperreports.json.field.expression" value="value1"/>
 		<fieldDescription><![CDATA[value1]]></fieldDescription>
 	</field>
-	<sortField name="date"/>
 	<title>
 		<band height="204" splitType="Stretch">
 			<stackedBarChart>

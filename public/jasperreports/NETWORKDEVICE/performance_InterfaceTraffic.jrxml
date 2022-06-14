@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.19.1.final using JasperReports Library version 6.19.1-867c00bf88cd4d784d404379d6c05e1b419e8a4c  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="performance_InterfaceTraffic" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="769bcdef-003b-4415-9efa-412203ab8dd9">
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Adapter API - KIO"/>
+	<property name="com.jaspersoft.studio.report.description" value=""/>
+	<property name="net.sf.jasperreports.export.pdf.compressed" value="true"/>
+	<queryString language="json">
+		<![CDATA[customer.performance_traffic]]>
+	</queryString>
+	<field name="label" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="label"/>
+		<fieldDescription><![CDATA[label]]></fieldDescription>
+	</field>
+	<title>
+		<band height="36">
+			<staticText>
+				<reportElement x="20" y="6" width="170" height="23" uuid="aec66320-c3a1-405e-8c46-682b3aa0bed5"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Interfaces]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="10" y="25" width="530" height="3" forecolor="rgba(117, 114, 114, 0.0)" backcolor="#BDBDBD" uuid="cf9b3632-7bfa-4108-883a-6860231bb9cc">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+			</rectangle>
+		</band>
+	</title>
+	<detail>
+		<band height="79">
+			<subreport>
+				<reportElement x="20" y="31" width="521" height="39" uuid="632ff9d4-ed64-4718-9c87-461e90f69d61"/>
+				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("intraffic")]]></dataSourceExpression>
+				<subreportExpression><![CDATA["C:\\Users\\David Orozco\\JaspersoftWorkspace\\Informes KIO - Final\\NETWORKDEVICE\\performance_InterfaceInTrafficChart.jasper"]]></subreportExpression>
+			</subreport>
+			<textField>
+				<reportElement x="20" y="6" width="352" height="22" backcolor="#EBEBEB" uuid="d6b94f5f-9f22-46e6-89e8-a0e578b69eda"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{label}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="57">
+			<subreport>
+				<reportElement x="20" y="10" width="521" height="39" uuid="d421892d-4ac8-49b7-b9d6-29953f924b82"/>
+				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("outtraffic")]]></dataSourceExpression>
+				<subreportExpression><![CDATA["C:\\Users\\David Orozco\\JaspersoftWorkspace\\Informes KIO - Final\\NETWORKDEVICE\\performance_InterfaceOutTrafficChart.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+</jasperReport>

@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.19.1.final using JasperReports Library version 6.19.1-867c00bf88cd4d784d404379d6c05e1b419e8a4c  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="performance_NetworkDataGraph" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="769bcdef-003b-4415-9efa-412203ab8dd9">
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Adapter API - KIO"/>
+	<property name="com.jaspersoft.studio.report.description" value=""/>
+	<queryString language="json">
+		<![CDATA[customer.performance.data.chart_data.NetworkDataGraph]]>
+	</queryString>
+	<field name="average" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="average"/>
+		<fieldDescription><![CDATA[average]]></fieldDescription>
+	</field>
+	<field name="min" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="min"/>
+		<fieldDescription><![CDATA[min]]></fieldDescription>
+	</field>
+	<field name="max" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="max"/>
+		<fieldDescription><![CDATA[max]]></fieldDescription>
+	</field>
+	<title>
+		<band height="142" splitType="Stretch">
+			<subreport>
+				<reportElement x="9" y="80" width="521" height="62" uuid="632ff9d4-ed64-4718-9c87-461e90f69d61"/>
+				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("chart_data")]]></dataSourceExpression>
+				<subreportExpression><![CDATA["C:\\Users\\David Orozco\\JaspersoftWorkspace\\Informes KIO - Final\\IISSERVER\\performance_NetworkDataGraph_charts.jasper"]]></subreportExpression>
+			</subreport>
+			<staticText>
+				<reportElement x="298" y="22" width="71" height="16" uuid="dd99812e-f100-4213-ae1e-453e0e1bf4b4">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Average]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="379" y="22" width="71" height="16" uuid="0d84c31a-5b38-4251-acfa-f6ef3c068d35">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Minimum]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="459" y="22" width="71" height="16" uuid="77b350b5-eede-40a1-81e5-de76ac5f79be">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Maximum]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="10" width="120" height="23" uuid="deeb9823-6f21-4aff-9898-bc0df6d02fdc"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Network Statistics]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="157" y="39" width="135" height="16" uuid="bb24eb07-0788-477a-a691-de12d6283a58">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Bytes received (KB/sec)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="157" y="54" width="135" height="16" uuid="16a0de36-4521-4318-b04b-63768dd40c27">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Bytes Sent (KB/sec)]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="298" y="41" width="71" height="14" uuid="71c38980-ebfb-4e75-b3e5-48a50840d293">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[TEXT(FLOAT_VALUE($F{average}.replace( "[","").replace( "]","").split(",")[0]),"#,###.##")]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="379" y="41" width="71" height="14" uuid="20be05a3-1e35-4aff-95dc-e37dd5a57984">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[TEXT(FLOAT_VALUE($F{min}.replace( "[","").replace( "]","").split(",")[0]),"#,###.##")]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="459" y="41" width="71" height="14" uuid="cfad2399-5d24-4ec3-a9f6-ef2397aaabd2">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[TEXT(FLOAT_VALUE($F{max}.replace( "[","").replace( "]","").split(",")[0]),"#,###.##")]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="298" y="55" width="71" height="14" uuid="44c37a32-e869-41ab-9a56-a70f295c3319">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[TEXT(FLOAT_VALUE($F{average}.replace( "[","").replace( "]","").split(",")[1]),"#,###.##")]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="379" y="55" width="71" height="14" uuid="ee34a58a-8d52-4b77-8853-d7007dc11f65">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[TEXT(FLOAT_VALUE($F{min}.replace( "[","").replace( "]","").split(",")[1]),"#,###.##")]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="459" y="55" width="71" height="14" uuid="b9dcc7fc-8cc7-402c-9018-0e987e4cf81c">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[TEXT(FLOAT_VALUE($F{max}.replace( "[","").replace( "]","").split(",")[1]),"#,###.##")]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+</jasperReport>

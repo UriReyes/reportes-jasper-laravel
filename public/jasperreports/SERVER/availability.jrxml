@@ -33,17 +33,21 @@
 		<property name="net.sf.jasperreports.json.field.expression" value="info.formatted_end_time"/>
 		<fieldDescription><![CDATA[info.formatted_end_time]]></fieldDescription>
 	</field>
+	<field name="downtime_duration" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="summary_details.downtime_duration"/>
+		<fieldDescription><![CDATA[summary_details.downtime_duration]]></fieldDescription>
+	</field>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<detail>
-		<band height="65">
+		<band height="68">
 			<staticText>
-				<reportElement x="231" y="30" width="50" height="14" uuid="318e1acb-e7f5-46f7-be7a-73904c2b666f"/>
-				<text><![CDATA[Uptime:]]></text>
+				<reportElement x="257" y="30" width="70" height="14" uuid="318e1acb-e7f5-46f7-be7a-73904c2b666f"/>
+				<text><![CDATA[Total Uptime:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="281" y="30" width="119" height="14" uuid="147c4614-19e2-4340-a01f-905fee449496"/>
+				<reportElement x="335" y="30" width="145" height="14" uuid="147c4614-19e2-4340-a01f-905fee449496"/>
 				<textElement textAlignment="Left">
 					<font size="10" isBold="true"/>
 				</textElement>
@@ -99,6 +103,17 @@
 				</reportElement>
 				<text><![CDATA[End time:]]></text>
 			</staticText>
+			<staticText>
+				<reportElement x="257" y="47" width="83" height="14" uuid="2b91b3aa-77e8-471c-ac16-2a0ba19c41fe"/>
+				<text><![CDATA[Total Downtime:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="335" y="47" width="145" height="14" uuid="304afa31-69bb-41eb-912b-7ab77566b989"/>
+				<textElement textAlignment="Left">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{downtime_duration}]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 </jasperReport>

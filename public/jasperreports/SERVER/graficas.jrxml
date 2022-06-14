@@ -23,10 +23,10 @@
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="226">
+		<band height="190">
 			<areaChart>
 				<chart evaluationTime="Report">
-					<reportElement stretchType="ContainerHeight" mode="Transparent" x="0" y="1" width="550" height="209" uuid="0b8a4f18-99fe-42cd-97d0-60885380ea78"/>
+					<reportElement stretchType="ContainerHeight" mode="Transparent" x="0" y="19" width="550" height="169" uuid="0b8a4f18-99fe-42cd-97d0-60885380ea78"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -79,6 +79,13 @@
 					</valueAxisFormat>
 				</areaPlot>
 			</areaChart>
+			<staticText>
+				<reportElement x="12" y="1" width="110" height="23" uuid="0b2a8451-1409-45b4-89c2-84b9f63c2431"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Availability]]></text>
+			</staticText>
 		</band>
 	</title>
 </jasperReport>

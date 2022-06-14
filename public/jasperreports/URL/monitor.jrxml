@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.19.1.final using JasperReports Library version 6.19.1-867c00bf88cd4d784d404379d6c05e1b419e8a4c  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="monitor" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="b8818c2f-40ba-42af-bb03-5ac6ee8e6020">
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Adapter API - KIO"/>
+	<queryString language="json">
+		<![CDATA[customer.monitor]]>
+	</queryString>
+	<field name="ipaddress" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="ipaddress"/>
+		<fieldDescription><![CDATA[ipaddress]]></fieldDescription>
+	</field>
+	<field name="tag_ids" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="tag_ids"/>
+		<fieldDescription><![CDATA[tag_ids]]></fieldDescription>
+	</field>
+	<field name="monitor_id" class="java.lang.Long">
+		<property name="net.sf.jasperreports.json.field.expression" value="monitor_id"/>
+		<fieldDescription><![CDATA[monitor_id]]></fieldDescription>
+	</field>
+	<field name="threshold_profile_id" class="java.lang.Long">
+		<property name="net.sf.jasperreports.json.field.expression" value="threshold_profile_id"/>
+		<fieldDescription><![CDATA[threshold_profile_id]]></fieldDescription>
+	</field>
+	<field name="type" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="type"/>
+		<fieldDescription><![CDATA[type]]></fieldDescription>
+	</field>
+	<field name="display_name" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="display_name"/>
+		<fieldDescription><![CDATA[display_name]]></fieldDescription>
+	</field>
+	<field name="monitor_groups" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="monitor_groups"/>
+		<fieldDescription><![CDATA[monitor_groups]]></fieldDescription>
+	</field>
+	<field name="notification_profile_id" class="java.lang.Long">
+		<property name="net.sf.jasperreports.json.field.expression" value="notification_profile_id"/>
+		<fieldDescription><![CDATA[notification_profile_id]]></fieldDescription>
+	</field>
+	<field name="server_type" class="java.lang.String"/>
+	<field name="period_name" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="customer.availability.data.info.period_name"/>
+		<fieldDescription><![CDATA[customer.availability.data.info.period_name]]></fieldDescription>
+	</field>
+	<field name="http_protocol" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="http_protocol"/>
+		<fieldDescription><![CDATA[http_protocol]]></fieldDescription>
+	</field>
+	<field name="check_frequency" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="check_frequency"/>
+		<fieldDescription><![CDATA[check_frequency]]></fieldDescription>
+	</field>
+	<field name="auth_method" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="auth_method"/>
+		<fieldDescription><![CDATA[auth_method]]></fieldDescription>
+	</field>
+	<field name="http_method" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="http_method"/>
+		<fieldDescription><![CDATA[http_method]]></fieldDescription>
+	</field>
+	<field name="website" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="website"/>
+		<fieldDescription><![CDATA[website]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="77">
+			<textField>
+				<reportElement x="80" y="10" width="480" height="20" uuid="0c2fbcc0-d5f5-4c45-ad78-04e66c51ccd0"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{display_name}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="9" y="10" width="71" height="20" uuid="951ff878-0d99-4e48-a368-9fa497aac7b3"/>
+				<text><![CDATA[Monitor name:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="80" y="32" width="190" height="16" uuid="96ff1d59-dae8-40cc-90b5-9f230e75c0e9">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{type}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="9" y="32" width="71" height="16" uuid="d5afd775-9b45-424e-98ae-89729146ac84">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<text><![CDATA[Monitor type:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="80" y="51" width="490" height="16" uuid="136128b4-31ea-40d1-957f-6ee3e1f3a670">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font size="9" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{website}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="9" y="51" width="71" height="16" uuid="e5fc5d72-ff65-40f4-94a2-d9562c109781">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Website:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="488" y="34" width="81" height="16" uuid="5e6c45b9-e3e6-4f84-ac16-07cf6af4e9c9">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{http_protocol}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="386" y="34" width="100" height="16" uuid="7fd692f5-908c-4a14-8d33-7781d4170529">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[HTPP Protocol:]]></text>
+			</staticText>
+		</band>
+	</detail>
+</jasperReport>

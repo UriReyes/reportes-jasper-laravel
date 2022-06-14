@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.19.1.final using JasperReports Library version 6.19.1-867c00bf88cd4d784d404379d6c05e1b419e8a4c  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="performance_StorageChart" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="d5b5301d-fde4-4896-8fc4-06d194f09c15">
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Adapter API - KIO"/>
+	<property name="com.jaspersoft.studio.report.description" value=""/>
+	<queryString language="json">
+		<![CDATA[customer.performance_store.data.widgets]]>
+	</queryString>
+	<field name="vm_spaceoccupied" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="vm_spaceoccupied"/>
+		<fieldDescription><![CDATA[vm_spaceoccupied]]></fieldDescription>
+	</field>
+	<field name="vm_spacealloted" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="vm_spacealloted"/>
+		<fieldDescription><![CDATA[vm_spacealloted]]></fieldDescription>
+	</field>
+	<field name="vm_name" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="vm_name"/>
+		<fieldDescription><![CDATA[vm_name]]></fieldDescription>
+	</field>
+	<field name="vm_spaceavailable" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="vm_spaceavailable"/>
+		<fieldDescription><![CDATA[vm_spaceavailable]]></fieldDescription>
+	</field>
+	<sortField name="vm_name"/>
+	<title>
+		<band height="300" splitType="Stretch">
+			<staticText>
+				<reportElement x="9" y="31" width="20" height="109" uuid="93759df6-30f2-4149-8051-6387e6aebed8"/>
+				<textElement textAlignment="Center" rotation="Left">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[GB]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="12" y="8" width="298" height="23" uuid="066a1159-1a54-4047-82e2-70d2ee752812"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Virtual Machines by Disk Space Occupied]]></text>
+			</staticText>
+			<barChart>
+				<chart evaluationTime="Report">
+					<reportElement x="20" y="30" width="510" height="270" uuid="8b3c4aea-8482-4e2d-b18a-1701266b0a6d"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<categoryDataset>
+					<dataset resetType="Report"/>
+					<categorySeries>
+						<seriesExpression><![CDATA["Disk Space Occupied"]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{vm_name}]]></categoryExpression>
+						<valueExpression><![CDATA[FLOAT_VALUE($F{vm_spaceoccupied})]]></valueExpression>
+					</categorySeries>
+				</categoryDataset>
+				<barPlot isShowLabels="false">
+					<plot labelRotation="60.0">
+						<seriesColor seriesOrder="0" color="#27C38F"/>
+					</plot>
+					<itemLabel/>
+					<categoryAxisFormat labelRotation="60.0">
+						<axisFormat labelColor="#000000" tickLabelColor="#000000" axisLineColor="#000000">
+							<tickLabelFont>
+								<font size="10"/>
+							</tickLabelFont>
+						</axisFormat>
+					</categoryAxisFormat>
+					<valueAxisFormat>
+						<axisFormat labelColor="#000000" tickLabelColor="#000000" axisLineColor="#000000"/>
+					</valueAxisFormat>
+				</barPlot>
+			</barChart>
+		</band>
+	</title>
+	<summary>
+		<band height="616">
+			<barChart>
+				<chart evaluationTime="Report">
+					<reportElement x="28" y="356" width="510" height="242" uuid="04f832c2-b164-4bd1-9882-3da3fb77fd2f"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<categoryDataset>
+					<dataset resetType="Report"/>
+					<categorySeries>
+						<seriesExpression><![CDATA["Disk Space Allocated"]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{vm_name}]]></categoryExpression>
+						<valueExpression><![CDATA[FLOAT_VALUE($F{vm_spacealloted})]]></valueExpression>
+					</categorySeries>
+				</categoryDataset>
+				<barPlot isShowLabels="false">
+					<plot labelRotation="60.0">
+						<seriesColor seriesOrder="0" color="#27C38F"/>
+					</plot>
+					<itemLabel/>
+					<categoryAxisFormat labelRotation="60.0">
+						<axisFormat labelColor="#000000" tickLabelColor="#000000" axisLineColor="#000000">
+							<tickLabelFont>
+								<font size="10"/>
+							</tickLabelFont>
+						</axisFormat>
+					</categoryAxisFormat>
+					<valueAxisFormat>
+						<axisFormat labelColor="#000000" tickLabelColor="#000000" axisLineColor="#000000"/>
+					</valueAxisFormat>
+				</barPlot>
+			</barChart>
+			<staticText>
+				<reportElement x="12" y="357" width="20" height="109" uuid="c6fab10f-9397-4b28-8328-4cb5b499068d"/>
+				<textElement textAlignment="Center" rotation="Left">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[GB]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="20" y="334" width="298" height="23" uuid="f51ca386-9831-4123-802e-ad5f4a58416a"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Virtual Machines by Disk Space Allocated]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="7" y="36" width="20" height="109" uuid="0f4c4809-3d14-4502-895b-b1dc465785e4"/>
+				<textElement textAlignment="Center" rotation="Left">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[GB]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="12" y="10" width="298" height="23" uuid="f879b944-8424-42d1-91ed-5f66dae3a4bd"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Virtual Machines with Critical Freespace]]></text>
+			</staticText>
+			<barChart>
+				<chart evaluationTime="Report">
+					<reportElement x="20" y="32" width="510" height="248" uuid="20420226-e3ba-4106-bc09-917c9b7c1f49"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<categoryDataset>
+					<dataset resetType="Report"/>
+					<categorySeries>
+						<seriesExpression><![CDATA["Disk Space Available"]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{vm_name}]]></categoryExpression>
+						<valueExpression><![CDATA[FLOAT_VALUE($F{vm_spaceavailable})]]></valueExpression>
+					</categorySeries>
+				</categoryDataset>
+				<barPlot isShowLabels="false">
+					<plot labelRotation="60.0">
+						<seriesColor seriesOrder="0" color="#27C38F"/>
+					</plot>
+					<itemLabel/>
+					<categoryAxisFormat labelRotation="60.0">
+						<axisFormat labelColor="#000000" tickLabelColor="#000000" axisLineColor="#000000">
+							<tickLabelFont>
+								<font size="10"/>
+							</tickLabelFont>
+						</axisFormat>
+					</categoryAxisFormat>
+					<valueAxisFormat>
+						<axisFormat labelColor="#000000" tickLabelColor="#000000" axisLineColor="#000000"/>
+					</valueAxisFormat>
+				</barPlot>
+			</barChart>
+		</band>
+	</summary>
+</jasperReport>

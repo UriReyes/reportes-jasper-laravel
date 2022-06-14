@@ -47,7 +47,6 @@
 		<property name="net.sf.jasperreports.json.field.expression" value="GrantedWorkspaceM"/>
 		<fieldDescription><![CDATA[GrantedWorkspaceM]]></fieldDescription>
 	</field>
-	<sortField name="date"/>
 	<title>
 		<band height="214" splitType="Stretch">
 			<lineChart>

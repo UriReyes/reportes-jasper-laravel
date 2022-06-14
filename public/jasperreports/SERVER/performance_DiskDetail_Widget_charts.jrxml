@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.19.1.final using JasperReports Library version 6.19.1-867c00bf88cd4d784d404379d6c05e1b419e8a4c  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="performance_DiskDetail_Widget_charts" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="2c46b3df-1997-4372-8cd7-96415e2625a4">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Adapter API - KIO"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<property name="com.jaspersoft.studio.report.description" value=""/>
+	<subDataset name="Dataset1" uuid="03fa1cba-f21b-4b27-b479-6e13c9d84017">
+		<queryString>
+			<![CDATA[]]>
+		</queryString>
+	</subDataset>
+	<queryString language="json">
+		<![CDATA[customer.performance_diskdetail.data.widgets]]>
+	</queryString>
+	<field name="disk_name" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="disk_name"/>
+		<fieldDescription><![CDATA[disk_name]]></fieldDescription>
+	</field>
+	<field name="disk_size" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="disk_size"/>
+		<fieldDescription><![CDATA[disk_size]]></fieldDescription>
+	</field>
+	<field name="disk_free" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="disk_free"/>
+		<fieldDescription><![CDATA[disk_free]]></fieldDescription>
+	</field>
+	<field name="disk_used" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="disk_used"/>
+		<fieldDescription><![CDATA[disk_used]]></fieldDescription>
+	</field>
+	<field name="disk_status" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="disk_status"/>
+		<fieldDescription><![CDATA[disk_status]]></fieldDescription>
+	</field>
+	<field name="disk_file_system" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="disk_file_system"/>
+		<fieldDescription><![CDATA[disk_file_system]]></fieldDescription>
+	</field>
+	<field name="disk_used_size" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="disk_used_size"/>
+		<fieldDescription><![CDATA[disk_used_size]]></fieldDescription>
+	</field>
+	<field name="disk_free_size" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="disk_free_size"/>
+		<fieldDescription><![CDATA[disk_free_size]]></fieldDescription>
+	</field>
+	<title>
+		<band height="21" splitType="Stretch">
+			<staticText>
+				<reportElement x="10" y="2" width="150" height="18" uuid="fe9f8948-739e-4402-82ed-8d298ec99841">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Disk Partition Details]]></text>
+			</staticText>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="24">
+			<staticText>
+				<reportElement x="196" y="6" width="46" height="16" uuid="54bdb74d-afc6-4591-899b-d9e0c7e9bb0e">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Size (MB)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="15" y="6" width="60" height="16" uuid="3f4543a0-f7ee-4107-ad58-fb8dc9769ea3">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Name
+]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="252" y="6" width="46" height="16" uuid="ab44f515-fade-4aa5-a6d1-b03ff60aaae7">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Free (MB)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="309" y="6" width="46" height="16" uuid="9cf73277-edeb-49b8-9102-babdd607c960">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Free (%)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="366" y="6" width="46" height="16" uuid="5b2a9d89-aae7-4344-ba96-605da7be4e51">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Used (MB)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="425" y="6" width="46" height="16" uuid="a49a345c-410e-4b77-96e7-4cc988bad951">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Used (%)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="135" y="6" width="49" height="16" uuid="9e873a7c-a282-4576-a0b1-20d62dad4053">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[File System]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="486" y="7" width="46" height="16" uuid="ef1b1ccb-f4c5-4f80-bc64-cbe4ab5c35c1">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Status]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="19">
+			<textField>
+				<reportElement x="15" y="4" width="115" height="14" uuid="769c7b39-5913-42d4-9f7a-336ac563ef03">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b1b5077d-b764-47be-ac92-207a81c8ad11"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{disk_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="135" y="4" width="49" height="14" uuid="c138f8d4-04fe-4fa6-b9c1-4730379a9a4c">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b1b5077d-b764-47be-ac92-207a81c8ad11"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{disk_file_system}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="193" y="4" width="49" height="14" uuid="a15edb4b-77e8-474a-9c8b-ef8e332b91b2">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b1b5077d-b764-47be-ac92-207a81c8ad11"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{disk_size}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="250" y="4" width="49" height="14" uuid="0e71766b-d06d-41a1-b0cc-01a881f5758f">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b1b5077d-b764-47be-ac92-207a81c8ad11"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{disk_free_size}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="306" y="4" width="49" height="14" uuid="fdfbfd02-1732-40e4-8f51-60f4fc09cdcb">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b1b5077d-b764-47be-ac92-207a81c8ad11"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{disk_free}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="363" y="4" width="49" height="14" uuid="cd9e413c-5e3a-4721-bdc9-7899a09b7771">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b1b5077d-b764-47be-ac92-207a81c8ad11"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{disk_used_size}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="422" y="4" width="49" height="14" uuid="6c88539a-7caf-4283-b493-a3de353ca33d">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b1b5077d-b764-47be-ac92-207a81c8ad11"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{disk_used}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="480" y="4" width="60" height="14" uuid="b9d3cf3a-869a-4e84-a090-870bf0fabb45">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b1b5077d-b764-47be-ac92-207a81c8ad11"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[IF($F{disk_status}.equals("1"),"Available","Unavailable")]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

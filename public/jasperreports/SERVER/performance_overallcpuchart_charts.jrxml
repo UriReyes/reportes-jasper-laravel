@@ -22,7 +22,6 @@
 		<property name="net.sf.jasperreports.json.field.expression" value="value"/>
 		<fieldDescription><![CDATA[value]]></fieldDescription>
 	</field>
-	<sortField name="date"/>
 	<variable name="value1" class="java.math.BigDecimal" calculation="Average">
 		<variableExpression><![CDATA[$F{value}]]></variableExpression>
 	</variable>
@@ -33,10 +32,10 @@
 		<variableExpression><![CDATA[$F{value}]]></variableExpression>
 	</variable>
 	<title>
-		<band height="214" splitType="Stretch">
+		<band height="154" splitType="Stretch">
 			<lineChart>
 				<chart evaluationTime="Report">
-					<reportElement x="20" y="0" width="512" height="210" uuid="fcb2bba9-2c20-4e34-95dd-f84c1263897f">
+					<reportElement x="20" y="0" width="512" height="150" uuid="fcb2bba9-2c20-4e34-95dd-f84c1263897f">
 						<property name="net.sf.jasperreports.customizer.0.selectionMode" value="itemSeries"/>
 						<property name="net.sf.jasperreports.customizer.0.shapeType" value="polygon"/>
 						<property name="net.sf.jasperreports.customizer.class.0" value="net.sf.jasperreports.customizers.shape.LineDotShapeCustomizer"/>

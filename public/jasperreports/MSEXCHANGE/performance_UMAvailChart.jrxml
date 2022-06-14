@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.19.1.final using JasperReports Library version 6.19.1-867c00bf88cd4d784d404379d6c05e1b419e8a4c  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="performance_UMAvailChart" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="d5b5301d-fde4-4896-8fc4-06d194f09c15">
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Adapter API - KIO"/>
+	<property name="com.jaspersoft.studio.report.description" value=""/>
+	<queryString language="json">
+		<![CDATA[customer.performance.data.chart_data.UMAvailChart]]>
+	</queryString>
+	<field name="average" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="average"/>
+		<fieldDescription><![CDATA[average]]></fieldDescription>
+	</field>
+	<field name="min" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="min"/>
+		<fieldDescription><![CDATA[min]]></fieldDescription>
+	</field>
+	<field name="max" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="max"/>
+		<fieldDescription><![CDATA[max]]></fieldDescription>
+	</field>
+	<title>
+		<band height="160" splitType="Stretch">
+			<subreport>
+				<reportElement x="10" y="84" width="521" height="70" uuid="d6681919-726f-45c9-8781-2a6db53f50ee"/>
+				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("chart_data")]]></dataSourceExpression>
+				<subreportExpression><![CDATA["C:\\Users\\David Orozco\\JaspersoftWorkspace\\Informes KIO - Final\\MSEXCHANGE\\performance_UMAvailChart_charts.jasper"]]></subreportExpression>
+			</subreport>
+			<staticText>
+				<reportElement x="12" y="7" width="98" height="23" uuid="066a1159-1a54-4047-82e2-70d2ee752812"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Access Failure]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="299" y="38" width="71" height="14" uuid="6c33fe81-3fcb-4653-a2bb-a764cfe5d1c1">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{average}.replace( "[","").replace( "]","").split(",")[0]]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="299" y="21" width="71" height="14" uuid="a243b212-398c-47ba-b7cc-fd3debde841b">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Average]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="380" y="21" width="71" height="14" uuid="0d23b3fc-32d6-4bfc-ace9-3e7996dd36dc">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Minimum]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="380" y="38" width="71" height="14" uuid="076e41f7-8b4c-4f96-b145-cb0cf2d4e17f">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{min}.replace( "[","").replace( "]","").split(",")[0]]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="460" y="21" width="71" height="14" uuid="231ce9cb-531b-4dd9-9f6a-9dfb2674c5eb">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Maximum]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="460" y="38" width="71" height="14" uuid="9e1de614-f74b-409a-bf8a-8f2ea14e71c2">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{max}.replace( "[","").replace( "]","").split(",")[0]]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="299" y="52" width="71" height="14" uuid="bb9a2c7a-796b-4924-a6e0-5d31f472f05c">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{average}.replace( "[","").replace( "]","").split(",")[1]]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="380" y="52" width="71" height="14" uuid="ae6f1ed9-8173-427b-b79b-796faa93c3bb">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{min}.replace( "[","").replace( "]","").split(",")[1]]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="460" y="52" width="71" height="14" uuid="799924e7-f5b5-47bf-a07f-6d22a243484a">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{max}.replace( "[","").replace( "]","").split(",")[1]]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="110" y="38" width="191" height="14" uuid="9726c06a-f750-4187-a18f-00d72b1c21bb">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Mailbox Access Failure (Per Second)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="90" y="51" width="211" height="14" uuid="ffec8058-6264-4064-88a4-ed68939911d1">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Hub Transport Access Failure (Per Second)]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="299" y="66" width="71" height="14" uuid="f9b6c543-48e7-4217-a71f-23adaa200a07">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{average}.replace( "[","").replace( "]","").split(",")[2]]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="380" y="66" width="71" height="14" uuid="ef937b8b-eccc-4665-b464-11efba924486">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{min}.replace( "[","").replace( "]","").split(",")[2]]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="460" y="66" width="71" height="14" uuid="03543f9b-ce0d-4e36-b0f5-88ee4e775e32">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{max}.replace( "[","").replace( "]","").split(",")[2]]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="90" y="65" width="211" height="14" uuid="6c20dea1-2c53-4534-8447-d8301f869767">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Directory Access Failure (Per Second)]]></text>
+			</staticText>
+		</band>
+	</title>
+</jasperReport>

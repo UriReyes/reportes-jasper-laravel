@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.19.1.final using JasperReports Library version 6.19.1-867c00bf88cd4d784d404379d6c05e1b419e8a4c  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="performance_DiskIO_charts" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="fe5f42c9-00fa-4c1e-8412-d7c61d619a21">
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Adapter API - KIO"/>
+	<property name="com.jaspersoft.studio.report.description" value=""/>
+	<queryString language="json">
+		<![CDATA[customer.performance_disk.data.chart_data.DiskIO.chart_data]]>
+	</queryString>
+	<field name="date" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="date"/>
+		<fieldDescription><![CDATA[date]]></fieldDescription>
+	</field>
+	<field name="value1" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="value1"/>
+		<fieldDescription><![CDATA[value1]]></fieldDescription>
+	</field>
+	<field name="value2" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="value2"/>
+		<fieldDescription><![CDATA[value2]]></fieldDescription>
+	</field>
+	<sortField name="date"/>
+	<title>
+		<band height="194" splitType="Stretch">
+			<lineChart>
+				<chart evaluationTime="Report">
+					<reportElement x="20" y="20" width="512" height="165" uuid="aaa5a741-b386-4ddd-a5a9-f0115d5ebc30">
+						<property name="net.sf.jasperreports.customizer.0.selectionMode" value="itemSeries"/>
+						<property name="net.sf.jasperreports.customizer.0.shapeType" value="polygon"/>
+						<property name="net.sf.jasperreports.customizer.class.0" value="net.sf.jasperreports.customizers.shape.LineDotShapeCustomizer"/>
+					</reportElement>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<categoryDataset>
+					<dataset resetType="Report"/>
+					<categorySeries>
+						<seriesExpression><![CDATA["Disk Reads"]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{date}]]></categoryExpression>
+						<valueExpression><![CDATA[FLOAT_VALUE($F{value1})]]></valueExpression>
+					</categorySeries>
+					<categorySeries>
+						<seriesExpression><![CDATA["Disk Writes"]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{date}]]></categoryExpression>
+						<valueExpression><![CDATA[FLOAT_VALUE($F{value2})]]></valueExpression>
+					</categorySeries>
+				</categoryDataset>
+				<linePlot isShowLines="true" isShowShapes="false">
+					<plot labelRotation="74.0">
+						<seriesColor seriesOrder="0" color="#75D7EA"/>
+					</plot>
+					<categoryAxisFormat labelRotation="74.0">
+						<axisFormat labelColor="#000000" tickLabelColor="#000000" axisLineColor="#000000">
+							<labelFont>
+								<font size="10"/>
+							</labelFont>
+							<tickLabelFont>
+								<font size="8"/>
+							</tickLabelFont>
+						</axisFormat>
+					</categoryAxisFormat>
+					<valueAxisFormat>
+						<axisFormat labelColor="#000000" tickLabelColor="#000000" verticalTickLabels="false" axisLineColor="#000000"/>
+					</valueAxisFormat>
+				</linePlot>
+			</lineChart>
+			<staticText>
+				<reportElement x="10" y="1" width="170" height="23" uuid="86061403-5019-4242-988d-cc02768e9c0b"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Disk (I/O)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="6" y="20" width="14" height="165" uuid="bb3633b6-822d-4788-aab7-fe99d2f9f4aa"/>
+				<textElement textAlignment="Center" rotation="Left">
+					<font size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[bytes/sec]]></text>
+			</staticText>
+		</band>
+	</title>
+</jasperReport>

@@ -70,11 +70,11 @@
 				<textFieldExpression><![CDATA[LEFT($F{max},FIND($F{max},",")).replace( "[","") + " %"]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="12" y="27" width="150" height="23" uuid="5933e348-74e9-48ea-9b76-c3dd9a5dd362"/>
+				<reportElement x="12" y="27" width="188" height="23" uuid="5933e348-74e9-48ea-9b76-c3dd9a5dd362"/>
 				<textElement>
 					<font size="12" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Disk Utilization (%)]]></text>
+				<text><![CDATA[Average Disk Utilization (%)]]></text>
 			</staticText>
 			<pieChart>
 				<chart isShowLegend="false" evaluationTime="Report">

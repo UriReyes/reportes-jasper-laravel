@@ -36,7 +36,7 @@
 		<fieldDescription><![CDATA[max]]></fieldDescription>
 	</field>
 	<title>
-		<band height="304" splitType="Stretch">
+		<band height="308" splitType="Stretch">
 			<subreport>
 				<reportElement x="12" y="221" width="520" height="80" uuid="b484856c-7df0-4c39-9c65-b413d6165ad7"/>
 				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("chart_data")]]></dataSourceExpression>
@@ -79,11 +79,11 @@
 				<textFieldExpression><![CDATA[$F{max}.replace( "[","").replace( "]","") + " %"]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="12" y="27" width="150" height="23" uuid="5933e348-74e9-48ea-9b76-c3dd9a5dd362"/>
+				<reportElement x="12" y="27" width="168" height="23" uuid="5933e348-74e9-48ea-9b76-c3dd9a5dd362"/>
 				<textElement>
 					<font size="12" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Disk Utilization (%)]]></text>
+				<text><![CDATA[Average Disk Utilization (%)]]></text>
 			</staticText>
 			<pieChart>
 				<chart isShowLegend="false" evaluationTime="Report">
