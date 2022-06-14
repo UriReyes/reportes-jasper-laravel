@@ -5,8 +5,14 @@ namespace App\Console;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
+
 class Kernel extends ConsoleKernel
 {
+
+    protected $command = [
+        Commands\TaskGeneraInformes::class
+    ];
+
     /**
      * Define the application's command schedule.
      *
@@ -15,7 +21,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
+        $schedule->command('GeneraInformes:task')->timezone('America/Mexico_City')->monthlyOn(14, '10:30');
     }
 
     /**

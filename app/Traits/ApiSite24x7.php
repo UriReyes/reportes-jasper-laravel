@@ -45,6 +45,20 @@ trait ApiSite24x7
         return $response['data'];
     }
 
+    public function getMonitorGroups($url, $zaaid, $refresh_token)
+    {
+        $authorization = "Zoho-oauthtoken {$refresh_token}";
+        $cookie = "zaaid={$zaaid}";
+        $response = Http::timeout(360)->withHeaders([
+            'Content-Type' => 'application/json;charset=UTF-8',
+            'Accept' => 'application/json; version=2.0',
+            'Authorization' => $authorization,
+            'Cookie' => $cookie
+        ])->get("{$url}/monitor_groups");
+        $response = $response->json();
+        return $response['data'];
+    }
+
     public function getMonitor($url, $zaaid, $refresh_token, $monitor_id)
     {
         $authorization = "Zoho-oauthtoken {$refresh_token}";
