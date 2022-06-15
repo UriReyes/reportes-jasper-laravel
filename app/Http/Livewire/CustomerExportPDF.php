@@ -59,6 +59,7 @@ class CustomerExportPDF extends Component implements ShouldBroadcast
             $this->completed_reports++;
             $this->percentage = $this->getPercentage($this->completed_reports, $this->totalMonitors);
             event(new ProcessReport($this->totalMonitors, $this->percentage, $this->completed_reports, $this->zaaid, $this->name));
+
             $finish_time = microtime(true);
                 $time = $finish_time - $start_time;
                 if($time > 3500){

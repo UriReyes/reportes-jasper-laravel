@@ -10,6 +10,7 @@ use App\Traits\ReestructurarDatosAPISite24x7;
 use Livewire\Component;
 use Jenssegers\Date\Date;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Storage;
 
 class ExportAllReports extends Component
 {
@@ -40,11 +41,18 @@ class ExportAllReports extends Component
 
     public function startProcess()
     {
+        Date::setLocale('es');
+        $this->last_month = ucfirst(Date::now()->firstOfMonth()->subMonth()->format('F'));
+        
         $site24x7Url = env('SITE_24X7_API');
         $refresh_token = $this->getRefreshToken();
 
         $customers_its = $this->getCustomers($site24x7Url, $refresh_token);
         $start_time = microtime(true);
+
+        $texto = "[" . date("Y-m-d H:i:s") . "]: Inicio de tarea de generación de informes.";
+        Storage::append("tareas_programadas.txt", $texto);
+
         foreach ($customers_its as $customer_it) {
             $customer_id = $customer_it['user_id'];
             $customer = $customer_it['name'];
@@ -70,6 +78,13 @@ class ExportAllReports extends Component
             $this->completed_customers++;
             $this->percentage_customers = $this->getPercentage($this->completed_customers, count($customers_its));
             event(new ProcessReports(count($customers_its), $this->percentage_customers, $this->completed_customers, $customer_id));
+
+            $texto = "[" . date("Y-m-d H:i:s") . "]: " . $customer;
+            Storage::append("tareas_programadas.txt", $texto);
+
         }
+
+        $texto = "[" . date("Y-m-d H:i:s") . "]: Fin de tarea de generación de informes.";
+        Storage::append("tareas_programadas.txt", $texto);
     }
 }

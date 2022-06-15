@@ -54,11 +54,16 @@ trait GenerarReportesSite24x7
         // return response()->file($pathToFile);
     }
 
-    public function createFolderToCustomer($last_month, $customer_name, $monitor = null)
+    public function createFolderToCustomer($last_month, $customer_name, $monitor = null, $group)
     {
         $path_reports = Carbon::now()->format('Y') . DIRECTORY_SEPARATOR . str_replace(" ","_",$customer_name) . DIRECTORY_SEPARATOR . $last_month;
         if ($monitor) {
-            $path_reports = Carbon::now()->format('Y') . DIRECTORY_SEPARATOR . str_replace(" ","_",$customer_name) . DIRECTORY_SEPARATOR . $last_month . DIRECTORY_SEPARATOR . $monitor['type'];
+            if($customer_name == 'Monitoring PrimeOps' || $customer_name == 'KIO CA&C'){
+                $path_reports = Carbon::now()->format('Y') . DIRECTORY_SEPARATOR . str_replace(" ","_",$customer_name) . DIRECTORY_SEPARATOR . $group . DIRECTORY_SEPARATOR . $last_month . DIRECTORY_SEPARATOR . $monitor['type']; 
+            }
+            else {
+                $path_reports = Carbon::now()->format('Y') . DIRECTORY_SEPARATOR . str_replace(" ","_",$customer_name) . DIRECTORY_SEPARATOR . $last_month . DIRECTORY_SEPARATOR . $monitor['type'];
+            }
         }
         Storage::makeDirectory('public/InformesKIO' . DIRECTORY_SEPARATOR . $path_reports);
         return $path_reports;
@@ -68,6 +73,10 @@ trait GenerarReportesSite24x7
     {
         //and $monitor['monitor_id'] == "417536000001287157"
         $monitor_id = $monitor['monitor_id'];
+        $monitor_group =  0;
+        if (array_key_exists('monitor_groups',$monitor)){
+            $monitor_group =  $monitor['monitor_groups']['0'];  
+        };
         $current_status = $this->getCurrentStatus($site24x7Url,$zaaid,$refresh_token,$monitor_id);
         $current_status = array_key_exists('status',$current_status) ? $current_status['status'] : 10;
 
@@ -78,9 +87,16 @@ trait GenerarReportesSite24x7
             $unit_of_time = 3; //Daily Data
         }
 
-
+        
         if($this->isPermitedEstatus($current_status))
         {
+            $group = 'Sin Grupo';
+            if($monitor_group != 0 && ($customer_name == 'Monitoring PrimeOps' || $customer_name == 'KIO CA&C')){
+                $monitorGroups = $this->getMonitorGroups($site24x7Url, $zaaid, $refresh_token, $monitor_group);
+                $group =  $monitorGroups['display_name']; 
+            };
+            
+
             if ($monitor['type'] == 'SERVER' and $monitor['state'] == 0) {
                 $availability = $this->getAvailabilityReport($site24x7Url, $monitor_id, $zaaid, $refresh_token, "?period={$this->period_report}");
                 $performance = $this->getPerformance($site24x7Url, $monitor_id, $zaaid, $refresh_token, "?unit_of_time={$unit_of_time}&period={$this->period_report}");
@@ -99,7 +115,7 @@ trait GenerarReportesSite24x7
                         'performance_diskdetail' => $performance_diskdetail,
                     ]
                 ];
-                $path_reports = $this->createFolderToCustomer($last_month, $customer_name, $monitor);
+                $path_reports = $this->createFolderToCustomer($last_month, $customer_name, $monitor, $group);
                 $this->getJasperReport($customers,  str_replace("&","_",str_replace(" ","_",$customer_name)), $monitor['display_name'], $path_reports, $monitor_id, $monitor['type']);
             } 
             else if ($monitor['type'] == 'AGENTLESSSERVER' and $monitor['state'] == 0) {
@@ -120,7 +136,7 @@ trait GenerarReportesSite24x7
                         'performance_ContRendimiento' => $this->applyFormatToPerformance($performance_ContRendimiento),
                     ]
                 ];
-                $path_reports = $this->createFolderToCustomer($last_month, $customer_name, $monitor);
+                $path_reports = $this->createFolderToCustomer($last_month, $customer_name, $monitor, $group);
                 $this->getJasperReport($customers, str_replace("&","_",str_replace(" ","_",$customer_name)), $monitor['display_name'], $path_reports, $monitor_id, $monitor['type']);
             }
             else if ($monitor['type'] == 'VMWAREVM' and $monitor['state'] == 0) {
@@ -137,7 +153,7 @@ trait GenerarReportesSite24x7
                         'performance_disk' => $performance_disk,
                     ]
                 ];
-                $path_reports = $this->createFolderToCustomer($last_month, $customer_name, $monitor);
+                $path_reports = $this->createFolderToCustomer($last_month, $customer_name, $monitor, $group);
                 $this->getJasperReport($customers, str_replace("&","_",str_replace(" ","_",$customer_name)), $monitor['display_name'], $path_reports, $monitor_id, $monitor['type']);
             } 
             else if ($monitor['type'] == 'VMWAREESX' and $monitor['state'] == 0) {
@@ -152,7 +168,7 @@ trait GenerarReportesSite24x7
                         'performance' =>  $this->applyFormatToPerformance($performance),
                     ]
                 ];
-                $path_reports = $this->createFolderToCustomer($last_month, $customer_name, $monitor);
+                $path_reports = $this->createFolderToCustomer($last_month, $customer_name, $monitor, $group);
                 $this->getJasperReport($customers, str_replace("&","_",str_replace(" ","_",$customer_name)), $monitor['display_name'], $path_reports, $monitor_id, $monitor['type']);
             } 
             else if ($monitor['type'] == 'PLUGIN' and $monitor['state'] == 0) {
@@ -167,7 +183,7 @@ trait GenerarReportesSite24x7
                         'performance' =>  $this->applyFormatToPerformancePlugin($performance),
                     ]
                 ];
-                $path_reports = $this->createFolderToCustomer($last_month, $customer_name, $monitor);
+                $path_reports = $this->createFolderToCustomer($last_month, $customer_name, $monitor, $group);
                 $this->getJasperReport($customers, str_replace("&","_",str_replace(" ","_",$customer_name)), $monitor['display_name'], $path_reports, $monitor_id, $monitor['type']);
             } 
             else if ($monitor['type'] == 'SQLSERVER' and $monitor['state'] == 0) {
@@ -186,7 +202,7 @@ trait GenerarReportesSite24x7
                         'performance_db' => $performance_db,
                     ]
                 ];
-                $path_reports = $this->createFolderToCustomer($last_month, $customer_name, $monitor);
+                $path_reports = $this->createFolderToCustomer($last_month, $customer_name, $monitor, $group);
                 $this->getJasperReport($customers, str_replace("&","_",str_replace(" ","_",$customer_name)), $monitor['display_name'], $path_reports, $monitor_id, $monitor['type']);
             } 
             else if ($monitor['type'] == 'NETWORKDEVICE' and $monitor['state'] == 0) {
@@ -207,7 +223,7 @@ trait GenerarReportesSite24x7
                         'performance_traffic' => $performance_traffic,
                     ]
                 ];
-                $path_reports = $this->createFolderToCustomer($last_month, $customer_name, $monitor);
+                $path_reports = $this->createFolderToCustomer($last_month, $customer_name, $monitor, $group);
                 $this->getJasperReport($customers, str_replace("&","_",str_replace(" ","_",$customer_name)), $monitor['display_name'], $path_reports, $monitor_id, $monitor['type']);
             }
             else if ($monitor['type'] == 'DATASTORE' and $monitor['state'] == 0) {
@@ -224,7 +240,7 @@ trait GenerarReportesSite24x7
                         'performance_store' => $performance_store,
                     ]
                 ];
-                $path_reports = $this->createFolderToCustomer($last_month, $customer_name, $monitor);
+                $path_reports = $this->createFolderToCustomer($last_month, $customer_name, $monitor, $group);
                 $this->getJasperReport($customers, str_replace("&","_",str_replace(" ","_",$customer_name)), $monitor['display_name'], $path_reports, $monitor_id, $monitor['type']);
             }  
             else if ($monitor['type'] == 'MSEXCHANGE' and $monitor['state'] == 0) {
@@ -239,7 +255,7 @@ trait GenerarReportesSite24x7
                         'performance' =>  $this->applyFormatToPerformance($performance),
                     ]
                 ];
-                $path_reports = $this->createFolderToCustomer($last_month, $customer_name, $monitor);
+                $path_reports = $this->createFolderToCustomer($last_month, $customer_name, $monitor, $group);
                 $this->getJasperReport($customers, str_replace("&","_",str_replace(" ","_",$customer_name)), $monitor['display_name'], $path_reports, $monitor_id, $monitor['type']);
             } 
             else if ($monitor['type'] == 'IISSERVER' and $monitor['state'] == 0) {
@@ -258,7 +274,7 @@ trait GenerarReportesSite24x7
                         'IndividualApp' =>  $this->applyFormatToPerformanceIndividualApp($IndividualApp),
                     ]
                 ];
-                $path_reports = $this->createFolderToCustomer($last_month, $customer_name, $monitor);
+                $path_reports = $this->createFolderToCustomer($last_month, $customer_name, $monitor, $group);
                 $this->getJasperReport($customers, str_replace("&","_",str_replace(" ","_",$customer_name)), $monitor['display_name'], $path_reports, $monitor_id, $monitor['type']);
             } 
             else if ($monitor['type'] == 'PING' and $monitor['state'] == 0) {
@@ -273,7 +289,7 @@ trait GenerarReportesSite24x7
                         'performance' =>  $this->applyFormatToPerformance($performance),
                     ]
                 ];
-                $path_reports = $this->createFolderToCustomer($last_month, $customer_name, $monitor);
+                $path_reports = $this->createFolderToCustomer($last_month, $customer_name, $monitor, $group);
                 $this->getJasperReport($customers, str_replace("&","_",str_replace(" ","_",$customer_name)), $monitor['display_name'], $path_reports, $monitor_id, $monitor['type']);
             } 
             else if ($monitor['type'] == 'URL' and $monitor['state'] == 0) {
@@ -288,7 +304,7 @@ trait GenerarReportesSite24x7
                         'performance' =>  $this->applyFormatToPerformance($performance),
                     ]
                 ];
-                $path_reports = $this->createFolderToCustomer($last_month, $customer_name, $monitor);
+                $path_reports = $this->createFolderToCustomer($last_month, $customer_name, $monitor, $group);
                 $this->getJasperReport($customers, str_replace("&","_",str_replace(" ","_",$customer_name)), $monitor['display_name'], $path_reports, $monitor_id, $monitor['type']);
             } 
         }

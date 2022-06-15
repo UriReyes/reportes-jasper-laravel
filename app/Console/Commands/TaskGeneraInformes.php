@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Livewire\ExportAllReports;
 
 class TaskGeneraInformes extends Command
 {
@@ -29,12 +30,12 @@ class TaskGeneraInformes extends Command
      */
     public function handle()
     {
-        $texto = "[" . date("Y-m-d H:i:s") . "]: Inicio de tarea de generación de informes.";
-        Storage::append("tareas_programadas.txt", $texto);
+        // $texto = "[" . date("Y-m-d H:i:s") . "]: Inicio de tarea de generación de informes.";
+        // Storage::append("tareas_programadas.txt", $texto);
         $reportes = new ExportAllReports();
         $reportes->startProcess();
-        $texto = "[" . date("Y-m-d H:i:s") . "]: Fin de tarea de generación de informes.";
-        Storage::append("tareas_programadas.txt", $texto);
+        // $texto = "[" . date("Y-m-d H:i:s") . "]: Fin de tarea de generación de informes.";
+        // Storage::append("tareas_programadas.txt", $texto);
         //return 0;
     }
 }

@@ -4,6 +4,7 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use Illuminate\Support\Facades\Storage;
 
 
 class Kernel extends ConsoleKernel
@@ -21,7 +22,13 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('GeneraInformes:task')->timezone('America/Mexico_City')->monthlyOn(14, '10:30');
+        $schedule->command('GeneraInformes:task')->timezone('America/Mexico_City')->monthlyOn(14, '16:30')
+        
+        ->onFailure(function (Stringable $output) {
+            // The task failed...
+            $texto = "[" . date("Y-m-d H:i:s") . "]: " . $output;
+            Storage::append("tareas_programadas.txt", $texto);
+        });
     }
 
     /**
