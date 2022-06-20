@@ -22,7 +22,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('GeneraInformes:task')->timezone('America/Mexico_City')->monthlyOn(16, '00:10')
+        $schedule->command('GeneraInformes:task')->timezone('America/Mexico_City')->monthlyOn(17, '14:41')
         
         ->onFailure(function (Stringable $output) {
             // The task failed...
