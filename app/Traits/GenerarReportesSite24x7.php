@@ -13,7 +13,7 @@ trait GenerarReportesSite24x7
     public function getJasperReport($data, $folder_name, $file_name = "Resumen", $path_reports, $monitor_id, $type = "SERVER")
     {
         //$public = public_path("jasperreports/{$type}/");
-        $xmlTmpfilePath = 'C:\Users\David Orozco\JaspersoftWorkspace\Informes KIO - Final'.DIRECTORY_SEPARATOR .$type.DIRECTORY_SEPARATOR .'Resumen.jrxml';
+        $xmlTmpfilePath = env('JASPER_PATH').DIRECTORY_SEPARATOR .$type.DIRECTORY_SEPARATOR .'Resumen.jrxml';
         // $textoRemplazar = "C:\\\Users\\\uriel.santiago\\\JaspersoftWorkspace\\\KIO-Jasper\\\\";
         // $contenido = file_get_contents("C:\\laragon\\www\\reportes-jasper-laravel\\public\\jasperreports\\Resumen.jrxml");
         // $templateRuta = str_replace($textoRemplazar, str_replace('\\', '\\\\', (string)$public), (string)$contenido);
