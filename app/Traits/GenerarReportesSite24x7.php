@@ -47,7 +47,8 @@ trait GenerarReportesSite24x7
         //Compilando el reporte graficas.jrxml
         // shell_exec('jasperstarter compile "C:/Users/uriel.santiago/JaspersoftWorkspace/KIO-Jasper/graficas.jrxml"');
         //dd($output);
-        shell_exec($output);
+        //shell_exec($output);
+        shell_exec('cd /d "C:\Program Files (x86)\JasperStarter\bin" && ' .$output);
         //dd($output);
         // $pathToFile = base_path() .
         //     '/resources/reports/pdf/Resumen.pdf';
@@ -71,7 +72,6 @@ trait GenerarReportesSite24x7
 
     public function processSite24x7Monitors($monitor, $site24x7Url, $refresh_token, $zaaid, $customer_name, $last_month)
     {
-        //and $monitor['monitor_id'] == "417536000001287157"
         $monitor_id = $monitor['monitor_id'];
         $monitor_group =  0;
         if (array_key_exists('monitor_groups',$monitor)){
@@ -277,7 +277,7 @@ trait GenerarReportesSite24x7
                 $path_reports = $this->createFolderToCustomer($last_month, $customer_name, $monitor, $group);
                 $this->getJasperReport($customers, str_replace("&","_",str_replace(" ","_",$customer_name)), $monitor['display_name'], $path_reports, $monitor_id, $monitor['type']);
             } 
-            else if ($monitor['type'] == 'PING' and $monitor['state'] == 0) {
+            if ($monitor['type'] == 'PING' and $monitor['state'] == 0) {
                 $availability = $this->getAvailabilityReport($site24x7Url, $monitor_id, $zaaid, $refresh_token, "?period={$this->period_report}");
                 $performance = $this->getPerformance($site24x7Url, $monitor_id, $zaaid, $refresh_token, "?unit_of_time={$unit_of_time}&period={$this->period_report}");
                 $customers = [
