@@ -57,13 +57,13 @@ trait GenerarReportesSite24x7
 
     public function createFolderToCustomer($last_month, $customer_name, $monitor = null, $group)
     {
-        $path_reports = Carbon::now()->format('Y') . DIRECTORY_SEPARATOR . str_replace(" ","_",$customer_name) . DIRECTORY_SEPARATOR . $last_month;
+        $path_reports = Carbon::now()->format('Y') . DIRECTORY_SEPARATOR . str_replace(".","_",str_replace(" ","_",$customer_name)) . DIRECTORY_SEPARATOR . $last_month;
         if ($monitor) {
             if($customer_name == 'Monitoring PrimeOps' || $customer_name == 'KIO CA&C'){
-                $path_reports = Carbon::now()->format('Y') . DIRECTORY_SEPARATOR . str_replace(" ","_",$customer_name) . DIRECTORY_SEPARATOR . $group . DIRECTORY_SEPARATOR . $last_month . DIRECTORY_SEPARATOR . $monitor['type']; 
+                $path_reports = Carbon::now()->format('Y') . DIRECTORY_SEPARATOR . str_replace(".","_",str_replace(" ","_",$customer_name)) . DIRECTORY_SEPARATOR . str_replace(".","_",str_replace(" ","_",$group)) . DIRECTORY_SEPARATOR . $last_month . DIRECTORY_SEPARATOR . $monitor['type']; 
             }
             else {
-                $path_reports = Carbon::now()->format('Y') . DIRECTORY_SEPARATOR . str_replace(" ","_",$customer_name) . DIRECTORY_SEPARATOR . $last_month . DIRECTORY_SEPARATOR . $monitor['type'];
+                $path_reports = Carbon::now()->format('Y') . DIRECTORY_SEPARATOR . str_replace(".","_",str_replace(" ","_",$customer_name)) . DIRECTORY_SEPARATOR . $last_month . DIRECTORY_SEPARATOR . $monitor['type'];
             }
         }
         Storage::makeDirectory('public/InformesKIO' . DIRECTORY_SEPARATOR . $path_reports);
@@ -115,6 +115,7 @@ trait GenerarReportesSite24x7
                         'performance_diskdetail' => $performance_diskdetail,
                     ]
                 ];
+                //dd($customers);
                 $path_reports = $this->createFolderToCustomer($last_month, $customer_name, $monitor, $group);
                 $this->getJasperReport($customers,  str_replace("&","_",str_replace(" ","_",$customer_name)), $monitor['display_name'], $path_reports, $monitor_id, $monitor['type']);
             } 

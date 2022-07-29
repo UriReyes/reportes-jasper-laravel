@@ -9,7 +9,7 @@
         var pusher = new Pusher('1b717ef2209c3ce46729', {
       cluster: 'us2'
     });
-        var channel = pusher.subscribe('progress-report');
+        var channel = pusher.subscribe('progress-reportD');
         channel.bind('process-report', function(data) {
             Livewire.emit('current-percentage', data);
         });

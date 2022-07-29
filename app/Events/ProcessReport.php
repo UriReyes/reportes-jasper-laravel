@@ -42,7 +42,7 @@ class ProcessReport implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return 'progress-report';
+        return 'progress-reportD';
     }
 
     public function broadcastAs()

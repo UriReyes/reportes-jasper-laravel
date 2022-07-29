@@ -26,7 +26,7 @@ class CustomerExportPDF extends Component implements ShouldBroadcast
 
     public function broadcastOn()
     {
-        return new Channel('progress-report');
+        return new Channel('progress-reportD');
     }
 
     public function mount($customer, $period, $last_month)
@@ -55,17 +55,19 @@ class CustomerExportPDF extends Component implements ShouldBroadcast
 
         // Se realiza el proceso de generacion de reportes
         foreach ($monitors as $monitor) {
-            $this->processSite24x7Monitors($monitor, $site24x7Url, $refresh_token, $this->zaaid, $this->name, $this->last_month);
-            $this->completed_reports++;
-            $this->percentage = $this->getPercentage($this->completed_reports, $this->totalMonitors);
-            event(new ProcessReport($this->totalMonitors, $this->percentage, $this->completed_reports, $this->zaaid, $this->name));
+            if ($monitor['monitor_id'] == '417536000002177252') {
+                $this->processSite24x7Monitors($monitor, $site24x7Url, $refresh_token, $this->zaaid, $this->name, $this->last_month);
+                $this->completed_reports++;
+                $this->percentage = $this->getPercentage($this->completed_reports, $this->totalMonitors);
+                event(new ProcessReport($this->totalMonitors, $this->percentage, $this->completed_reports, $this->zaaid, $this->name));
 
-            $finish_time = microtime(true);
-                $time = $finish_time - $start_time;
-                if($time > 3500){
-                    $refresh_token = $this->getRefreshToken();
-                    $start_time = microtime(true);
-                }
+                $finish_time = microtime(true);
+                    $time = $finish_time - $start_time;
+                    if($time > 3500){
+                        $refresh_token = $this->getRefreshToken();
+                        $start_time = microtime(true);
+                    }
+            }
         }
     }
 }
