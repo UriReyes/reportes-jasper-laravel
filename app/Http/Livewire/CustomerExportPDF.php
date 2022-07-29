@@ -55,7 +55,7 @@ class CustomerExportPDF extends Component implements ShouldBroadcast
 
         // Se realiza el proceso de generacion de reportes
         foreach ($monitors as $monitor) {
-            if ($monitor['monitor_id'] == '417536000002177252') {
+            //if ($monitor['monitor_id'] == '417536000002177252') {
                 $this->processSite24x7Monitors($monitor, $site24x7Url, $refresh_token, $this->zaaid, $this->name, $this->last_month);
                 $this->completed_reports++;
                 $this->percentage = $this->getPercentage($this->completed_reports, $this->totalMonitors);
@@ -67,7 +67,7 @@ class CustomerExportPDF extends Component implements ShouldBroadcast
                         $refresh_token = $this->getRefreshToken();
                         $start_time = microtime(true);
                     }
-            }
+            //}
         }
     }
 }
