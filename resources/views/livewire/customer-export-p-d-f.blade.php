@@ -22,20 +22,5 @@
         </div>
 
     </div>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            Livewire.on('current-percentage', (data) => {
-                let {
-                    progress,
-                    completed_reports,
-                    total_monitors,
-                    zaaid
-                } = data;
-                document.getElementById(`percentageBar${zaaid}`).style.width = progress + '%';
-                document.getElementById(`progressText${zaaid}`).innerHTML = `
-                    ${progress}% (${completed_reports} de ${total_monitors} monitores)
-                `;
-            });
-        });
-    </script>
+
 </div>

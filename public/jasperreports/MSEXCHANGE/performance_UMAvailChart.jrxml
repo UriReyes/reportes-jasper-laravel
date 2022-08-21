@@ -32,7 +32,7 @@
 			<subreport>
 				<reportElement x="10" y="84" width="521" height="70" uuid="d6681919-726f-45c9-8781-2a6db53f50ee"/>
 				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("chart_data")]]></dataSourceExpression>
-				<subreportExpression><![CDATA["C:\\Users\\David Orozco\\JaspersoftWorkspace\\Informes KIO - Final\\MSEXCHANGE\\performance_UMAvailChart_charts.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA["C:\\Users\\uriel.santiago\\JaspersoftWorkspace\\Reports\\MSEXCHANGE\\performance_UMAvailChart_charts.jasper"]]></subreportExpression>
 			</subreport>
 			<staticText>
 				<reportElement x="12" y="7" width="98" height="23" uuid="066a1159-1a54-4047-82e2-70d2ee752812"/>

@@ -13,8 +13,24 @@
     </div>
     <div class="grid grid-cols-3 gap-3">
         @foreach ($customers_its as $customer)
-            @livewire('customer-export-p-d-f', ['customer' => $customer,
-            'period'=>$period,'last_month'=>$last_month],key($customer['zaaid']))
+            @livewire('customer-export-p-d-f', ['customer' => $customer, 'period' => $period, 'last_month' => $last_month], key($customer['zaaid']))
         @endforeach
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            Livewire.on('current-percentage', (data) => {
+                let {
+                    progress,
+                    completed_reports,
+                    total_monitors,
+                    zaaid
+                } = data;
+                console.table(data);
+                document.getElementById(`percentageBar${zaaid}`).style.width = progress + '%';
+                document.getElementById(`progressText${zaaid}`).innerHTML = `
+                    ${progress}% (${completed_reports} de ${total_monitors} monitores)
+                `;
+            });
+        });
+    </script>
 </div>

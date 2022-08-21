@@ -9,7 +9,7 @@ trait ApiSite24x7
     public function getRefreshToken()
     {
         $url = env('ZOHO_API_URL');
-        $response = Http::connectTimeout(10)->timeout(5000)->asForm()->retry(3, 5000)->post("{$url}/token", data: [
+        $response = Http::asForm()->retry(3, 5000)->post("{$url}/token", data: [
             'client_id' => env('ZOHO_CLIENT_ID'),
             'client_secret' => env('ZOHO_CLIENT_SECRET'),
             'refresh_token' => env('ZOHO_REFRESH_TOKEN'),
@@ -22,11 +22,11 @@ trait ApiSite24x7
     public function getCustomers($url, $refresh_token)
     {
         $authorization = "Zoho-oauthtoken {$refresh_token}";
-        $response = Http::connectTimeout(10)->timeout(5000)->withHeaders([
+        $response = Http::withHeaders([
             'Content-Type' => 'application/json;charset=UTF-8',
             'Accept' => 'application/json; version=2.0',
             'Authorization' => $authorization
-        ])->retry(3, 10000)->get("{$url}/short/msp/customers");
+        ])->get("{$url}/short/msp/customers");
         $response = $response->json();
         return $response['data'];
     }
@@ -35,12 +35,12 @@ trait ApiSite24x7
     {
         $authorization = "Zoho-oauthtoken {$refresh_token}";
         $cookie = "zaaid={$zaaid}";
-        $response = Http::connectTimeout(10)->timeout(5000)->withHeaders([
+        $response = Http::withHeaders([
             'Content-Type' => 'application/json;charset=UTF-8',
             'Accept' => 'application/json; version=2.0',
             'Authorization' => $authorization,
             'Cookie' => $cookie
-        ])->retry(3, 10000)->get("{$url}/monitors");
+        ])->get("{$url}/monitors");
         $response = $response->json();
         return $response['data'];
     }
@@ -49,12 +49,12 @@ trait ApiSite24x7
     {
         $authorization = "Zoho-oauthtoken {$refresh_token}";
         $cookie = "zaaid={$zaaid}";
-        $response = Http::connectTimeout(10)->timeout(5000)->withHeaders([
+        $response = Http::withHeaders([
             'Content-Type' => 'application/json;charset=UTF-8',
             'Accept' => 'application/json; version=2.0',
             'Authorization' => $authorization,
             'Cookie' => $cookie
-        ])->retry(3, 10000)->get("{$url}/monitor_groups/{$monitor_group}");
+        ])->get("{$url}/monitor_groups/{$monitor_group}");
         $response = $response->json();
         return $response['data'];
     }
@@ -63,27 +63,27 @@ trait ApiSite24x7
     {
         $authorization = "Zoho-oauthtoken {$refresh_token}";
         $cookie = "zaaid={$zaaid}";
-        $response = Http::connectTimeout(10)->timeout(5000)->withHeaders([
+        $response = Http::withHeaders([
             'Content-Type' => 'application/json;charset=UTF-8',
             'Accept' => 'application/json; version=2.0',
             'Authorization' => $authorization,
             'Cookie' => $cookie
-        ])->retry(3, 10000)->get("{$url}/monitors/{$monitor_id}");
+        ])->get("{$url}/monitors/{$monitor_id}");
         $response = $response->json();
         return $response['data'];
     }
 
     public function getCurrentStatus($url, $zaaid, $refresh_token, $monitor_id)
     {
-        try{
+        try {
             $authorization = "Zoho-oauthtoken {$refresh_token}";
             $cookie = "zaaid={$zaaid}";
-            $response = Http::connectTimeout(10)->withHeaders([
+            $response = Http::withHeaders([
                 'Content-Type' => 'application/json;charset=UTF-8',
                 'Accept' => 'application/json; version=2.0',
                 'Authorization' => $authorization,
                 'Cookie' => $cookie
-            ])->timeout(5000)->retry(5, 10000)->get("{$url}/current_status/{$monitor_id}");
+            ])->get("{$url}/current_status/{$monitor_id}");
             $response = $response->json();
             return $response['data'];
         } catch (\Exception $e) {
@@ -97,25 +97,25 @@ trait ApiSite24x7
     {
         $authorization = "Zoho-oauthtoken {$refresh_token}";
         $cookie = "zaaid={$zaaid}";
-        $response = Http::connectTimeout(10)->timeout(5000)->withHeaders([
+        $response = Http::withHeaders([
             'Accept' => 'application/json; version=2.0',
             'Authorization' => $authorization,
             'Cookie' => $cookie
-        ])->retry(3, 10000)->get("{$url}/reports/availability_summary/${monitor_id}${atributos}");
+        ])->get("{$url}/reports/availability_summary/${monitor_id}${atributos}");
         $response = $response->json();
         return $response;
     }
 
     public function getPerformance($url, $monitor_id, $zaaid, $refresh_token, $attributos)
     {
-        try{   
+        try {
             $authorization = "Zoho-oauthtoken {$refresh_token}";
             $cookie = "zaaid={$zaaid}";
-            $response = Http::connectTimeout(10)->timeout(5000)->withHeaders([
+            $response = Http::withHeaders([
                 'Accept' => 'application/json; version=2.0',
                 'Authorization' => $authorization,
                 'Cookie' => $cookie
-            ])->retry(3, 10000)->get("{$url}/reports/performance/{$monitor_id}{$attributos}");
+            ])->get("{$url}/reports/performance/{$monitor_id}{$attributos}");
             $response = $response->json();
             return $response;
         } catch (\Exception $e) {
@@ -125,17 +125,17 @@ trait ApiSite24x7
             ];
         }
     }
-    
+
     public function getPerformanceCharts($url, $monitor_id, $zaaid, $refresh_token, $attributos)
     {
-        try{   
+        try {
             $authorization = "Zoho-oauthtoken {$refresh_token}";
             $cookie = "zaaid={$zaaid}";
-            $response = Http::connectTimeout(10)->timeout(5000)->withHeaders([
+            $response = Http::withHeaders([
                 'Accept' => 'application/json; version=2.0',
                 'Authorization' => $authorization,
                 'Cookie' => $cookie
-            ])->retry(3, 10000)->get("{$url}/charts/performance/{$monitor_id}{$attributos}");
+            ])->get("{$url}/charts/performance/{$monitor_id}{$attributos}");
             $response = $response->json();
             return $response;
         } catch (\Exception $e) {
@@ -148,14 +148,14 @@ trait ApiSite24x7
 
     public function getPerformanceDiskWidget($url, $monitor_id, $zaaid, $refresh_token, $attributos)
     {
-        try{
+        try {
             $authorization = "Zoho-oauthtoken {$refresh_token}";
             $cookie = "zaaid={$zaaid}";
-            $response = Http::connectTimeout(10)->timeout(5000)->withHeaders([
+            $response = Http::withHeaders([
                 'Accept' => 'application/json; version=2.0',
                 'Authorization' => $authorization,
                 'Cookie' => $cookie
-            ])->retry(3, 10000)->get("{$url}/monitors/widget_details/{$monitor_id}{$attributos}");
+            ])->get("{$url}/monitors/widget_details/{$monitor_id}{$attributos}");
             $response = $response->json();
             return $response;
         } catch (\Exception $e) {
