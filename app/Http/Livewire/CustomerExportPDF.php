@@ -57,14 +57,14 @@ class CustomerExportPDF extends Component implements ShouldBroadcast
         $this->percentage = 0;
         // $start_time = microtime(true);
 
-        // $monitorsCollect = collect();
+        $monitorsCollect = collect();
         // Se realiza el proceso de generacion de reportes
         foreach ($monitors as $monitor) {
             //if ($monitor['monitor_id'] == '417536000002177252') {
             $processedMonitor = $this->processSite24x7Monitors($monitor, $site24x7Url, $refresh_token, $this->zaaid, $this->name, $this->last_month);
-            $this->completed_reports++;
-            $this->percentage = $this->getPercentage($this->completed_reports, $this->totalMonitors);
-            event(new ProcessReport($this->totalMonitors, $this->percentage, $this->completed_reports, $this->zaaid, $this->name));
+            // $this->completed_reports++;
+            // $this->percentage = $this->getPercentage($this->completed_reports, $this->totalMonitors);
+            // event(new ProcessReport($this->totalMonitors, $this->percentage, $this->completed_reports, $this->zaaid, $this->name));
 
             // $finish_time = microtime(true);
             // $time = $finish_time - $start_time;
@@ -72,15 +72,15 @@ class CustomerExportPDF extends Component implements ShouldBroadcast
             //     $refresh_token = $this->getRefreshToken();
             //     $start_time = microtime(true);
             // }
-            // $monitorsCollect->push($processedMonitor);
+            $monitorsCollect->push($processedMonitor);
             //}
         }
-        // $this->storedInformation->push([
-        //     'id' => null,
-        //     'name' => $this->name,
-        //     'zaaid' => $this->zaaid,
-        //     'monitors' => $monitorsCollect
-        // ]);
+        $this->storedInformation->push([
+            'id' => null,
+            'name' => $this->name,
+            'zaaid' => $this->zaaid,
+            'monitors' => $monitorsCollect
+        ]);
         file_put_contents(public_path("storage/downloaded_msp_information/{$this->name}_{$this->zaaid}.json"), json_encode($this->storedInformation));
         $this->generateMSPReports();
     }

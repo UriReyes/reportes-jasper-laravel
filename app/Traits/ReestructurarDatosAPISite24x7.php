@@ -79,7 +79,7 @@ trait ReestructurarDatosAPISite24x7
             return $OverallDiskUtilization;
         }
     }
-    
+
     public function getFormattedResponse($item)
     {
         if (array_key_exists('chart_data', $item)) {
@@ -93,7 +93,6 @@ trait ReestructurarDatosAPISite24x7
                 return strtotime($a['date']) - strtotime($b['date']);
             });
             return $item;
-            
         }
     }
 
@@ -246,7 +245,7 @@ trait ReestructurarDatosAPISite24x7
         }
     }
 
-    public function getFormattedResponsePlugin($item,$key)
+    public function getFormattedResponsePlugin($item, $key)
     {
         if (array_key_exists('chart_data', $item)) {
             $item['chart_data'] = array_map(function ($item) {
@@ -255,7 +254,7 @@ trait ReestructurarDatosAPISite24x7
                     'value1' => array_key_exists(1, $item) ? $item[1] : null,
                 ];
             }, $item['chart_data']);
-            $item['metric']=$key;
+            $item['metric'] = $key;
             usort($item['chart_data'], function ($a, $b) {
                 return strtotime($a['date']) - strtotime($b['date']);
             });
@@ -265,9 +264,9 @@ trait ReestructurarDatosAPISite24x7
 
     public function getFormattedResponseTraffic($traffic)
     {
-        $trafficArray=[];
-        foreach($traffic as $traffic_it){
-            foreach($traffic_it as $item){
+        $trafficArray = [];
+        foreach ($traffic as $traffic_it) {
+            foreach ($traffic_it as $item) {
                 if (array_key_exists('chart_data', $item)) {
                     $item['chart_data'] = array_map(function ($item) {
                         return [
@@ -278,7 +277,7 @@ trait ReestructurarDatosAPISite24x7
                     usort($item['chart_data'], function ($a, $b) {
                         return strtotime($a['date']) - strtotime($b['date']);
                     });
-                    array_push($trafficArray,$item);
+                    array_push($trafficArray, $item);
                 }
             }
         }
