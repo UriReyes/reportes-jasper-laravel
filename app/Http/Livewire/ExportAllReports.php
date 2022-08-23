@@ -50,7 +50,7 @@ class ExportAllReports extends Component
         $refresh_token = $this->getRefreshToken();
 
         $customers_its = $this->getCustomers($site24x7Url, $refresh_token);
-        // $start_time = microtime(true);
+        $start_time = microtime(true);
         $texto = "[" . date("Y-m-d H:i:s") . "]: Inicio de tarea de generación de informes.";
         Storage::append("tareas_programadas.txt", $texto);
         foreach ($customers_its as $customer_it) {
@@ -69,12 +69,12 @@ class ExportAllReports extends Component
                 $this->completed_reports++;
                 $this->percentage = $this->getPercentage($this->completed_reports, $this->totalMonitors);
                 event(new ProcessReport($this->totalMonitors, $this->percentage, $this->completed_reports, $zaaid, $customer));
-                // $finish_time = microtime(true);
-                // $time = $finish_time - $start_time;
-                // if ($time > 3500) {
-                //     $refresh_token = $this->getRefreshToken();
-                //     $start_time = microtime(true);
-                // }
+                $finish_time = microtime(true);
+                $time = $finish_time - $start_time;
+                if ($time > 3500) {
+                    $refresh_token = $this->getRefreshToken();
+                    $start_time = microtime(true);
+                }
                 $monitorsCollect->push($processedMonitor);
             }
 
