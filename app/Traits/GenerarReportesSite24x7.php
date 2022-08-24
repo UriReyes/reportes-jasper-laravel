@@ -2,6 +2,7 @@
 //make a trait for api site 24x7
 namespace App\Traits;
 
+use App\Events\ProcessReport;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
 use PHPJasper\PHPJasper;
@@ -620,18 +621,21 @@ trait GenerarReportesSite24x7
 
     public function generateMSPReports()
     {
+        $completed_reports = 0;
         $files = Storage::disk('public')->files('downloaded_msp_information');
         foreach ($files as $file) {
             $mspArray = json_decode(file_get_contents(public_path("storage/{$file}")), true);
             if ($mspArray != null) {
-
                 foreach ($mspArray as $mspItem) {
                     foreach ($mspItem['monitors'] as $monitor) {
+                        $totalMonitors = count($mspItem['monitors']);
                         if ($monitor != null) {
                             foreach ($monitor as $monitorItem) {
-
                                 $path_reports = $this->createFolderToCustomer($this->last_month, $mspItem['name'], $monitorItem, $monitorItem['group']);
                                 $this->getJasperReport($monitor, str_replace("&", "_", str_replace(" ", "_", $monitorItem['name'])), $monitorItem['monitor']['display_name'], $path_reports, $monitorItem['monitor']['monitor_id'], $monitorItem['monitor']['type']);
+                                $completed_reports++;
+                                $percentage = $this->getPercentage($completed_reports, $totalMonitors);
+                                event(new ProcessReport($totalMonitors, $percentage, $completed_reports, $monitorItem['zaaid'], $monitorItem['name']));
                             }
                         }
                     }

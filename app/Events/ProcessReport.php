@@ -25,14 +25,16 @@ class ProcessReport implements ShouldBroadcast
     public $completed_reports;
     public $zaaid;
     public $customer;
+    public $textType;
 
-    public function __construct($total_monitors, $progress, $completed_reports, $zaaid, $customer = null)
+    public function __construct($total_monitors, $progress, $completed_reports, $zaaid, $customer = null, $textType = 'Descargando Archivos...')
     {
         $this->customer = $customer;
         $this->total_monitors = $total_monitors;
         $this->progress = $progress;
         $this->completed_reports = $completed_reports;
         $this->zaaid = $zaaid;
+        $this->textType = $textType;
     }
 
     /**

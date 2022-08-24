@@ -17,7 +17,15 @@ class JasperController extends Controller
     {
         $site24x7Url = env('SITE_24X7_API');
         $refresh_token = $this->getRefreshToken();
-        $customers_its = $this->getCustomers($site24x7Url, $refresh_token);
+
+        if ($refresh_token == 'access_denied') {
+            $customers_its  = [];
+        } else {
+            $customers_its = $this->getCustomers($site24x7Url, $refresh_token);
+            if ($customers_its == 401) {
+                $customers_its = [];
+            }
+        }
         // dd($customers_its);
         return view('welcome', compact('customers_its'));
     }

@@ -1,5 +1,7 @@
 @extends('layouts.layout')
-
+{{-- @section('title')
+    Exportar Todo
+@endsection --}}
 @section('content')
     @livewire('export-all-reports')
 @endsection
