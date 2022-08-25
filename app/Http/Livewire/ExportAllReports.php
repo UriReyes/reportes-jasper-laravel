@@ -79,7 +79,7 @@ class ExportAllReports extends Component
                 'text' => 'Ocurrió un error de comunicación con el API, espere un momento y vuelva a intentarlo',
             ]);
         } else {
-            $start_time = microtime(true);
+            // $start_time = microtime(true);
             $texto = "[" . date("Y-m-d H:i:s") . "]: Inicio de tarea de generación de informes.";
             Storage::append("tareas_programadas.txt", $texto);
             foreach ($customers_its as $customer_it) {
@@ -106,12 +106,12 @@ class ExportAllReports extends Component
                         $this->completed_reports++;
                         $this->percentage = $this->getPercentage($this->completed_reports, $this->totalMonitors);
                         event(new DownloadInformationAPI($this->totalMonitors, $this->percentage, $this->completed_reports, $zaaid, $customer));
-                        $finish_time = microtime(true);
-                        $time = $finish_time - $start_time;
-                        if ($time > 3500) {
-                            $refresh_token = $this->getRefreshToken();
-                            $start_time = microtime(true);
-                        }
+                        // $finish_time = microtime(true);
+                        // $time = $finish_time - $start_time;
+                        // if ($time > 3500) {
+                        //     $refresh_token = $this->getRefreshToken();
+                        //     $start_time = microtime(true);
+                        // }
                         $monitorsCollect->push($processedMonitor);
                     }
 

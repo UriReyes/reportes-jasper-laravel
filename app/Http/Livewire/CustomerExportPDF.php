@@ -76,7 +76,7 @@ class CustomerExportPDF extends Component implements ShouldBroadcast
                 $this->totalMonitors = count($monitors);
                 $this->completed_reports = 0;
                 $this->percentage = 0;
-                $start_time = microtime(true);
+                // $start_time = microtime(true);
 
                 $monitorsCollect = collect();
                 // Se realiza el proceso de generacion de reportes
@@ -87,12 +87,12 @@ class CustomerExportPDF extends Component implements ShouldBroadcast
                     $this->percentage = $this->getPercentage($this->completed_reports, $this->totalMonitors);
                     event(new DownloadInformationAPI($this->totalMonitors, $this->percentage, $this->completed_reports, $this->zaaid, $this->name));
 
-                    $finish_time = microtime(true);
-                    $time = $finish_time - $start_time;
-                    if ($time > 3500) {
-                        $refresh_token = $this->getRefreshToken();
-                        $start_time = microtime(true);
-                    }
+                    // $finish_time = microtime(true);
+                    // $time = $finish_time - $start_time;
+                    // if ($time > 3500) {
+                    //     $refresh_token = $this->getRefreshToken();
+                    //     $start_time = microtime(true);
+                    // }
                     $monitorsCollect->push($processedMonitor);
                     //}
                 }
