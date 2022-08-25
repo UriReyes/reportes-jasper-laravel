@@ -74,6 +74,11 @@ class JasperController extends Controller
         return view('downloaded-information');
     }
 
+    public function folder()
+    {
+        return view('folder');
+    }
+
     // public function tests()
     // {
     //     dd('s');

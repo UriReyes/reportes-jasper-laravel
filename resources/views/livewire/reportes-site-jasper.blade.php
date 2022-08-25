@@ -2,7 +2,7 @@
     <div class="grid grid-cols-4 gap-4 mb-6">
         <div class="w-full">
             <h5 class="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">
-                Exportar Por MSP
+                <i class="fas fa-home mr-2"></i> Exportar Por MSP
             </h5>
             <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400"><i
                     class="fa-solid fa-filter mr-2"></i>Selecciona el periodo</label>
@@ -14,7 +14,10 @@
             </select>
         </div>
     </div>
-    <div style="height: calc(100vh - 240px);overflow: auto;" class="">
+    <div style="text-align: end">
+        <strong>{{ count($customers_its) }} MSP</strong>
+    </div>
+    <div style="height: calc(100vh - 270px);overflow: auto;" class="">
 
         <div class="grid grid-cols-3 gap-3">
             @foreach ($customers_its as $customer)

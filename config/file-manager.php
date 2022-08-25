@@ -158,7 +158,7 @@ return [
      */
     'aclRules' => [
         null => [
-            //['disk' => 'public', 'path' => '/', 'access' => 2],
+            ['disk' => 'reports', 'path' => '/', 'access' => 1],
         ],
         1 => [
             //['disk' => 'public', 'path' => 'images/arch*.jpg', 'access' => 2],

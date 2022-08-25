@@ -17,4 +17,5 @@ use Illuminate\Support\Facades\Route;
 Route::get('/',  [JasperController::class, 'index'])->name('home');
 Route::get('/export-all',  [JasperController::class, 'exportAll'])->name('export-all');
 Route::get('/downloaded-information',  [JasperController::class, 'downloadedInformationMSP'])->name('downloaded-information');
+Route::get('/folder',  [JasperController::class, 'folder'])->name('folder');
 // Route::post('tests', [JasperController::class, 'tests'])->name('tests');
