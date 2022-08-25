@@ -2,6 +2,8 @@
 
 namespace App\Http\Livewire;
 
+use App\Events\DownloadAllInformationAPI;
+use App\Events\DownloadInformationAPI;
 use App\Events\ProcessReport;
 use App\Events\ProcessReports;
 use App\Traits\ApiSite24x7;
@@ -27,7 +29,7 @@ class ExportAllReports extends Component
     public $completed_customers = 0;
     public $period_report = 7;
     public $storedInformation;
-
+    public $msp_init = 'undefinedMSP';
     public function mount()
     {
         Date::setLocale('es');
@@ -59,6 +61,16 @@ class ExportAllReports extends Component
         $refresh_token = $this->getRefreshToken();
 
         $customers_its = $this->getCustomers($site24x7Url, $refresh_token);
+        if ($this->msp_init != 'undefinedMSP') {
+            foreach ($customers_its as $index => $msp) {
+                if ($msp['zaaid'] != $this->msp_init) {
+                    unset($customers_its[$index]);
+                } elseif ($msp['zaaid'] == $this->msp_init) {
+                    break;
+                }
+            }
+        }
+
         if ($customers_its == 401) {
             $this->alert('info', 'Upps!', [
                 'position' => 'center',
@@ -93,7 +105,7 @@ class ExportAllReports extends Component
                         $processedMonitor = $this->processSite24x7Monitors($monitor, $site24x7Url, $refresh_token, $zaaid, $customer, $this->last_month);
                         $this->completed_reports++;
                         $this->percentage = $this->getPercentage($this->completed_reports, $this->totalMonitors);
-                        event(new ProcessReport($this->totalMonitors, $this->percentage, $this->completed_reports, $zaaid, $customer));
+                        event(new DownloadInformationAPI($this->totalMonitors, $this->percentage, $this->completed_reports, $zaaid, $customer));
                         $finish_time = microtime(true);
                         $time = $finish_time - $start_time;
                         if ($time > 3500) {
@@ -112,14 +124,13 @@ class ExportAllReports extends Component
                     file_put_contents(public_path("storage/downloaded_msp_information/{$customer}_{$zaaid}.json"), json_encode($this->storedInformation));
                     $this->completed_customers++;
                     $this->percentage_customers = $this->getPercentage($this->completed_customers, count($customers_its));
-                    event(new ProcessReports(count($customers_its), $this->percentage_customers, $this->completed_customers, $customer_id));
-
+                    event(new DownloadAllInformationAPI(count($customers_its), $this->percentage_customers, $this->completed_customers, $customer_id));
+                    $this->generateMSPReport("downloaded_msp_information/{$customer}_{$zaaid}.json");
                     $texto = "[" . date("Y-m-d H:i:s") . "]: " . $customer;
                     Storage::append("tareas_programadas.txt", $texto);
                 }
             }
-            sleep(5);
-            $this->generateMSPReports();
+            // $this->generateMSPReports();
             $texto = "[" . date("Y-m-d H:i:s") . "]: Fin de tarea de generación de informes.";
             Storage::append("tareas_programadas.txt", $texto);
         }

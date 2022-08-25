@@ -34,11 +34,13 @@
                     textType
                 } = data;
                 console.table(data);
-                document.getElementById(`progressTextType${zaaid}`).innerHTML = textType;
-                document.getElementById(`percentageBar${zaaid}`).style.width = progress + '%';
-                document.getElementById(`progressText${zaaid}`).innerHTML = `
+                if (zaaid != '0000') {
+                    document.getElementById(`progressTextType${zaaid}`).innerHTML = textType;
+                    document.getElementById(`percentageBar${zaaid}`).style.width = progress + '%';
+                    document.getElementById(`progressText${zaaid}`).innerHTML = `
                     ${progress}% (${completed_reports} de ${total_monitors} monitores)
                 `;
+                }
             });
             Livewire.on('current-percentage-donwload', (data) => {
                 let {
@@ -50,15 +52,13 @@
                     textType
                 } = data;
                 console.table(data);
-                document.getElementById(`progressTextType${zaaid}`).innerHTML = textType;
-                document.getElementById(`percentageBar${zaaid}`).style.width = progress + '%';
-                document.getElementById(`progressText${zaaid}`).innerHTML = `
+                if (zaaid != '0000') {
+                    document.getElementById(`progressTextType${zaaid}`).innerHTML = textType;
+                    document.getElementById(`percentageBar${zaaid}`).style.width = progress + '%';
+                    document.getElementById(`progressText${zaaid}`).innerHTML = `
                     ${progress}% (${completed_reports} de ${total_monitors} monitores)
                 `;
-                // if (progress == 100) {
-                //     @this.emit('completedExport', data);
-                //     document.getElementById(`percentageBar${zaaid}`).style.width = 0 + '%';
-                // }
+                }
             });
         });
     </script>

@@ -19,7 +19,7 @@ trait ApiSite24x7
             ]);
             $response = $response->object();
             return $response->access_token;
-        } catch (\Throwable $th) {
+        } catch (\Throwable | \GuzzleHttp\Exception\GuzzleException $th) {
             return $response->error;
         }
     }
@@ -35,7 +35,7 @@ trait ApiSite24x7
             ])->retry(3, 10000)->get("{$url}/short/msp/customers");
             $response = $response->json();
             return $response['data'];
-        } catch (\Throwable $th) {
+        } catch (\Throwable | \GuzzleHttp\Exception\GuzzleException $th) {
             return $th->getCode();
         }
     }
@@ -54,6 +54,7 @@ trait ApiSite24x7
             $response = $response->json();
             return $response['data'];
         } catch (\Throwable $th) {
+            dd($th);
             return "error";
         }
     }
@@ -71,7 +72,7 @@ trait ApiSite24x7
             ])->retry(3, 10000)->get("{$url}/monitor_groups/{$monitor_group}");
             $response = $response->json();
             return $response['data'];
-        } catch (\Throwable $th) {
+        } catch (\Throwable | \GuzzleHttp\Exception\GuzzleException $th) {
             return [
                 'data' => [],
             ];
@@ -91,7 +92,7 @@ trait ApiSite24x7
             ])->retry(3, 10000)->get("{$url}/monitors/{$monitor_id}");
             $response = $response->json();
             return $response['data'];
-        } catch (\Throwable $th) {
+        } catch (\Throwable | \GuzzleHttp\Exception\GuzzleException $th) {
             return [
                 'data' => [],
             ];
@@ -111,7 +112,7 @@ trait ApiSite24x7
             ])->timeout(5000)->retry(5, 10000)->get("{$url}/current_status/{$monitor_id}");
             $response = $response->json();
             return $response['data'];
-        } catch (\Exception $e) {
+        } catch (\Throwable | \GuzzleHttp\Exception\GuzzleException $th) {
             return [
                 'data' => [],
             ];
@@ -130,7 +131,7 @@ trait ApiSite24x7
             ])->retry(3, 10000)->get("{$url}/reports/availability_summary/${monitor_id}${atributos}");
             $response = $response->json();
             return $response;
-        } catch (\Throwable $th) {
+        } catch (\Throwable | \GuzzleHttp\Exception\GuzzleException $th) {
             return [
                 'data' => [],
             ];
@@ -149,7 +150,7 @@ trait ApiSite24x7
             ])->retry(3, 10000)->get("{$url}/reports/performance/{$monitor_id}{$attributos}");
             $response = $response->json();
             return $response;
-        } catch (\Exception $e) {
+        } catch (\Throwable | \GuzzleHttp\Exception\GuzzleException $th) {
             return [
                 'data' => [],
                 'chart_data' => [],
@@ -169,7 +170,7 @@ trait ApiSite24x7
             ])->retry(3, 10000)->get("{$url}/charts/performance/{$monitor_id}{$attributos}");
             $response = $response->json();
             return $response;
-        } catch (\Exception $e) {
+        } catch (\Throwable | \GuzzleHttp\Exception\GuzzleException $th) {
             return [
                 'data' => [],
                 'chart_data' => [],
@@ -189,7 +190,7 @@ trait ApiSite24x7
             ])->retry(3, 10000)->get("{$url}/monitors/widget_details/{$monitor_id}{$attributos}");
             $response = $response->json();
             return $response;
-        } catch (\Exception $e) {
+        } catch (\Throwable | \GuzzleHttp\Exception\GuzzleException $th) {
             return [
                 'data' => [],
                 'chart_data' => [],

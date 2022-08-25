@@ -103,7 +103,7 @@ class CustomerExportPDF extends Component implements ShouldBroadcast
                     'monitors' => $monitorsCollect
                 ]);
                 file_put_contents(public_path("storage/downloaded_msp_information/{$this->name}_{$this->zaaid}.json"), json_encode($this->storedInformation));
-                $this->generateMSPReports();
+                $this->generateMSPReport("downloaded_msp_information/{$this->name}_{$this->zaaid}.json");
             }
         }
     }

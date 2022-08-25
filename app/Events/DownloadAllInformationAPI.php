@@ -10,17 +10,15 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class ProcessReports implements ShouldBroadcast
+class DownloadAllInformationAPI implements ShouldBroadcast
 {
-    use Dispatchable, InteractsWithSockets, SerializesModels;
-
     public $total_customers;
     public $progress;
     public $completed_customers;
     public $customer_id;
     public $textType;
 
-    public function __construct($total_customers, $progress, $completed_customers, $customer_id, $textType = 'Descargando Archivos...')
+    public function __construct($total_customers, $progress, $completed_customers, $customer_id, $textType = 'Descargando Información...')
     {
         $this->total_customers = $total_customers;
         $this->progress = $progress;
@@ -36,11 +34,11 @@ class ProcessReports implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return 'progress-reportDs';
+        return 'downloadAllAPI';
     }
 
     public function broadcastAs()
     {
-        return 'process-reports';
+        return 'downloadAllAPIEvent';
     }
 }

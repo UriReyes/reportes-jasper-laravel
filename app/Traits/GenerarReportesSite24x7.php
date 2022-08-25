@@ -3,6 +3,7 @@
 namespace App\Traits;
 
 use App\Events\ProcessReport;
+use App\Events\ProcessReports;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
 use PHPJasper\PHPJasper;
@@ -619,25 +620,46 @@ trait GenerarReportesSite24x7
         return false;
     }
 
+    public function generateMSPReport(string $archivo = null)
+    {
+        $completed_reports = 0;
+        $mspArray = json_decode(file_get_contents(public_path("storage/{$archivo}")), true);
+        $this->iterateInforationMSP($mspArray, $completed_reports);
+    }
     public function generateMSPReports()
     {
         $completed_reports = 0;
+        $completed_customers = 0;
+        $percentage_customers = 0;
         $files = Storage::disk('public')->files('downloaded_msp_information');
+        $customers_its = count($files);
         foreach ($files as $file) {
             $mspArray = json_decode(file_get_contents(public_path("storage/{$file}")), true);
-            if ($mspArray != null) {
-                foreach ($mspArray as $mspItem) {
-                    foreach ($mspItem['monitors'] as $monitor) {
-                        $totalMonitors = count($mspItem['monitors']);
-                        if ($monitor != null) {
-                            foreach ($monitor as $monitorItem) {
-                                $path_reports = $this->createFolderToCustomer($this->last_month, $mspItem['name'], $monitorItem, $monitorItem['group']);
-                                $this->getJasperReport($monitor, str_replace("&", "_", str_replace(" ", "_", $monitorItem['name'])), $monitorItem['monitor']['display_name'], $path_reports, $monitorItem['monitor']['monitor_id'], $monitorItem['monitor']['type']);
-                                $completed_reports++;
-                                $percentage = $this->getPercentage($completed_reports, $totalMonitors);
-                                event(new ProcessReport($totalMonitors, $percentage, $completed_reports, $monitorItem['zaaid'], $monitorItem['name']));
-                            }
+            $this->iterateInforationMSP($mspArray, $completed_reports);
+            $completed_customers++;
+            $percentage_customers = $this->getPercentage($completed_customers, $customers_its);
+            event(new ProcessReports($customers_its, $percentage_customers, $completed_customers, $mspArray['id']));
+        }
+    }
+
+    public function iterateInforationMSP($mspArray, $completed_reports)
+    {
+        if ($mspArray != null) {
+            foreach ($mspArray as $mspItem) {
+                foreach ($mspItem['monitors'] as $monitor) {
+                    $totalMonitors = count($mspItem['monitors']);
+                    if ($monitor != null) {
+                        foreach ($monitor as $monitorItem) {
+                            $path_reports = $this->createFolderToCustomer($this->last_month, $mspItem['name'], $monitorItem, $monitorItem['group']);
+                            $this->getJasperReport($monitor, str_replace("&", "_", str_replace(" ", "_", $monitorItem['name'])), $monitorItem['monitor']['display_name'], $path_reports, $monitorItem['monitor']['monitor_id'], $monitorItem['monitor']['type']);
+                            $completed_reports++;
+                            $percentage = $this->getPercentage($completed_reports, $totalMonitors);
+                            event(new ProcessReport($totalMonitors, $percentage, $completed_reports, $monitorItem['zaaid'], $monitorItem['name']));
                         }
+                    }else{
+                        $completed_reports++;
+                            $percentage = $this->getPercentage($completed_reports, $totalMonitors);
+                            event(new ProcessReport($totalMonitors, $percentage, $completed_reports, "0000", "Generic MSP - Created By System Export"));
                     }
                 }
             }

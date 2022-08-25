@@ -23,5 +23,14 @@
         channel2.bind('process-reports', function(data) {
             Livewire.emit('current-percentage-customers', data);
         });
+
+        var privateChannelDownloadAPI = pusher.subscribe('downloadAPI');
+        privateChannelDownloadAPI.bind('downloadAPIEvent', function(data) {
+            Livewire.emit('current-percentage-donwload', data);
+        });
+        var privateChannelDownloadAPI = pusher.subscribe('downloadAllAPI');
+        privateChannelDownloadAPI.bind('downloadAllAPIEvent', function(data) {
+            Livewire.emit('current-all-percentage-donwload', data);
+        });
     </script>
 @endsection
