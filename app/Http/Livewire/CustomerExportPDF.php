@@ -28,7 +28,7 @@ class CustomerExportPDF extends Component implements ShouldBroadcast
     public $period_report;
     public $storedInformation;
 
-    protected $listeners = ['completedExport'];
+    protected $listeners = ['completedExport', 'reloadProcessExport' => 'startProcess'];
 
     public function broadcastOn()
     {
@@ -54,6 +54,7 @@ class CustomerExportPDF extends Component implements ShouldBroadcast
         Storage::makeDirectory('/public/state-msp/');
         Storage::makeDirectory('public/downloaded_msp_information');
         $completed_monitors = [];
+        $totalMonitorsMask = 1;
         $state = json_decode(Storage::get('public/state-msp/state.json'), true);
         $this->storedInformation = [];
         array_push($this->storedInformation,  [
@@ -74,6 +75,7 @@ class CustomerExportPDF extends Component implements ShouldBroadcast
             ]);
         } else {
             $monitors = $this->getMonitors($site24x7Url, $this->zaaid, $refresh_token);
+            $totalMonitorsMask = count($monitors);
             if ($state != null) {
                 if (array_key_exists('zaaid', $state)) {
                     if ($this->zaaid == $state['zaaid']) {
@@ -101,8 +103,8 @@ class CustomerExportPDF extends Component implements ShouldBroadcast
                 ]);
             } else {
                 $this->totalMonitors = count($monitors);
-                $this->completed_reports = 0;
-                $this->percentage = 0;
+                $this->completed_reports = count($completed_monitors);
+                $this->percentage = $totalMonitorsMask > 0 ? ($this->getPercentage($this->completed_reports, $totalMonitorsMask)) : 0;
                 // $start_time = microtime(true);
 
                 $monitorsCollect = collect();
@@ -119,7 +121,7 @@ class CustomerExportPDF extends Component implements ShouldBroadcast
                     );
 
                     $this->completed_reports++;
-                    $this->percentage = $this->getPercentage($this->completed_reports, $this->totalMonitors);
+                    $this->percentage = $this->getPercentage($this->completed_reports, $totalMonitorsMask);
                     array_push($this->storedInformation[0]['monitors'], $processedMonitor);
                     file_put_contents(public_path("storage/downloaded_msp_information/{$this->name}_{$this->zaaid}.json"), json_encode($this->storedInformation));
                     //SAVE STATE
@@ -133,7 +135,7 @@ class CustomerExportPDF extends Component implements ShouldBroadcast
                         'downloaded_files' => false
                     ], JSON_PRETTY_PRINT);
                     Storage::put('public/state-msp/state.json', $state_stored);
-                    event(new DownloadInformationAPI($this->totalMonitors, $this->percentage, $this->completed_reports, $this->zaaid, $this->name, 'Descargando Información...'));
+                    event(new DownloadInformationAPI($totalMonitorsMask, $this->percentage, $this->completed_reports, $this->zaaid, $this->name, 'Descargando Información...'));
                 }
 
                 $this->generateMSPReport("downloaded_msp_information/{$this->name}_{$this->zaaid}.json");
