@@ -17,6 +17,9 @@
                         @endforeach
                     </Select>
                 </div>
+                <div>
+
+                </div>
             </div>
             <div style="text-align: end">
                 <strong>{{ count($customers_its) }} MSP</strong>
@@ -25,6 +28,8 @@
                 <span class="text-base font-medium text-blue-700 dark:text-white">
                     <i class="fa-solid fa-play text-green-500" wire:loading.remove
                         wire:click.prevent="startProcess()"></i>
+                    {{-- <i class="fas fa-stop text-danger" wire:loading wire:target="startProcess"
+                        wire:click="stopProcess"></i> --}}
                     <i class="fa-solid fa-spinner fa-spin-pulse" wire:loading wire:target="startProcess"></i>
                 </span>
                 <div class="w-full text-right">
@@ -52,7 +57,8 @@
         @else
             @include('partials.error-api', [
                 'titleErrorAPI' => 'Exportar Por MSP',
-                'errorAPI' => 'No se pudo consultar la información del API, espere un momento y refresque la pagina',
+                'errorAPI' =>
+                    'No se pudo consultar la información del API, espere un momento y refresque la pagina',
             ])
         @endif
     </div>
@@ -114,7 +120,8 @@
                     total_monitors,
                     zaaid,
                     customer,
-                    textType
+                    textType,
+                    state_stored
                 } = data;
                 console.table(data);
                 if (zaaid != '0000') {

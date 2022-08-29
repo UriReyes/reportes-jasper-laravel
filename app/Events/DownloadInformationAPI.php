@@ -20,6 +20,7 @@ class DownloadInformationAPI implements ShouldBroadcast
     public $zaaid;
     public $customer;
     public $textType;
+
     public function __construct($total_monitors, $progress, $completed_reports, $zaaid, $customer = null, $textType = 'Descargando Información...')
     {
         $this->customer = $customer;

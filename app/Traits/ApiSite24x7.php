@@ -2,6 +2,7 @@
 //make a trait for api site 24x7
 namespace App\Traits;
 
+use App\Events\ReloadProcessOnErrorAPI;
 use Error;
 use Illuminate\Support\Facades\Http;
 
@@ -54,8 +55,13 @@ trait ApiSite24x7
             $response = $response->json();
             return $response['data'];
         } catch (\Throwable $th) {
-            dd($th);
-            return "error";
+            // dd('1');
+            if (str_contains($th->getMessage(), '"message":"Invalid data provided."')) {
+                return 'error';
+            } else {
+                // die();
+                event(new ReloadProcessOnErrorAPI());
+            }
         }
     }
 
@@ -73,9 +79,16 @@ trait ApiSite24x7
             $response = $response->json();
             return $response['data'];
         } catch (\Throwable | \GuzzleHttp\Exception\GuzzleException $th) {
-            return [
-                'data' => [],
-            ];
+            // dd('2');
+            if (str_contains($th->getMessage(), '"message":"Invalid data provided."')) {
+                return [
+                    'data' => [],
+                    'chart_data' => [],
+                ];
+            } else {
+                // die();
+                event(new ReloadProcessOnErrorAPI());
+            }
         }
     }
 
@@ -93,9 +106,16 @@ trait ApiSite24x7
             $response = $response->json();
             return $response['data'];
         } catch (\Throwable | \GuzzleHttp\Exception\GuzzleException $th) {
-            return [
-                'data' => [],
-            ];
+            // dd('3');
+            if (str_contains($th->getMessage(), '"message":"Invalid data provided."')) {
+                return [
+                    'data' => [],
+                    'chart_data' => [],
+                ];
+            } else {
+                // die();
+                event(new ReloadProcessOnErrorAPI());
+            }
         }
     }
 
@@ -113,9 +133,16 @@ trait ApiSite24x7
             $response = $response->json();
             return $response['data'];
         } catch (\Throwable | \GuzzleHttp\Exception\GuzzleException $th) {
-            return [
-                'data' => [],
-            ];
+            // dd('4');
+            if (str_contains($th->getMessage(), '"message":"Invalid data provided."')) {
+                return [
+                    'data' => [],
+                    'chart_data' => [],
+                ];
+            } else {
+                // die();
+                event(new ReloadProcessOnErrorAPI());
+            }
         }
     }
 
@@ -132,9 +159,16 @@ trait ApiSite24x7
             $response = $response->json();
             return $response;
         } catch (\Throwable | \GuzzleHttp\Exception\GuzzleException $th) {
-            return [
-                'data' => [],
-            ];
+            // dd('5');
+            if (str_contains($th->getMessage(), '"message":"Invalid data provided."')) {
+                return [
+                    'data' => [],
+                    'chart_data' => [],
+                ];
+            } else {
+                // die();
+                event(new ReloadProcessOnErrorAPI());
+            }
         }
     }
 
@@ -151,10 +185,15 @@ trait ApiSite24x7
             $response = $response->json();
             return $response;
         } catch (\Throwable | \GuzzleHttp\Exception\GuzzleException $th) {
-            return [
-                'data' => [],
-                'chart_data' => [],
-            ];
+            if (str_contains($th->getMessage(), '"message":"Invalid data provided."')) {
+                return [
+                    'data' => [],
+                    'chart_data' => [],
+                ];
+            } else {
+                // die();
+                event(new ReloadProcessOnErrorAPI());
+            }
         }
     }
 
@@ -171,10 +210,16 @@ trait ApiSite24x7
             $response = $response->json();
             return $response;
         } catch (\Throwable | \GuzzleHttp\Exception\GuzzleException $th) {
-            return [
-                'data' => [],
-                'chart_data' => [],
-            ];
+            // dd('7');
+            if (str_contains($th->getMessage(), '"message":"Invalid data provided."')) {
+                return [
+                    'data' => [],
+                    'chart_data' => [],
+                ];
+            } else {
+                // die();
+                event(new ReloadProcessOnErrorAPI());
+            }
         }
     }
 
@@ -191,10 +236,16 @@ trait ApiSite24x7
             $response = $response->json();
             return $response;
         } catch (\Throwable | \GuzzleHttp\Exception\GuzzleException $th) {
-            return [
-                'data' => [],
-                'chart_data' => [],
-            ];
+            // dd('8');
+            if (str_contains($th->getMessage(), '"message":"Invalid data provided."')) {
+                return [
+                    'data' => [],
+                    'chart_data' => [],
+                ];
+            } else {
+                // die();
+                event(new ReloadProcessOnErrorAPI());
+            }
         }
     }
 }

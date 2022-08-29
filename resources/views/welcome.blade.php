@@ -28,5 +28,10 @@
         privateChannelDownloadAPI.bind('downloadAPIEvent', function(data) {
             Livewire.emit('current-percentage-donwload', data);
         });
+
+        var privateChannelDownloadAPI = pusher.subscribe('reloadBecauseExistErrorOnAPI');
+        privateChannelDownloadAPI.bind('reloadBecauseExistErrorOnAPIEvent', function(data) {
+            Livewire.emit('reloadProcessExport', data);
+        });
     </script>
 @endsection

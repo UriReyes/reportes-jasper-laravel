@@ -78,6 +78,10 @@ class JasperController extends Controller
     {
         return view('folder');
     }
+    public function administracion()
+    {
+        return view('administracion');
+    }
 
     // public function tests()
     // {
