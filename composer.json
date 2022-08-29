@@ -9,6 +9,7 @@
         "alexusmai/laravel-file-manager": "^3.0",
         "geekcom/phpjasper": "^3.1",
         "guzzlehttp/guzzle": "^7.2",
+        "jantinnerezo/livewire-alert": "^2.2",
         "jenssegers/date": "^4.0",
         "laravel/framework": "^9.2",
         "laravel/sanctum": "^2.14.1",
@@ -40,7 +41,8 @@
     "scripts": {
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
-            "@php artisan package:discover --ansi"
+            "@php artisan package:discover --ansi",
+            "@php artisan vendor:publish --force --tag=livewire:assets --ansi"
         ],
         "post-update-cmd": [
             "@php artisan vendor:publish --tag=laravel-assets --ansi --force"

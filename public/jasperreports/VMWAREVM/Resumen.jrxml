@@ -54,7 +54,7 @@
 		<band height="57" splitType="Stretch">
 			<image>
 				<reportElement x="2" y="7" width="552" height="30" uuid="f4ce0081-a3e9-4fe6-9d66-8833ba0397be"/>
-				<imageExpression><![CDATA["C:\\Users\\David Orozco\\JaspersoftWorkspace\\Informes KIO - Final\\VMWAREVM\\informe de rendimiento.png"]]></imageExpression>
+				<imageExpression><![CDATA["C:\\Users\\uriel.santiago\\JaspersoftWorkspace\\Reports\\VMWAREVM\\informe de rendimiento.png"]]></imageExpression>
 			</image>
 			<textField pattern="MMM d, yyyy h:mm:ss a">
 				<reportElement x="453" y="41" width="100" height="16" uuid="29c02edf-4fbc-4c0b-b755-996a91c67ee9">
@@ -91,49 +91,49 @@
 			<subreport>
 				<reportElement x="3" y="10" width="550" height="27" uuid="22b32f6d-4f26-4cc0-8493-7a1f6fdb311f"/>
 				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("monitor")]]></dataSourceExpression>
-				<subreportExpression><![CDATA["C:\\Users\\David Orozco\\JaspersoftWorkspace\\Informes KIO - Final\\VMWAREVM\\monitor.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA["C:\\Users\\uriel.santiago\\JaspersoftWorkspace\\Reports\\VMWAREVM\\monitor.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
 		<band height="43">
 			<subreport>
 				<reportElement x="3" y="5" width="551" height="35" uuid="ab05a58c-2638-48a0-94b5-95c2f22773fb"/>
 				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("availability.data")]]></dataSourceExpression>
-				<subreportExpression><![CDATA["C:\\Users\\David Orozco\\JaspersoftWorkspace\\Informes KIO - Final\\VMWAREVM\\availability.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA["C:\\Users\\uriel.santiago\\JaspersoftWorkspace\\Reports\\VMWAREVM\\availability.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
 		<band height="40">
 			<subreport overflowType="Stretch">
 				<reportElement x="2" y="7" width="551" height="30" uuid="734ae9e1-1be9-4b35-b670-5d575fbfa187"/>
 				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("availability.data.charts.data.uptimes")]]></dataSourceExpression>
-				<subreportExpression><![CDATA["C:\\Users\\David Orozco\\JaspersoftWorkspace\\Informes KIO - Final\\VMWAREVM\\graficas.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA["C:\\Users\\uriel.santiago\\JaspersoftWorkspace\\Reports\\VMWAREVM\\graficas.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
 		<band height="50">
 			<subreport>
 				<reportElement x="2" y="4" width="551" height="40" uuid="41fa938e-2d9d-438c-af4e-52c02ce1dfd2"/>
 				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("performance.data.chart_data.CPUUtilizationChart")]]></dataSourceExpression>
-				<subreportExpression><![CDATA["C:\\Users\\David Orozco\\JaspersoftWorkspace\\Informes KIO - Final\\VMWAREVM\\performance_CPUUtilizationChart.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA["C:\\Users\\uriel.santiago\\JaspersoftWorkspace\\Reports\\VMWAREVM\\performance_CPUUtilizationChart.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
 		<band height="50">
 			<subreport>
 				<reportElement x="2" y="10" width="549" height="30" uuid="5f307152-bbae-4bde-81d1-842fe94f3239"/>
 				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("performance.data.chart_data.MEMORYUtilizationChart")]]></dataSourceExpression>
-				<subreportExpression><![CDATA["C:\\Users\\David Orozco\\JaspersoftWorkspace\\Informes KIO - Final\\VMWAREVM\\performance_MEMORYUtilizationChart.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA["C:\\Users\\uriel.santiago\\JaspersoftWorkspace\\Reports\\VMWAREVM\\performance_MEMORYUtilizationChart.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
 		<band height="50">
 			<subreport>
 				<reportElement x="2" y="10" width="549" height="30" uuid="c04eb382-1f0e-4040-9b4a-7311e337943a"/>
 				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("performance.data.chart_data.NETUtilizationChart")]]></dataSourceExpression>
-				<subreportExpression><![CDATA["C:\\Users\\David Orozco\\JaspersoftWorkspace\\Informes KIO - Final\\VMWAREVM\\performance_NETUtilizationChart.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA["C:\\Users\\uriel.santiago\\JaspersoftWorkspace\\Reports\\VMWAREVM\\performance_NETUtilizationChart.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
 		<band height="61">
 			<subreport>
 				<reportElement x="2" y="8" width="551" height="35" uuid="f5f04c04-1e7a-44bc-92a6-d4e793ac6ecc"/>
 				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("performance_disk.data.widgets")]]></dataSourceExpression>
-				<subreportExpression><![CDATA["C:\\Users\\David Orozco\\JaspersoftWorkspace\\Informes KIO - Final\\VMWAREVM\\performance_GUESTDISKIO_Widget_charts.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA["C:\\Users\\uriel.santiago\\JaspersoftWorkspace\\Reports\\VMWAREVM\\performance_GUESTDISKIO_Widget_charts.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
 	</detail>

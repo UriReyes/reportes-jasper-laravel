@@ -49,7 +49,7 @@
 			<subreport>
 				<reportElement x="10" y="50" width="571" height="30" uuid="3ba3392d-6fd5-4fdd-90df-102976c827c4"/>
 				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("chart_data")]]></dataSourceExpression>
-				<subreportExpression><![CDATA["C:\\Users\\David Orozco\\JaspersoftWorkspace\\Informes KIO - Final\\AGENTLESSSERVER\\performanceAllDiskUsedChart_charts.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA["C:\\Users\\uriel.santiago\\JaspersoftWorkspace\\Reports\\AGENTLESSSERVER\\performanceAllDiskUsedChart_charts.jasper"]]></subreportExpression>
 			</subreport>
 			<textField>
 				<reportElement x="191" y="22" width="100" height="20" uuid="5a41684c-b961-420c-8e75-d4c6b70d9c24"/>

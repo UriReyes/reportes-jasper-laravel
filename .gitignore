@@ -2,6 +2,7 @@
 /public/hot
 /public/storage
 /storage/app/public/InformesKIO
+/storage/app/public/downloaded_msp_information
 /storage/app/public/reports
 /storage/app/public/jasper
 /storage/*.key

@@ -16,11 +16,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/',  [JasperController::class, 'index'])->name('home');
 Route::get('/export-all',  [JasperController::class, 'exportAll'])->name('export-all');
-
-Route::get('/compilar', [JasperController::class, 'compilar'])->name('compilar');
-Route::get('/reporte', [JasperController::class, 'reporte'])->name('reporte');
-Route::get('/listarParametros', [JasperController::class, 'listarParametros'])->name('listarParametros');
-Route::get('/compilarConParametros', [JasperController::class, 'compilarConParametros'])->name('compilarConParametros');
-//Generar pdf en automatico
-Route::get('/reporteParametros/{customer?}/{zaaid?}', [JasperController::class, 'reporteParametros'])->name('reporteParametros');
-Route::view('/pdfs', 'storage')->name('pdfs');
+Route::get('/downloaded-information',  [JasperController::class, 'downloadedInformationMSP'])->name('downloaded-information');
+Route::get('/folder',  [JasperController::class, 'folder'])->name('folder');
+Route::get('/administracion',  [JasperController::class, 'administracion'])->name('administracion');
+// Route::post('tests', [JasperController::class, 'tests'])->name('tests');
