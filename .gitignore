@@ -5,6 +5,7 @@
 /storage/app/public/downloaded_msp_information
 /storage/app/public/reports
 /storage/app/public/jasper
+/storage/app/public/state-msp
 /storage/*.key
 /vendor
 .env
@@ -19,3 +20,7 @@ yarn-error.log
 
 resources/reports/pdf/
 storage/app/public/jasper/api.json
+
+storage/app/tareas_programadas.txt
+
+storage/app/public/state-msp-all/

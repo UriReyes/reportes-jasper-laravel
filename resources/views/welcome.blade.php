@@ -29,7 +29,7 @@
             Livewire.emit('current-percentage-donwload', data);
         });
 
-        var privateChannelDownloadAPI = pusher.subscribe('reloadBecauseExistErrorOnAPI');
+        var privateChannelDownloadAPI2 = pusher.subscribe('reloadBecauseExistErrorOnAPI');
         privateChannelDownloadAPI.bind('reloadBecauseExistErrorOnAPIEvent', function(data) {
             Livewire.emit('reloadProcessExport', data);
         });

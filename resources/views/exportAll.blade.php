@@ -28,12 +28,12 @@
         privateChannelDownloadAPI.bind('downloadAPIEvent', function(data) {
             Livewire.emit('current-percentage-donwload', data);
         });
-        var privateChannelDownloadAPI = pusher.subscribe('downloadAllAPI');
+        var privateChannelDownloadAPIAll = pusher.subscribe('downloadAllAPI');
         privateChannelDownloadAPI.bind('downloadAllAPIEvent', function(data) {
             Livewire.emit('current-all-percentage-donwload', data);
         });
 
-        var privateChannelDownloadAPI = pusher.subscribe('reloadBecauseExistErrorOnAPI');
+        var privateChannelDownloadAPIReload = pusher.subscribe('reloadBecauseExistErrorOnAPI');
         privateChannelDownloadAPI.bind('reloadBecauseExistErrorOnAPIEvent', function(data) {
             Livewire.emit('reloadProcessExportAll', data);
             console.log('reload');
