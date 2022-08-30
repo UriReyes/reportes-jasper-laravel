@@ -656,10 +656,10 @@ trait GenerarReportesSite24x7
                             $percentage = $this->getPercentage($completed_reports, $totalMonitors);
                             event(new ProcessReport($totalMonitors, $percentage, $completed_reports, $monitorItem['zaaid'], $monitorItem['name']));
                         }
-                    }else{
+                    } else {
                         $completed_reports++;
-                            $percentage = $this->getPercentage($completed_reports, $totalMonitors);
-                            event(new ProcessReport($totalMonitors, $percentage, $completed_reports, "0000", "Generic MSP - Created By System Export"));
+                        $percentage = $this->getPercentage($completed_reports, $totalMonitors);
+                        event(new ProcessReport($totalMonitors, $percentage, $completed_reports, $mspItem['zaaid'], $mspItem['name']));
                     }
                 }
             }
