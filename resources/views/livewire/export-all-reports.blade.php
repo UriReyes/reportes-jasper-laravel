@@ -6,16 +6,16 @@
             </h5>
             <div class="grid grid-cols-2 gap-6 mb-6">
                 <div class="w-full">
-                    <label for="msp_init" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400"><i
-                            class="fa-solid fa-filter mr-2"></i>Selecciona un MSP para iniciar (Opcional)</label>
-                    <Select id="msp_init" wire:loading.attr="disabled"
+                    {{-- <label for="msp_init" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400"><i
+                            class="fa-solid fa-filter mr-2"></i>Selecciona un MSP para iniciar (Opcional)</label> --}}
+                    {{-- <Select id="msp_init" wire:loading.attr="disabled"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         wire:model.defer="msp_init">
                         <option value="undefinedMSP" disabled selected>-- Selecciona un MSP --</option>
                         @foreach ($customers_its as $customer_it)
                             <option value="{{ $customer_it['zaaid'] }}">{{ $customer_it['name'] }}</option>
                         @endforeach
-                    </Select>
+                    </Select> --}}
                 </div>
                 <div>
 
@@ -65,7 +65,7 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             Livewire.on('current-percentage', (data) => {
-                console.log(data);
+                // console.log(data);
                 let {
                     progress,
                     completed_reports,
@@ -106,7 +106,7 @@
                     customer_id,
                     textType
                 } = data;
-                console.log(data);
+                //console.log(completed_customers, 'de', total_customers);
                 document.getElementById('progressTextType').innerHTML = `<small>${textType}</small>`;
                 document.getElementById(`percentageBar`).style.width = progress + '%';
                 document.getElementById(`progressText`).innerHTML = `
@@ -114,6 +114,7 @@
             });
 
             Livewire.on('current-percentage-donwload', (data) => {
+                //console.table(data);
                 let {
                     progress,
                     completed_reports,
@@ -123,7 +124,6 @@
                     textType,
                     state_stored
                 } = data;
-                console.table(data);
                 if (zaaid != '0000') {
                     let li = document.getElementById(`${zaaid}_customer`);
                     li.innerHTML =

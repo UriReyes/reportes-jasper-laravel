@@ -16,27 +16,45 @@
         });
         var channel = pusher.subscribe('progress-reportD');
         channel.bind('process-report', function(data) {
+            localStorage.setItem('error-api', false);
             Livewire.emit('current-percentage', data);
         });
 
         var channel2 = pusher.subscribe('progress-reportDs');
         channel2.bind('process-reports', function(data) {
+            localStorage.setItem('error-api', false);
             Livewire.emit('current-percentage-customers', data);
         });
 
         var privateChannelDownloadAPI = pusher.subscribe('downloadAPI');
         privateChannelDownloadAPI.bind('downloadAPIEvent', function(data) {
+            localStorage.setItem('error-api', false);
             Livewire.emit('current-percentage-donwload', data);
         });
         var privateChannelDownloadAPIAll = pusher.subscribe('downloadAllAPI');
-        privateChannelDownloadAPI.bind('downloadAllAPIEvent', function(data) {
+        privateChannelDownloadAPIAll.bind('downloadAllAPIEvent', function(data) {
+            localStorage.setItem('error-api', false);
             Livewire.emit('current-all-percentage-donwload', data);
         });
 
         var privateChannelDownloadAPIReload = pusher.subscribe('reloadBecauseExistErrorOnAPI');
-        privateChannelDownloadAPI.bind('reloadBecauseExistErrorOnAPIEvent', function(data) {
-            Livewire.emit('reloadProcessExportAll', data);
-            console.log('reload');
+        privateChannelDownloadAPIReload.bind('reloadBecauseExistErrorOnAPIEvent', function(data) {
+            localStorage.setItem('error-api', true);
+            setTimeout(() => {
+                window.location.reload();
+            }, 1000);
         });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            let errorOnAPI = localStorage.getItem('error-api');
+            errorOnAPI = errorOnAPI == 'true' ? true : false;
+            //console.log(errorOnAPI);
+            if (errorOnAPI) {
+                setTimeout(() => {
+                    console.log('Error on API');
+                    Livewire.emit('reloadProcessExportAll');
+                }, 2000);
+            }
+        })
     </script>
 @endsection
