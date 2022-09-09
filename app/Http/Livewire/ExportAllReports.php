@@ -100,7 +100,7 @@ class ExportAllReports extends Component
             $texto = "[" . date("Y-m-d H:i:s") . "]: Inicio de tarea de generación de informes.";
             Storage::append("tareas_programadas.txt", $texto);
             foreach ($customers_its as $customer_it) {
-
+                // dispatch(function () use ($customer_it, $site24x7Url, $state, $start_time, $customers_its) {
                 $completed_monitors = [];
                 $this->storedInformation = [];
                 $customer_id = $customer_it['user_id'];
@@ -182,12 +182,13 @@ class ExportAllReports extends Component
                         ], JSON_PRETTY_PRINT);
                         Storage::put('public/state-msp-all/state.json', $state_stored);
                         event(new DownloadInformationAPI($this->totalMonitors, $this->percentage, $this->completed_reports, $zaaid, $customer, 'Descargando Información...'));
+                        // $this->generateMSPReport("downloaded_msp_information/{$customer}_{$zaaid}.json");
                     }
                     $this->completed_customers++;
                     $this->percentage_customers = $this->getPercentage($this->completed_customers, count($customers_its));
+
                     event(new DownloadAllInformationAPI(count($customers_its), $this->percentage_customers, $this->completed_customers, $customer_id));
 
-                    $this->generateMSPReport("downloaded_msp_information/{$customer}_{$zaaid}.json");
                     $stateJSON = json_decode(Storage::get('public/state-msp-all/state.json'));
                     $stateJSON->downloaded_files = true;
                     Storage::put('public/state-msp-all/state.json', json_encode($stateJSON, JSON_PRETTY_PRINT));
@@ -195,6 +196,7 @@ class ExportAllReports extends Component
                     Storage::append("tareas_programadas.txt", $texto);
                 }
                 Storage::put('public/state-msp-all/state.json', json_encode([], JSON_PRETTY_PRINT));
+                // });
             }
             // $this->generateMSPReports();
             $texto = "[" . date("Y-m-d H:i:s") . "]: Fin de tarea de generación de informes.";

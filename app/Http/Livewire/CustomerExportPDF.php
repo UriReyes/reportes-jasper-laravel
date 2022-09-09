@@ -138,7 +138,7 @@ class CustomerExportPDF extends Component implements ShouldBroadcast
                     event(new DownloadInformationAPI($totalMonitorsMask, $this->percentage, $this->completed_reports, $this->zaaid, $this->name, 'Descargando Información...'));
                 }
 
-                $this->generateMSPReport("downloaded_msp_information/{$this->name}_{$this->zaaid}.json");
+                // $this->generateMSPReport("downloaded_msp_information/{$this->name}_{$this->zaaid}.json");
             }
         }
     }

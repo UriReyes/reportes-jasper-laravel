@@ -48,12 +48,14 @@ trait GenerarReportesSite24x7
 
     public function createFolderToCustomer($last_month, $customer_name, $monitor = null, $group)
     {
-        $path_reports = Carbon::now()->format('Y') . DIRECTORY_SEPARATOR . str_replace(".", "_", str_replace(" ", "_", $customer_name)) . DIRECTORY_SEPARATOR . $last_month;
+        $customerNameWithoutSpecialChars = preg_replace('/[^A-Za-z0-9\-]/', '_', $customer_name);
+
+        $path_reports = Carbon::now()->format('Y') . DIRECTORY_SEPARATOR . $customerNameWithoutSpecialChars . DIRECTORY_SEPARATOR . $last_month;
         if ($monitor) {
             if ($customer_name == 'Monitoring PrimeOps' || $customer_name == 'KIO CA&C') {
-                $path_reports = Carbon::now()->format('Y') . DIRECTORY_SEPARATOR . str_replace(".", "_", str_replace(" ", "_", $customer_name)) . DIRECTORY_SEPARATOR . str_replace(".", "_", str_replace(" ", "_", $group)) . DIRECTORY_SEPARATOR . $last_month . DIRECTORY_SEPARATOR . $monitor['type'];
+                $path_reports = Carbon::now()->format('Y') . DIRECTORY_SEPARATOR . $customerNameWithoutSpecialChars . DIRECTORY_SEPARATOR . str_replace(".", "_", str_replace(" ", "_", $group)) . DIRECTORY_SEPARATOR . $last_month . DIRECTORY_SEPARATOR . $monitor['type'];
             } else {
-                $path_reports = Carbon::now()->format('Y') . DIRECTORY_SEPARATOR . str_replace(".", "_", str_replace(" ", "_", $customer_name)) . DIRECTORY_SEPARATOR . $last_month . DIRECTORY_SEPARATOR . $monitor['type'];
+                $path_reports = Carbon::now()->format('Y') . DIRECTORY_SEPARATOR . $customerNameWithoutSpecialChars . DIRECTORY_SEPARATOR . $last_month . DIRECTORY_SEPARATOR . $monitor['type'];
             }
         }
         Storage::makeDirectory('public/InformesKIO' . DIRECTORY_SEPARATOR . $path_reports);
@@ -69,7 +71,11 @@ trait GenerarReportesSite24x7
             $monitor_group =  $monitor['monitor_groups']['0'];
         };
         $current_status = $this->getCurrentStatus($site24x7Url, $zaaid, $refresh_token, $monitor_id);
-        $current_status = array_key_exists('status', $current_status) ? $current_status['status'] : 10;
+        if ($current_status != null) {
+            $current_status = array_key_exists('status', $current_status) ? $current_status['status'] : 10;
+        } else {
+            $current_status = 10;
+        }
 
         if ($this->period_report == 25) {
             $unit_of_time = 4; //Weekly Data
@@ -107,6 +113,7 @@ trait GenerarReportesSite24x7
                     ]
                 ];
                 $monitors = $customers;
+                $this->generatePDFMSP($customers, $monitor_id, $customer_name, $monitor, $group);
                 // $path_reports = $this->createFolderToCustomer($last_month, $customer_name, $monitor, $group);
                 // $this->getJasperReport($customers,  str_replace("&", "_", str_replace(" ", "_", $customer_name)), $monitor['display_name'], $path_reports, $monitor_id, $monitor['type']);
             } else if ($monitor['type'] == 'AGENTLESSSERVER' and $monitor['state'] == 0) {
@@ -130,6 +137,7 @@ trait GenerarReportesSite24x7
                     ]
                 ];
                 $monitors = $customers;
+                $this->generatePDFMSP($customers, $monitor_id, $customer_name, $monitor, $group);
                 // $path_reports = $this->createFolderToCustomer($last_month, $customer_name, $monitor, $group);
                 // $this->getJasperReport($customers, str_replace("&", "_", str_replace(" ", "_", $customer_name)), $monitor['display_name'], $path_reports, $monitor_id, $monitor['type']);
             } else if ($monitor['type'] == 'VMWAREVM' and $monitor['state'] == 0) {
@@ -149,6 +157,7 @@ trait GenerarReportesSite24x7
                     ]
                 ];
                 $monitors = $customers;
+                $this->generatePDFMSP($customers, $monitor_id, $customer_name, $monitor, $group);
                 // $path_reports = $this->createFolderToCustomer($last_month, $customer_name, $monitor, $group);
                 // $this->getJasperReport($customers, str_replace("&", "_", str_replace(" ", "_", $customer_name)), $monitor['display_name'], $path_reports, $monitor_id, $monitor['type']);
             } else if ($monitor['type'] == 'VMWAREESX' and $monitor['state'] == 0) {
@@ -166,6 +175,7 @@ trait GenerarReportesSite24x7
                     ]
                 ];
                 $monitors = $customers;
+                $this->generatePDFMSP($customers, $monitor_id, $customer_name, $monitor, $group);
                 // $path_reports = $this->createFolderToCustomer($last_month, $customer_name, $monitor, $group);
                 // $this->getJasperReport($customers, str_replace("&", "_", str_replace(" ", "_", $customer_name)), $monitor['display_name'], $path_reports, $monitor_id, $monitor['type']);
             } else if ($monitor['type'] == 'PLUGIN' and $monitor['state'] == 0) {
@@ -183,6 +193,7 @@ trait GenerarReportesSite24x7
                     ]
                 ];
                 $monitors = $customers;
+                $this->generatePDFMSP($customers, $monitor_id, $customer_name, $monitor, $group);
                 // $path_reports = $this->createFolderToCustomer($last_month, $customer_name, $monitor, $group);
                 // $this->getJasperReport($customers, str_replace("&", "_", str_replace(" ", "_", $customer_name)), $monitor['display_name'], $path_reports, $monitor_id, $monitor['type']);
             } else if ($monitor['type'] == 'SQLSERVER' and $monitor['state'] == 0) {
@@ -204,6 +215,7 @@ trait GenerarReportesSite24x7
                     ]
                 ];
                 $monitors = $customers;
+                $this->generatePDFMSP($customers, $monitor_id, $customer_name, $monitor, $group);
                 // $path_reports = $this->createFolderToCustomer($last_month, $customer_name, $monitor, $group);
                 // $this->getJasperReport($customers, str_replace("&", "_", str_replace(" ", "_", $customer_name)), $monitor['display_name'], $path_reports, $monitor_id, $monitor['type']);
             } else if ($monitor['type'] == 'NETWORKDEVICE' and $monitor['state'] == 0) {
@@ -227,6 +239,7 @@ trait GenerarReportesSite24x7
                     ]
                 ];
                 $monitors = $customers;
+                $this->generatePDFMSP($customers, $monitor_id, $customer_name, $monitor, $group);
                 // $path_reports = $this->createFolderToCustomer($last_month, $customer_name, $monitor, $group);
                 // $this->getJasperReport($customers, str_replace("&", "_", str_replace(" ", "_", $customer_name)), $monitor['display_name'], $path_reports, $monitor_id, $monitor['type']);
             } else if ($monitor['type'] == 'DATASTORE' and $monitor['state'] == 0) {
@@ -246,6 +259,7 @@ trait GenerarReportesSite24x7
                     ]
                 ];
                 $monitors = $customers;
+                $this->generatePDFMSP($customers, $monitor_id, $customer_name, $monitor, $group);
                 // $path_reports = $this->createFolderToCustomer($last_month, $customer_name, $monitor, $group);
                 // $this->getJasperReport($customers, str_replace("&", "_", str_replace(" ", "_", $customer_name)), $monitor['display_name'], $path_reports, $monitor_id, $monitor['type']);
             } else if ($monitor['type'] == 'MSEXCHANGE' and $monitor['state'] == 0) {
@@ -263,6 +277,7 @@ trait GenerarReportesSite24x7
                     ]
                 ];
                 $monitors = $customers;
+                $this->generatePDFMSP($customers, $monitor_id, $customer_name, $monitor, $group);
                 // $path_reports = $this->createFolderToCustomer($last_month, $customer_name, $monitor, $group);
                 // $this->getJasperReport($customers, str_replace("&", "_", str_replace(" ", "_", $customer_name)), $monitor['display_name'], $path_reports, $monitor_id, $monitor['type']);
             } else if ($monitor['type'] == 'IISSERVER' and $monitor['state'] == 0) {
@@ -284,6 +299,7 @@ trait GenerarReportesSite24x7
                     ]
                 ];
                 $monitors = $customers;
+                $this->generatePDFMSP($customers, $monitor_id, $customer_name, $monitor, $group);
                 // $path_reports = $this->createFolderToCustomer($last_month, $customer_name, $monitor, $group);
                 // $this->getJasperReport($customers, str_replace("&", "_", str_replace(" ", "_", $customer_name)), $monitor['display_name'], $path_reports, $monitor_id, $monitor['type']);
             }
@@ -302,6 +318,7 @@ trait GenerarReportesSite24x7
                     ]
                 ];
                 $monitors = $customers;
+                $this->generatePDFMSP($customers, $monitor_id, $customer_name, $monitor, $group);
                 // $path_reports = $this->createFolderToCustomer($last_month, $customer_name, $monitor, $group);
                 // $this->getJasperReport($customers, str_replace("&", "_", str_replace(" ", "_", $customer_name)), $monitor['display_name'], $path_reports, $monitor_id, $monitor['type']);
             } else if ($monitor['type'] == 'URL' and $monitor['state'] == 0) {
@@ -319,6 +336,7 @@ trait GenerarReportesSite24x7
                     ]
                 ];
                 $monitors = $customers;
+                $this->generatePDFMSP($customers, $monitor_id, $customer_name, $monitor, $group);
                 // $path_reports = $this->createFolderToCustomer($last_month, $customer_name, $monitor, $group);
                 // $this->getJasperReport($customers, str_replace("&", "_", str_replace(" ", "_", $customer_name)), $monitor['display_name'], $path_reports, $monitor_id, $monitor['type']);
             }
@@ -651,8 +669,18 @@ trait GenerarReportesSite24x7
                     if ($monitor != null) {
                         foreach ($monitor as $monitorItem) {
                             $path_reports = $this->createFolderToCustomer($this->last_month, $mspItem['name'], $monitorItem, $monitorItem['group']);
-                            $this->getJasperReport($monitor, str_replace("&", "_", str_replace(" ", "_", $monitorItem['name'])), $monitorItem['monitor']['display_name'], $path_reports, $monitorItem['monitor']['monitor_id'], $monitorItem['monitor']['type']);
+                            //Remove special charts from monitor name
+                            $folferNameWithoutSpecialCharacters = preg_replace('/[^A-Za-z0-9\-]/', '_', $monitorItem['name']);
+                            //FileName of PDF
+                            $fileNameWithoutSpecialCharacters = preg_replace('/[^A-Za-z0-9\-]/', '_', ($monitorItem['monitor']['display_name'] . '_' . $monitorItem['monitor']['monitor_id']));
+
+                            //Generate PDF
+                            $this->getJasperReport($monitor, $folferNameWithoutSpecialCharacters, $fileNameWithoutSpecialCharacters, $path_reports, $monitorItem['monitor']['monitor_id'], $monitorItem['monitor']['type']);
+
+                            //Increment Percentage
                             $completed_reports++;
+
+                            //Emit event to websockets for render percentage in UI
                             $percentage = $this->getPercentage($completed_reports, $totalMonitors);
                             event(new ProcessReport($totalMonitors, $percentage, $completed_reports, $monitorItem['zaaid'], $monitorItem['name']));
                         }
@@ -664,5 +692,18 @@ trait GenerarReportesSite24x7
                 }
             }
         }
+    }
+
+    public function generatePDFMSP($customers, $monitor_id, $customer_name, $monitor, $group)
+    {
+
+
+        $path_reports = $this->createFolderToCustomer($this->last_month, $customer_name, $monitor, $group);
+        //Remove special charts from monitor name
+        $folferNameWithoutSpecialCharacters = preg_replace('/[^A-Za-z0-9\-]/', '_', $customer_name);
+        //FileName of PDF
+        $fileNameWithoutSpecialCharacters = preg_replace('/[^A-Za-z0-9\-]/', '_', ($monitor['display_name'] . '_' . $monitor_id));
+        //Generate PDF
+        $this->getJasperReport($customers, $folferNameWithoutSpecialCharacters, $fileNameWithoutSpecialCharacters, $path_reports, $monitor_id, $monitor['type']);
     }
 }

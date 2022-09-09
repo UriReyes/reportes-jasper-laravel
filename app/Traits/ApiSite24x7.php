@@ -21,7 +21,9 @@ trait ApiSite24x7
             $response = $response->object();
             return $response->access_token;
         } catch (\Throwable | \GuzzleHttp\Exception\GuzzleException $th) {
-            return $response->error;
+            // return $response->error;
+            sleep(300);
+            event(new ReloadProcessOnErrorAPI());
         }
     }
 
@@ -60,6 +62,7 @@ trait ApiSite24x7
                 return 'error';
             } else {
                 // die();
+                sleep(60);
                 event(new ReloadProcessOnErrorAPI());
             }
         }
@@ -87,6 +90,7 @@ trait ApiSite24x7
                 ];
             } else {
                 // die();
+                sleep(60);
                 event(new ReloadProcessOnErrorAPI());
             }
         }
@@ -114,6 +118,7 @@ trait ApiSite24x7
                 ];
             } else {
                 // die();
+                sleep(60);
                 event(new ReloadProcessOnErrorAPI());
             }
         }
@@ -141,6 +146,7 @@ trait ApiSite24x7
                 ];
             } else {
                 // die();
+                sleep(60);
                 event(new ReloadProcessOnErrorAPI());
             }
         }
@@ -167,6 +173,7 @@ trait ApiSite24x7
                 ];
             } else {
                 // die();
+                sleep(60);
                 event(new ReloadProcessOnErrorAPI());
             }
         }
@@ -192,6 +199,7 @@ trait ApiSite24x7
                 ];
             } else {
                 // die();
+                sleep(60);
                 event(new ReloadProcessOnErrorAPI());
             }
         }
@@ -218,6 +226,7 @@ trait ApiSite24x7
                 ];
             } else {
                 // die();
+                sleep(60);
                 event(new ReloadProcessOnErrorAPI());
             }
         }
@@ -244,6 +253,7 @@ trait ApiSite24x7
                 ];
             } else {
                 // die();
+                sleep(60);
                 event(new ReloadProcessOnErrorAPI());
             }
         }

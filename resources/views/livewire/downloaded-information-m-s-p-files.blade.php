@@ -70,7 +70,7 @@
                     customer,
                     textType
                 } = data;
-                console.table(data);
+                //console.table(data);
                 if (zaaid != '0000') {
                     document.getElementById(`percentageBar${zaaid}`).style.width = progress + '%';
                     document.getElementById(`progressText${zaaid}`).innerHTML = `

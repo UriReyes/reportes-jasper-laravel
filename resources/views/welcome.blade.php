@@ -22,16 +22,32 @@
         });
         var channel = pusher.subscribe('progress-reportD');
         channel.bind('process-report', function(data) {
+            localStorage.setItem('error-api-one', false);
             Livewire.emit('current-percentage', data);
         });
         var privateChannelDownloadAPI = pusher.subscribe('downloadAPI');
         privateChannelDownloadAPI.bind('downloadAPIEvent', function(data) {
+            localStorage.setItem('error-api-one', false);
             Livewire.emit('current-percentage-donwload', data);
         });
 
         var privateChannelDownloadAPI2 = pusher.subscribe('reloadBecauseExistErrorOnAPI');
-        privateChannelDownloadAPI.bind('reloadBecauseExistErrorOnAPIEvent', function(data) {
-            Livewire.emit('reloadProcessExport', data);
+        privateChannelDownloadAPI2.bind('reloadBecauseExistErrorOnAPIEvent', function(data) {
+            localStorage.setItem('error-api-one', true);
+            setTimeout(() => {
+                window.location.reload();
+            }, 1000);
         });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            let errorOnAPI = localStorage.getItem('error-api-one');
+            errorOnAPI = errorOnAPI == 'true' ? true : false;
+            if (errorOnAPI) {
+                setTimeout(() => {
+                    console.log('Error on API ONE');
+                    Livewire.emit('reloadProcessExport');
+                }, 2000);
+            }
+        })
     </script>
 @endsection

@@ -36,7 +36,7 @@
                     customer,
                     textType
                 } = data;
-                console.table(data);
+                //console.table(data);
                 if (zaaid != '0000') {
                     document.getElementById(`progressTextType${zaaid}`).innerHTML = textType;
                     document.getElementById(`percentageBar${zaaid}`).style.width = progress + '%';
@@ -54,7 +54,7 @@
                     customer,
                     textType
                 } = data;
-                console.table(data);
+                //console.table(data);
                 if (zaaid != '0000') {
                     document.getElementById(`progressTextType${zaaid}`).innerHTML = textType;
                     document.getElementById(`percentageBar${zaaid}`).style.width = progress + '%';
