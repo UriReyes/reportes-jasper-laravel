@@ -1,11 +1,44 @@
 <div class="w-full">
     <div class="p-6 bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
+        <x-loading-indicator wire:loading.delay wire:target="period_report" />
+        <x-loading-indicator wire:loading.delay wire:target="start_custom_date" />
+        <x-loading-indicator wire:loading.delay wire:target="end_custom_date" />
         @if (count($customers_its) > 0)
             <h5 class="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">
                 <i class="fas fa-file-download mr-2"></i> Exportar Todo
             </h5>
             <div class="grid grid-cols-2 gap-6 mb-6">
                 <div class="w-full">
+                    <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400"><i
+                            class="fa-solid fa-filter mr-2"></i>Selecciona el periodo</label>
+                    <select wire:loading.attr="disabled" id="periods" wire:model="period_report"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <option value="">Selecciona una opción</option>
+                        <option value="7">Mes Anterior</option>
+                        <option value="13">Actual</option>
+                        <option value="25">Últimos 3 meses</option>
+                        <option value="50">Periodo Customizado</option>
+                    </select>
+                </div>
+                <div class="w-full" style="display: {{ $showStartEndDate ? 'block' : 'none' }}">
+                    <div class="grid grid-cols-2 gap-6">
+                        <div class="w-full">
+                            <label for="msp_init" class="block text-sm font-medium text-gray-900 dark:text-gray-400"><i
+                                    class="fa-solid fa-filter mr-2"></i>Fecha de Inicio</label>
+                            <input wire:loading.attr="disabled"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                type="date" id="start_custom_date" wire:model="start_custom_date"
+                                max='{{ $end_custom_date ?? now()->format('Y-m-d') }}'>
+                        </div>
+                        <div class="w-full">
+                            <label for="msp_init" class="block text-sm font-medium text-gray-900 dark:text-gray-400"><i
+                                    class="fa-solid fa-filter mr-2"></i>Fecha de Fin</label>
+                            <input wire:loading.attr="disabled"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                type="date" id="end_custom_date" wire:model="end_custom_date"
+                                max='{{ now()->format('Y-m-d') }}'>
+                        </div>
+                    </div>
                     {{-- <label for="msp_init" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400"><i
                             class="fa-solid fa-filter mr-2"></i>Selecciona un MSP para iniciar (Opcional)</label> --}}
                     {{-- <Select id="msp_init" wire:loading.attr="disabled"
@@ -17,12 +50,13 @@
                         @endforeach
                     </Select> --}}
                 </div>
-                <div>
-
-                </div>
             </div>
             <div style="text-align: end">
-                <strong>{{ count($customers_its) }} MSP</strong>
+                <strong>Total de {{ count($customers_its) }} MSP</strong>
+
+            </div>
+            <div style="text-align: end">
+                <span><i class="fas fa-calendar-day mr-2"></i>Periodo Seleccionado: {{ $last_month }}</span>
             </div>
             <div class="flex justify-between mb-1" style="align-items: center;">
                 <span class="text-base font-medium text-blue-700 dark:text-white">
@@ -42,8 +76,12 @@
                 </div>
             </div>
             <div class="w-full" x-data="{ open: true }">
-                <i x-bind:class="!open ? 'fas fa-plus-circle' : 'fas fa-minus-circle'" x-on:click="open = ! open"></i>
-                <ul id="customersList" x-show="open" style="height: calc(100vh - 370px);overflow: auto;"
+                <div class="w-full" style="text-align: end">
+                    <span x-text="!open?'Maximizar':'Minimizar'"></span>
+                    <i x-bind:class="!open ? 'fas fa-plus-circle' : 'fas fa-minus-circle'"
+                        x-on:click="open = ! open"></i>
+                </div>
+                <ul id="customersList" x-show="open" style="height: calc(100vh - 390px);overflow: auto;"
                     class="w-full text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white">
                     @foreach ($customers_its as $customer)
                         <li id="{{ $customer['zaaid'] }}_customer"
