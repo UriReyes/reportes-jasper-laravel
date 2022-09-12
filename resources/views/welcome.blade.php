@@ -16,23 +16,33 @@
     <script>
         let pusher_key = "{{ env('PUSHER_APP_KEY') }}";
         let pusher_cluster = "{{ env('PUSHER_APP_CLUSTER') }}";
+        let PUSHER_RELOAD_BECAUSE_ERROR_CHANNEL = "{{ env('PUSHER_RELOAD_BECAUSE_ERROR_CHANNEL') }}";
+        let PUSHER_RELOAD_BECAUSE_ERROR_EVENT = "{{ env('PUSHER_RELOAD_BECAUSE_ERROR_EVENT') }}";
+        let PUSHER_DOWNLOAD_GENERATE_INDIVIDUAL_PROGRESS_CHANNEL =
+            "{{ env('PUSHER_DOWNLOAD_GENERATE_INDIVIDUAL_PROGRESS_CHANNEL') }}"
+        let PUSHER_DOWNLOAD_GENERATE_INDIVIDUAL_PROGRESS_EVENT =
+            "{{ env('PUSHER_DOWNLOAD_GENERATE_INDIVIDUAL_PROGRESS_EVENT') }}";
+        let PUSHER_DOWNLOAD_INFORMATION_INDIVIDUAL_PROGRESS_CHANNEL =
+            "{{ env('PUSHER_DOWNLOAD_INFORMATION_INDIVIDUAL_PROGRESS_CHANNEL') }}"
+        let PUSHER_DOWNLOAD_INFORMATION_INDIVIDUAL_PROGRESS_EVENT =
+            "{{ env('PUSHER_DOWNLOAD_INFORMATION_INDIVIDUAL_PROGRESS_EVENT') }}"
         Pusher.logToConsole = false;
         var pusher = new Pusher(pusher_key, {
             cluster: pusher_cluster
         });
-        var channel = pusher.subscribe('progress-reportD');
-        channel.bind('process-report', function(data) {
+        var channel = pusher.subscribe(PUSHER_DOWNLOAD_GENERATE_INDIVIDUAL_PROGRESS_CHANNEL);
+        channel.bind(PUSHER_DOWNLOAD_GENERATE_INDIVIDUAL_PROGRESS_EVENT, function(data) {
             localStorage.setItem('error-api-one', false);
             Livewire.emit('current-percentage', data);
         });
-        var privateChannelDownloadAPI = pusher.subscribe('downloadAPI');
-        privateChannelDownloadAPI.bind('downloadAPIEvent', function(data) {
+        var privateChannelDownloadAPI = pusher.subscribe(PUSHER_DOWNLOAD_INFORMATION_INDIVIDUAL_PROGRESS_CHANNEL);
+        privateChannelDownloadAPI.bind(PUSHER_DOWNLOAD_INFORMATION_INDIVIDUAL_PROGRESS_EVENT, function(data) {
             localStorage.setItem('error-api-one', false);
             Livewire.emit('current-percentage-donwload', data);
         });
 
-        var privateChannelDownloadAPI2 = pusher.subscribe('reloadBecauseExistErrorOnAPI');
-        privateChannelDownloadAPI2.bind('reloadBecauseExistErrorOnAPIEvent', function(data) {
+        var privateChannelDownloadAPI2 = pusher.subscribe(PUSHER_RELOAD_BECAUSE_ERROR_CHANNEL);
+        privateChannelDownloadAPI2.bind(PUSHER_RELOAD_BECAUSE_ERROR_EVENT, function(data) {
             localStorage.setItem('error-api-one', true);
             setTimeout(() => {
                 window.location.reload();

@@ -34,11 +34,11 @@ class DownloadAllInformationAPI implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return 'downloadAllAPI';
+        return env('PUSHER_DOWNLOAD_INFORMATION_MASIVE_PROGRESS_CHANNEL');
     }
 
     public function broadcastAs()
     {
-        return 'downloadAllAPIEvent';
+        return env('PUSHER_DOWNLOAD_INFORMATION_MASIVE_PROGRESS_EVENT');
     }
 }

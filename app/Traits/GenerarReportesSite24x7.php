@@ -77,12 +77,19 @@ trait GenerarReportesSite24x7
             $current_status = 10;
         }
 
+        $unit_of_time = 3; //Daily Data
+        $format = 'd M Y';
         if ($this->period_report == 25) {
             $unit_of_time = 4; //Weekly Data
-        } else {
-            $unit_of_time = 3; //Daily Data
+        } else if ($this->period_report == 50) {
+            $diff_in_days = Carbon::parse($this->end_custom_date)->diffInDays(Carbon::parse($this->start_custom_date));
+            if ($diff_in_days == 0) {
+                $unit_of_time = 2; //Per hour
+                $format = 'h:i:s A';
+            } else if ($diff_in_days > 31) {
+                $unit_of_time = 4; //Weekly Data
+            }
         }
-
 
         if ($this->isPermitedEstatus($current_status)) {
             $group = 'Sin Grupo';
@@ -105,10 +112,10 @@ trait GenerarReportesSite24x7
                         'name' => $customer_name,
                         'zaaid' => $zaaid,
                         'monitor' => $monitor,
-                        'availability' => $this->getUptimeDownTimeAndMaintenance($availability),
-                        'ServerUptime' =>  $this->applyFormatToPerformanceServerUpTime($ServerUptime),
-                        'performance' =>  $this->applyFormatToPerformance($performance),
-                        'performance_disk' => $this->applyFormatToPerformanceDisk($performance_disk),
+                        'availability' => $this->getUptimeDownTimeAndMaintenance($availability, $format),
+                        'ServerUptime' =>  $this->applyFormatToPerformanceServerUpTime($ServerUptime, $format),
+                        'performance' =>  $this->applyFormatToPerformance($performance, $format),
+                        'performance_disk' => $this->applyFormatToPerformanceDisk($performance_disk, $format),
                         'performance_diskdetail' => $performance_diskdetail,
                     ]
                 ];
@@ -129,11 +136,11 @@ trait GenerarReportesSite24x7
                         'name' => $customer_name,
                         'zaaid' => $zaaid,
                         'monitor' => $monitor,
-                        'availability' => $this->getUptimeDownTimeAndMaintenance($availability),
-                        'performance' =>  $this->applyFormatToPerformance($performance),
-                        'performance_disk' => $this->applyFormatToPerformanceDiskCharts($performance_disk),
+                        'availability' => $this->getUptimeDownTimeAndMaintenance($availability, $format),
+                        'performance' =>  $this->applyFormatToPerformance($performance, $format),
+                        'performance_disk' => $this->applyFormatToPerformanceDiskCharts($performance_disk, $format),
                         'performance_diskdetail' => $performance_diskdetail,
-                        'performance_ContRendimiento' => $this->applyFormatToPerformance($performance_ContRendimiento),
+                        'performance_ContRendimiento' => $this->applyFormatToPerformance($performance_ContRendimiento, $format),
                     ]
                 ];
                 $monitors = $customers;
@@ -151,8 +158,8 @@ trait GenerarReportesSite24x7
                         'name' => $customer_name,
                         'zaaid' => $zaaid,
                         'monitor' => $monitor,
-                        'availability' => $this->getUptimeDownTimeAndMaintenance($availability),
-                        'performance' =>  $this->applyFormatToPerformance($performance),
+                        'availability' => $this->getUptimeDownTimeAndMaintenance($availability, $format),
+                        'performance' =>  $this->applyFormatToPerformance($performance, $format),
                         'performance_disk' => $performance_disk,
                     ]
                 ];
@@ -170,8 +177,8 @@ trait GenerarReportesSite24x7
                         'name' => $customer_name,
                         'zaaid' => $zaaid,
                         'monitor' => $monitor,
-                        'availability' => $this->getUptimeDownTimeAndMaintenance($availability),
-                        'performance' =>  $this->applyFormatToPerformance($performance),
+                        'availability' => $this->getUptimeDownTimeAndMaintenance($availability, $format),
+                        'performance' =>  $this->applyFormatToPerformance($performance, $format),
                     ]
                 ];
                 $monitors = $customers;
@@ -188,8 +195,8 @@ trait GenerarReportesSite24x7
                         'name' => $customer_name,
                         'zaaid' => $zaaid,
                         'monitor' => $monitor,
-                        'availability' => $this->getUptimeDownTimeAndMaintenance($availability),
-                        'performance' =>  $this->applyFormatToPerformancePlugin($performance),
+                        'availability' => $this->getUptimeDownTimeAndMaintenance($availability, $format),
+                        'performance' =>  $this->applyFormatToPerformancePlugin($performance, $format),
                     ]
                 ];
                 $monitors = $customers;
@@ -208,9 +215,9 @@ trait GenerarReportesSite24x7
                         'name' => $customer_name,
                         'zaaid' => $zaaid,
                         'monitor' => $monitor,
-                        'availability' => $this->getUptimeDownTimeAndMaintenance($availability),
-                        'performance' =>  $this->applyFormatToPerformance($performance),
-                        'performance_page' => $this->applyFormatToPerformance($performance_page),
+                        'availability' => $this->getUptimeDownTimeAndMaintenance($availability, $format),
+                        'performance' =>  $this->applyFormatToPerformance($performance, $format),
+                        'performance_page' => $this->applyFormatToPerformance($performance_page, $format),
                         'performance_db' => $performance_db,
                     ]
                 ];
@@ -223,8 +230,8 @@ trait GenerarReportesSite24x7
                 $performance = $this->getPerformance($site24x7Url, $monitor_id, $zaaid, $refresh_token, "?unit_of_time={$unit_of_time}&period={$this->period_report}&start_date={$this->start_custom_date}&end_date={$this->end_custom_date}");
                 $performance_intraffic = $this->getPerformance($site24x7Url, $monitor_id, $zaaid, $refresh_token, "?period={$this->period_report}&start_date={$this->start_custom_date}&end_date={$this->end_custom_date}&report_attribute=INTRAFFIC");
                 $performance_outtraffic = $this->getPerformance($site24x7Url, $monitor_id, $zaaid, $refresh_token, "?period={$this->period_report}&start_date={$this->start_custom_date}&end_date={$this->end_custom_date}&report_attribute=OUTTRAFFIC");
-                $formated_performance_intraffic = $this->applyFormatToPerformanceInterface($performance_intraffic);
-                $formated_performance_outtraffic = $this->applyFormatToPerformanceInterface($performance_outtraffic);
+                $formated_performance_intraffic = $this->applyFormatToPerformanceInterface($performance_intraffic, $format);
+                $formated_performance_outtraffic = $this->applyFormatToPerformanceInterface($performance_outtraffic, $format);
                 $performance_traffic = $this->getPerformanceTraffic($formated_performance_intraffic, $formated_performance_outtraffic);
                 $customers = [
                     'customer' => [
@@ -233,8 +240,8 @@ trait GenerarReportesSite24x7
                         'name' => $customer_name,
                         'zaaid' => $zaaid,
                         'monitor' => $monitor,
-                        'availability' => $this->getUptimeDownTimeAndMaintenance($availability),
-                        'performance' =>  $this->applyFormatToPerformance($performance),
+                        'availability' => $this->getUptimeDownTimeAndMaintenance($availability, $format),
+                        'performance' =>  $this->applyFormatToPerformance($performance, $format),
                         'performance_traffic' => $performance_traffic,
                     ]
                 ];
@@ -253,8 +260,8 @@ trait GenerarReportesSite24x7
                         'name' => $customer_name,
                         'zaaid' => $zaaid,
                         'monitor' => $monitor,
-                        'availability' => $this->getUptimeDownTimeAndMaintenance($availability),
-                        'performance' =>  $this->applyFormatToPerformance($performance),
+                        'availability' => $this->getUptimeDownTimeAndMaintenance($availability, $format),
+                        'performance' =>  $this->applyFormatToPerformance($performance, $format),
                         'performance_store' => $performance_store,
                     ]
                 ];
@@ -272,8 +279,8 @@ trait GenerarReportesSite24x7
                         'name' => $customer_name,
                         'zaaid' => $zaaid,
                         'monitor' => $monitor,
-                        'availability' => $this->getUptimeDownTimeAndMaintenance($availability),
-                        'performance' =>  $this->applyFormatToPerformance($performance),
+                        'availability' => $this->getUptimeDownTimeAndMaintenance($availability, $format),
+                        'performance' =>  $this->applyFormatToPerformance($performance, $format),
                     ]
                 ];
                 $monitors = $customers;
@@ -292,10 +299,10 @@ trait GenerarReportesSite24x7
                         'name' => $customer_name,
                         'zaaid' => $zaaid,
                         'monitor' => $monitor,
-                        'availability' => $this->getUptimeDownTimeAndMaintenance($availability),
-                        'performance' =>  $this->applyFormatToPerformance($performance),
-                        'RequestChart' =>  $this->applyFormatToPerformanceRequestChart($RequestChart),
-                        'IndividualApp' =>  $this->applyFormatToPerformanceIndividualApp($IndividualApp),
+                        'availability' => $this->getUptimeDownTimeAndMaintenance($availability, $format),
+                        'performance' =>  $this->applyFormatToPerformance($performance, $format),
+                        'RequestChart' =>  $this->applyFormatToPerformanceRequestChart($RequestChart, $format),
+                        'IndividualApp' =>  $this->applyFormatToPerformanceIndividualApp($IndividualApp, $format),
                     ]
                 ];
                 $monitors = $customers;
@@ -313,8 +320,8 @@ trait GenerarReportesSite24x7
                         'name' => $customer_name,
                         'zaaid' => $zaaid,
                         'monitor' => $monitor,
-                        'availability' => $this->getUptimeDownTimeAndMaintenance($availability),
-                        'performance' =>  $this->applyFormatToPerformance($performance),
+                        'availability' => $this->getUptimeDownTimeAndMaintenance($availability, $format),
+                        'performance' =>  $this->applyFormatToPerformance($performance, $format),
                     ]
                 ];
                 $monitors = $customers;
@@ -331,8 +338,8 @@ trait GenerarReportesSite24x7
                         'name' => $customer_name,
                         'zaaid' => $zaaid,
                         'monitor' => $monitor,
-                        'availability' => $this->getUptimeDownTimeAndMaintenance($availability),
-                        'performance' =>  $this->applyFormatToPerformance($performance),
+                        'availability' => $this->getUptimeDownTimeAndMaintenance($availability, $format),
+                        'performance' =>  $this->applyFormatToPerformance($performance, $format),
                     ]
                 ];
                 $monitors = $customers;
@@ -344,152 +351,154 @@ trait GenerarReportesSite24x7
         return $monitors;
     }
 
-    public function applyFormatToPerformance($performance)
+    public function applyFormatToPerformance($performance, $format)
     {
-        if (array_key_exists('data', $performance)) {
-            $newPerformances = [];
-            $newPerformancesTable = [];
-            foreach ($performance['data']['chart_data'] as $pfms) {
-                foreach ($pfms as $pfm) {
-                    if (array_key_exists('OverallCPUChart', $pfm)) {
-                        $newPerformances['OverallCPUChart'] = $this->getOverallCPUChart($pfm['OverallCPUChart']);
+        if ($performance) {
+            if (array_key_exists('data', $performance)) {
+                $newPerformances = [];
+                $newPerformancesTable = [];
+                foreach ($performance['data']['chart_data'] as $pfms) {
+                    foreach ($pfms as $pfm) {
+                        if (array_key_exists('OverallCPUChart', $pfm)) {
+                            $newPerformances['OverallCPUChart'] = $this->getOverallCPUChart($pfm['OverallCPUChart'], $format);
+                        }
+                        if (array_key_exists('OverallMemoryChart', $pfm)) {
+                            $newPerformances['OverallMemoryChart'] = $this->getOverallMemoryChart($pfm['OverallMemoryChart'], $format);
+                        }
+                        if (array_key_exists('OverallDiskUtilization', $pfm)) {
+                            $newPerformances['OverallDiskUtilization'] = $this->getOverallDiskUtilization($pfm['OverallDiskUtilization'], $format);
+                        }
+                        if (array_key_exists('ResponseTimeChart', $pfm)) {
+                            $newPerformances['ResponseTimeChart'] = $this->getFormattedResponse($pfm['ResponseTimeChart'], $format);
+                        }
+                        if (array_key_exists('CpuUtilChart', $pfm)) {
+                            $newPerformances['CpuUtilChart'] = $this->getFormattedResponse($pfm['CpuUtilChart'], $format);
+                        }
+                        if (array_key_exists('CpuUtilChart', $pfm)) {
+                            $newPerformances['CpuUtilChart'] = $this->getFormattedResponse($pfm['CpuUtilChart'], $format);
+                        }
+                        if (array_key_exists('MemoryUtilChart', $pfm)) {
+                            $newPerformances['MemoryUtilChart'] = $this->getFormattedResponse($pfm['MemoryUtilChart'], $format);
+                        }
+                        if (array_key_exists('DiskUtilChart', $pfm)) {
+                            $newPerformances['DiskUtilChart'] = $this->getFormattedResponse($pfm['DiskUtilChart'], $format);
+                        }
+                        if (array_key_exists('CPUUtilizationChart', $pfm)) {
+                            $newPerformances['CPUUtilizationChart'] = $this->getFormattedResponse($pfm['CPUUtilizationChart'], $format);
+                        }
+                        if (array_key_exists('MEMORYUtilizationChart', $pfm)) {
+                            $newPerformances['MEMORYUtilizationChart'] = $this->getFormattedResponse($pfm['MEMORYUtilizationChart'], $format);
+                        }
+                        if (array_key_exists('DISKSpacePercentageChart', $pfm)) {
+                            $newPerformances['DISKSpacePercentageChart'] = $this->getFormattedResponse($pfm['DISKSpacePercentageChart'], $format);
+                        }
+                        if (array_key_exists('NETUtilizationChart', $pfm)) {
+                            $newPerformances['NETUtilizationChart'] = $this->getFormattedResponse($pfm['NETUtilizationChart'], $format);
+                        }
+                        if (array_key_exists('NETWORKUsageChart', $pfm)) {
+                            $newPerformances['NETWORKUsageChart'] = $this->getFormattedResponse($pfm['NETWORKUsageChart'], $format);
+                        }
+                        if (array_key_exists('ConnectionChart', $pfm)) {
+                            $newPerformances['ConnectionChart'] = $this->getFormattedResponse($pfm['ConnectionChart'], $format);
+                        }
+                        if (array_key_exists('RequestChart', $pfm)) {
+                            $newPerformances['RequestChart'] = $this->getFormattedResponse($pfm['RequestChart'], $format);
+                        }
+                        if (array_key_exists('BufferCacheHitChart', $pfm)) {
+                            $newPerformances['BufferCacheHitChart'] = $this->getFormattedResponse($pfm['BufferCacheHitChart'], $format);
+                        }
+                        if (array_key_exists('PlanCacheHitChart', $pfm)) {
+                            $newPerformances['PlanCacheHitChart'] = $this->getFormattedResponse($pfm['PlanCacheHitChart'], $format);
+                        }
+                        if (array_key_exists('PageOperationChart', $pfm)) {
+                            $newPerformances['PageOperationChart'] = $this->getFormattedResponseWithTwoValues($pfm['PageOperationChart'], $format);
+                        }
+                        if (array_key_exists('MemoryChart', $pfm)) {
+                            $newPerformances['MemoryChart'] = $this->getFormattedResponseMemorySQL($pfm['MemoryChart'], $format);
+                        }
+                        if (array_key_exists('CpuUsageChart', $pfm)) {
+                            $newPerformances['CpuUsageChart'] = $this->getFormattedResponse($pfm['CpuUsageChart'], $format);
+                        }
+                        if (array_key_exists('MemoryUsageChart', $pfm)) {
+                            $newPerformances['MemoryUsageChart'] = $this->getFormattedResponse($pfm['MemoryUsageChart'], $format);
+                        }
+                        if (array_key_exists('ResponseTimeChart', $pfm)) {
+                            $newPerformances['ResponseTimeChart'] = $this->getFormattedResponse($pfm['ResponseTimeChart'], $format);
+                        }
+                        if (array_key_exists('PacketLossChart', $pfm)) {
+                            $newPerformances['PacketLossChart'] = $this->getFormattedResponse($pfm['PacketLossChart'], $format);
+                        }
+                        if (array_key_exists('DS-STORAGE', $pfm)) {
+                            $newPerformances['DS-STORAGE'] = $this->getFormattedResponseDatastore($pfm['DS-STORAGE'], $format);
+                        }
+                        if (array_key_exists('EdgeSMTPChart', $pfm)) {
+                            $newPerformances['EdgeSMTPChart'] = $this->getFormattedResponseWithTwoValues($pfm['EdgeSMTPChart'], $format);
+                        }
+                        if (array_key_exists('ISCASRPCResponseChart', $pfm)) {
+                            $newPerformances['ISCASRPCResponseChart'] = $this->getFormattedResponseWithFourValues($pfm['ISCASRPCResponseChart'], $format);
+                        }
+                        if (array_key_exists('HubSMTPChart', $pfm)) {
+                            $newPerformances['HubSMTPChart'] = $this->getFormattedResponseWithTwoValues($pfm['HubSMTPChart'], $format);
+                        }
+                        if (array_key_exists('CASRespChart', $pfm)) {
+                            $newPerformances['CASRespChart'] = $this->getFormattedResponseWithTwoValues($pfm['CASRespChart'], $format);
+                        }
+                        if (array_key_exists('UMAvailChart', $pfm)) {
+                            $newPerformances['UMAvailChart'] = $this->getFormattedResponseWithThreeValues($pfm['UMAvailChart'], $format);
+                        }
+                        if (array_key_exists('NetworkTraficDataGraph', $pfm)) {
+                            $newPerformances['NetworkTraficDataGraph'] = $this->getFormattedResponse($pfm['NetworkTraficDataGraph'], $format);
+                        }
+                        if (array_key_exists('NetworkDataGraph', $pfm)) {
+                            $newPerformances['NetworkDataGraph'] = $this->getFormattedResponseWithTwoValues($pfm['NetworkDataGraph'], $format);
+                        }
+                        if (array_key_exists('ResponseTimeReportChart', $pfm)) {
+                            $newPerformances['ResponseTimeReportChart'] = $this->getFormattedResponseTimeReportURL($pfm['ResponseTimeReportChart'], $format);
+                        }
+                        if (array_key_exists('ThroughputChart', $pfm)) {
+                            $newPerformances['ThroughputChart'] = $this->getFormattedResponse($pfm['ThroughputChart'], $format);
+                        }
                     }
-                    if (array_key_exists('OverallMemoryChart', $pfm)) {
-                        $newPerformances['OverallMemoryChart'] = $this->getOverallMemoryChart($pfm['OverallMemoryChart']);
+                    if (array_key_exists('LocationResponseTimeChart', $pfms)) {
+                        $newPerformances['LocationResponseTimeChart'] = $this->getFormattedLocationResponseTime($pfms['LocationResponseTimeChart'], $format);
                     }
-                    if (array_key_exists('OverallDiskUtilization', $pfm)) {
-                        $newPerformances['OverallDiskUtilization'] = $this->getOverallDiskUtilization($pfm['OverallDiskUtilization']);
-                    }
-                    if (array_key_exists('ResponseTimeChart', $pfm)) {
-                        $newPerformances['ResponseTimeChart'] = $this->getFormattedResponse($pfm['ResponseTimeChart']);
-                    }
-                    if (array_key_exists('CpuUtilChart', $pfm)) {
-                        $newPerformances['CpuUtilChart'] = $this->getFormattedResponse($pfm['CpuUtilChart']);
-                    }
-                    if (array_key_exists('CpuUtilChart', $pfm)) {
-                        $newPerformances['CpuUtilChart'] = $this->getFormattedResponse($pfm['CpuUtilChart']);
-                    }
-                    if (array_key_exists('MemoryUtilChart', $pfm)) {
-                        $newPerformances['MemoryUtilChart'] = $this->getFormattedResponse($pfm['MemoryUtilChart']);
-                    }
-                    if (array_key_exists('DiskUtilChart', $pfm)) {
-                        $newPerformances['DiskUtilChart'] = $this->getFormattedResponse($pfm['DiskUtilChart']);
-                    }
-                    if (array_key_exists('CPUUtilizationChart', $pfm)) {
-                        $newPerformances['CPUUtilizationChart'] = $this->getFormattedResponse($pfm['CPUUtilizationChart']);
-                    }
-                    if (array_key_exists('MEMORYUtilizationChart', $pfm)) {
-                        $newPerformances['MEMORYUtilizationChart'] = $this->getFormattedResponse($pfm['MEMORYUtilizationChart']);
-                    }
-                    if (array_key_exists('DISKSpacePercentageChart', $pfm)) {
-                        $newPerformances['DISKSpacePercentageChart'] = $this->getFormattedResponse($pfm['DISKSpacePercentageChart']);
-                    }
-                    if (array_key_exists('NETUtilizationChart', $pfm)) {
-                        $newPerformances['NETUtilizationChart'] = $this->getFormattedResponse($pfm['NETUtilizationChart']);
-                    }
-                    if (array_key_exists('NETWORKUsageChart', $pfm)) {
-                        $newPerformances['NETWORKUsageChart'] = $this->getFormattedResponse($pfm['NETWORKUsageChart']);
-                    }
-                    if (array_key_exists('ConnectionChart', $pfm)) {
-                        $newPerformances['ConnectionChart'] = $this->getFormattedResponse($pfm['ConnectionChart']);
-                    }
-                    if (array_key_exists('RequestChart', $pfm)) {
-                        $newPerformances['RequestChart'] = $this->getFormattedResponse($pfm['RequestChart']);
-                    }
-                    if (array_key_exists('BufferCacheHitChart', $pfm)) {
-                        $newPerformances['BufferCacheHitChart'] = $this->getFormattedResponse($pfm['BufferCacheHitChart']);
-                    }
-                    if (array_key_exists('PlanCacheHitChart', $pfm)) {
-                        $newPerformances['PlanCacheHitChart'] = $this->getFormattedResponse($pfm['PlanCacheHitChart']);
-                    }
-                    if (array_key_exists('PageOperationChart', $pfm)) {
-                        $newPerformances['PageOperationChart'] = $this->getFormattedResponseWithTwoValues($pfm['PageOperationChart']);
-                    }
-                    if (array_key_exists('MemoryChart', $pfm)) {
-                        $newPerformances['MemoryChart'] = $this->getFormattedResponseMemorySQL($pfm['MemoryChart']);
-                    }
-                    if (array_key_exists('CpuUsageChart', $pfm)) {
-                        $newPerformances['CpuUsageChart'] = $this->getFormattedResponse($pfm['CpuUsageChart']);
-                    }
-                    if (array_key_exists('MemoryUsageChart', $pfm)) {
-                        $newPerformances['MemoryUsageChart'] = $this->getFormattedResponse($pfm['MemoryUsageChart']);
-                    }
-                    if (array_key_exists('ResponseTimeChart', $pfm)) {
-                        $newPerformances['ResponseTimeChart'] = $this->getFormattedResponse($pfm['ResponseTimeChart']);
-                    }
-                    if (array_key_exists('PacketLossChart', $pfm)) {
-                        $newPerformances['PacketLossChart'] = $this->getFormattedResponse($pfm['PacketLossChart']);
-                    }
-                    if (array_key_exists('DS-STORAGE', $pfm)) {
-                        $newPerformances['DS-STORAGE'] = $this->getFormattedResponseDatastore($pfm['DS-STORAGE']);
-                    }
-                    if (array_key_exists('EdgeSMTPChart', $pfm)) {
-                        $newPerformances['EdgeSMTPChart'] = $this->getFormattedResponseWithTwoValues($pfm['EdgeSMTPChart']);
-                    }
-                    if (array_key_exists('ISCASRPCResponseChart', $pfm)) {
-                        $newPerformances['ISCASRPCResponseChart'] = $this->getFormattedResponseWithFourValues($pfm['ISCASRPCResponseChart']);
-                    }
-                    if (array_key_exists('HubSMTPChart', $pfm)) {
-                        $newPerformances['HubSMTPChart'] = $this->getFormattedResponseWithTwoValues($pfm['HubSMTPChart']);
-                    }
-                    if (array_key_exists('CASRespChart', $pfm)) {
-                        $newPerformances['CASRespChart'] = $this->getFormattedResponseWithTwoValues($pfm['CASRespChart']);
-                    }
-                    if (array_key_exists('UMAvailChart', $pfm)) {
-                        $newPerformances['UMAvailChart'] = $this->getFormattedResponseWithThreeValues($pfm['UMAvailChart']);
-                    }
-                    if (array_key_exists('NetworkTraficDataGraph', $pfm)) {
-                        $newPerformances['NetworkTraficDataGraph'] = $this->getFormattedResponse($pfm['NetworkTraficDataGraph']);
-                    }
-                    if (array_key_exists('NetworkDataGraph', $pfm)) {
-                        $newPerformances['NetworkDataGraph'] = $this->getFormattedResponseWithTwoValues($pfm['NetworkDataGraph']);
-                    }
-                    if (array_key_exists('ResponseTimeReportChart', $pfm)) {
-                        $newPerformances['ResponseTimeReportChart'] = $this->getFormattedResponseTimeReportURL($pfm['ResponseTimeReportChart']);
-                    }
-                    if (array_key_exists('ThroughputChart', $pfm)) {
-                        $newPerformances['ThroughputChart'] = $this->getFormattedResponse($pfm['ThroughputChart']);
+                    if (array_key_exists('DialValueChart', $pfms)) {
+                        $newPerformances['DialValueChart'] = $this->getFormattedLocationResponseTime($pfms['DialValueChart'], $format);
                     }
                 }
-                if (array_key_exists('LocationResponseTimeChart', $pfms)) {
-                    $newPerformances['LocationResponseTimeChart'] = $this->getFormattedLocationResponseTime($pfms['LocationResponseTimeChart']);
+                $performance['data']['chart_data'] = $newPerformances;
+                foreach ($performance['data']['table_data'] as $pfm) {
+                    if (array_key_exists('CAPACITY', $pfm)) {
+                        $newPerformancesTable['CAPACITY'] = $this->getFormattedResponse($pfm['CAPACITY'], $format);
+                    }
                 }
-                if (array_key_exists('DialValueChart', $pfms)) {
-                    $newPerformances['DialValueChart'] = $this->getFormattedLocationResponseTime($pfms['DialValueChart']);
-                }
+                $performance['data']['table_data'] = $newPerformancesTable;
+                return $performance;
             }
-            $performance['data']['chart_data'] = $newPerformances;
-            foreach ($performance['data']['table_data'] as $pfm) {
-                if (array_key_exists('CAPACITY', $pfm)) {
-                    $newPerformancesTable['CAPACITY'] = $this->getFormattedResponse($pfm['CAPACITY']);
-                }
-            }
-            $performance['data']['table_data'] = $newPerformancesTable;
-            return $performance;
         }
     }
 
-    public function applyFormatToPerformanceDisk($performance)
+    public function applyFormatToPerformanceDisk($performance, $format)
     {
         if (array_key_exists('data', $performance)) {
             $newPerformances = [];
             foreach ($performance['data']['chart_data'] as $pfms) {
                 foreach ($pfms as $pfm) {
                     if (array_key_exists('OverallDiskUtilization', $pfm)) {
-                        $newPerformances['OverallDiskUtilization'] = $this->getOverallDiskUtilization($pfm['OverallDiskUtilization']);
+                        $newPerformances['OverallDiskUtilization'] = $this->getOverallDiskUtilization($pfm['OverallDiskUtilization'], $format);
                     }
                     if (array_key_exists('OverallDiskUsedChart', $pfm)) {
-                        $newPerformances['OverallDiskUsedChart'] = $this->getOverallDiskUsedChart($pfm['OverallDiskUsedChart']);
+                        $newPerformances['OverallDiskUsedChart'] = $this->getOverallDiskUsedChart($pfm['OverallDiskUsedChart'], $format);
                     }
                     if (array_key_exists('IndividualDiskUtilization', $pfm)) {
                         $newPerformances['IndividualDiskUtilization'] = $this->getIndividualDiskUtilization($pfm['IndividualDiskUtilization']);
                     }
                     if (array_key_exists('DiskIO', $pfm)) {
-                        $newPerformances['DiskIO'] = $this->getDiskIO($pfm['DiskIO']);
+                        $newPerformances['DiskIO'] = $this->getDiskIO($pfm['DiskIO'], $format);
                     }
                 }
                 if (array_key_exists('IndividualDiskUtilizationTimeChart', $pfms)) {
-                    $newPerformances['IndividualDiskUtilizationTimeChart'] = $this->getIndividualDiskUtilizationTimeChart($pfms['IndividualDiskUtilizationTimeChart']);
+                    $newPerformances['IndividualDiskUtilizationTimeChart'] = $this->getIndividualDiskUtilizationTimeChart($pfms['IndividualDiskUtilizationTimeChart'], $format);
                 }
             }
             $performance['data']['chart_data'] = $newPerformances;
@@ -497,14 +506,14 @@ trait GenerarReportesSite24x7
         }
     }
 
-    public function applyFormatToPerformanceDiskCharts($performance)
+    public function applyFormatToPerformanceDiskCharts($performance, $format)
     {
         if (array_key_exists('data', $performance)) {
             if (array_key_exists('AllDiskUsedChart', $performance['data'])) {
                 $newPerformances = [];
                 foreach ($performance['data']['AllDiskUsedChart'] as $disks) {
                     foreach ($disks as $disk) {
-                        array_push($newPerformances, $this->getFormattedResponse($disk));
+                        array_push($newPerformances, $this->getFormattedResponse($disk, $format));
                     }
                 }
                 $performance['data']['AllDiskUsedChart'] = $newPerformances;
@@ -514,14 +523,14 @@ trait GenerarReportesSite24x7
         return [];
     }
 
-    public function applyFormatToPerformanceServerUpTime($performance)
+    public function applyFormatToPerformanceServerUpTime($performance, $format)
     {
         if (array_key_exists('data', $performance)) {
             $newPerformances = [];
             foreach ($performance['data'] as $pfms) {
                 foreach ($pfms as $pfm) {
                     if (array_key_exists('chart_data', $pfm)) {
-                        array_push($newPerformances, $this->getFormattedResponse($pfm));
+                        array_push($newPerformances, $this->getFormattedResponse($pfm, $format));
                     }
                 }
             }
@@ -531,7 +540,7 @@ trait GenerarReportesSite24x7
         return [];
     }
 
-    public function applyFormatToPerformancePlugin($performance)
+    public function applyFormatToPerformancePlugin($performance, $format)
     {
         if (array_key_exists('data', $performance)) {
             if (array_key_exists('chart_data', $performance['data'])) {
@@ -540,7 +549,7 @@ trait GenerarReportesSite24x7
                     //dd($plugins);
                     foreach ($plugins as $plugin) {
                         foreach ($plugin as $key => $plugin_item) {
-                            $newPerformances[] = $this->getFormattedResponsePlugin($plugin_item, $key);
+                            $newPerformances[] = $this->getFormattedResponsePlugin($plugin_item, $key, $format);
                         }
                     }
                 }
@@ -551,17 +560,17 @@ trait GenerarReportesSite24x7
         return [];
     }
 
-    public function applyFormatToPerformanceInterface($performance)
+    public function applyFormatToPerformanceInterface($performance, $format)
     {
         if (array_key_exists('data', $performance)) {
             if (array_key_exists('chart_data', $performance['data'])) {
                 $newPerformances = [];
                 foreach ($performance['data']['chart_data'] as $pfms) {
                     if (array_key_exists('InterfaceTrafficInChart', $pfms)) {
-                        $newPerformances['InterfaceTrafficInChart'] = $this->getFormattedResponseTraffic($pfms['InterfaceTrafficInChart']);
+                        $newPerformances['InterfaceTrafficInChart'] = $this->getFormattedResponseTraffic($pfms['InterfaceTrafficInChart'], $format);
                     }
                     if (array_key_exists('InterfaceTrafficOutChart', $pfms)) {
-                        $newPerformances['InterfaceTrafficOutChart'] = $this->getFormattedResponseTraffic($pfms['InterfaceTrafficOutChart']);
+                        $newPerformances['InterfaceTrafficOutChart'] = $this->getFormattedResponseTraffic($pfms['InterfaceTrafficOutChart'], $format);
                     }
                 }
                 $performance['data']['chart_data'] = $newPerformances;
@@ -570,14 +579,14 @@ trait GenerarReportesSite24x7
         }
     }
 
-    public function applyFormatToPerformanceRequestChart($performance)
+    public function applyFormatToPerformanceRequestChart($performance, $format)
     {
         if (array_key_exists('data', $performance)) {
             $newPerformances = [];
             foreach ($performance['data'] as $pfms) {
                 foreach ($pfms as $pfm) {
                     if (array_key_exists('chart_data', $pfm)) {
-                        array_push($newPerformances, $this->getFormattedResponseWithTwoValues($pfm));
+                        array_push($newPerformances, $this->getFormattedResponseWithTwoValues($pfm, $format));
                     }
                 }
             }
@@ -587,14 +596,14 @@ trait GenerarReportesSite24x7
         return [];
     }
 
-    public function applyFormatToPerformanceIndividualApp($performance)
+    public function applyFormatToPerformanceIndividualApp($performance, $format)
     {
         if (array_key_exists('data', $performance)) {
             if (array_key_exists('IndividualAppPoolData', $performance['data'])) {
                 $newPerformances = [];
                 foreach ($performance['data']['IndividualAppPoolData'] as $apps) {
                     foreach ($apps as $app) {
-                        array_push($newPerformances, $this->getFormattedResponse($app));
+                        array_push($newPerformances, $this->getFormattedResponse($app, $format));
                     }
                 }
                 $performance['data']['IndividualAppPoolData'] = $newPerformances;

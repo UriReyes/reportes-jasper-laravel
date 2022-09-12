@@ -7,8 +7,10 @@ use App\Events\ProcessReport;
 use App\Traits\ApiSite24x7;
 use App\Traits\GenerarReportesSite24x7;
 use App\Traits\ReestructurarDatosAPISite24x7;
+use Carbon\Carbon;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
@@ -35,7 +37,8 @@ class CustomerExportPDF extends Component implements ShouldBroadcast
 
     public function broadcastOn()
     {
-        return new Channel('progress-reportD');
+
+        return new Channel(env('PUSHER_DOWNLOAD_GENERATE_INDIVIDUAL_PROGRESS_CHANNEL'));
     }
 
     public function mount($customer, $period, $last_month)
@@ -127,6 +130,7 @@ class CustomerExportPDF extends Component implements ShouldBroadcast
                         $monitorsCollect = collect();
                         // Se realiza el proceso de generacion de reportes
                         foreach ($monitors as $monitor) {
+
                             //if ($monitor['monitor_id'] == '417536000002177252') {
                             $processedMonitor = $this->processSite24x7Monitors(
                                 $monitor,

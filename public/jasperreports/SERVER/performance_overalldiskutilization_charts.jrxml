@@ -30,7 +30,7 @@
 		<band height="193" splitType="Stretch">
 			<stackedBarChart>
 				<chart evaluationTime="Report">
-					<reportElement x="10" y="0" width="520" height="190" uuid="20f7718e-6990-4f59-9a4b-593ea20a2a14"/>
+					<reportElement x="10" y="0" width="520" height="190" uuid="ff14303a-a991-4e68-9a51-cf25ca19e142"/>
 					<chartTitle/>
 					<chartSubtitle/>
 					<chartLegend/>
@@ -40,13 +40,13 @@
 					<categorySeries>
 						<seriesExpression><![CDATA["Used Space %"]]></seriesExpression>
 						<categoryExpression><![CDATA[$F{date}]]></categoryExpression>
-						<valueExpression><![CDATA[$F{performance1}]]></valueExpression>
+						<valueExpression><![CDATA[$F{performance2}]]></valueExpression>
 						<labelExpression><![CDATA[$F{date}]]></labelExpression>
 					</categorySeries>
 					<categorySeries>
 						<seriesExpression><![CDATA["Free Space %"]]></seriesExpression>
 						<categoryExpression><![CDATA[$F{date}]]></categoryExpression>
-						<valueExpression><![CDATA[$F{performance2}]]></valueExpression>
+						<valueExpression><![CDATA[$F{performance1}]]></valueExpression>
 						<labelExpression><![CDATA[$F{date}]]></labelExpression>
 					</categorySeries>
 				</categoryDataset>
