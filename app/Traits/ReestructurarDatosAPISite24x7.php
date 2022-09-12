@@ -8,14 +8,14 @@ use Illuminate\Support\Facades\Http;
 trait ReestructurarDatosAPISite24x7
 {
 
-    public function getUptimeDownTimeAndMaintenance($data)
+    public function getUptimeDownTimeAndMaintenance($data, $format = 'd M Y')
     {
         if (array_key_exists('data', $data)) {
-            $charts = array_map(function ($item) {
+            $charts = array_map(function ($item) use ($format) {
                 if ($item['key'] == 'percentage_chart') {
-                    $item['data']['uptimes'] = array_map(function ($item) {
+                    $item['data']['uptimes'] = array_map(function ($item) use ($format) {
                         return [
-                            'date' => Carbon::parse($item[0])->format('d M Y'),
+                            'date' => Carbon::parse($item[0])->format($format),
                             'uptime' => $item[1],
                             'downtime' => $item[2],
                             'maintenance' => $item[3],
@@ -30,13 +30,13 @@ trait ReestructurarDatosAPISite24x7
         }
     }
 
-    public function getOverallCPUChart($OverallCPUChart)
+    public function getOverallCPUChart($OverallCPUChart, $format = 'd M Y')
     {
         if (array_key_exists('chart_data', $OverallCPUChart)) {
 
-            $OverallCPUChart['chart_data'] = array_map(function ($item) {
+            $OverallCPUChart['chart_data'] = array_map(function ($item) use ($format) {
                 return [
-                    'date' => array_key_exists(0, $item) ? Carbon::parse($item[0])->format('d M Y') : null,
+                    'date' => array_key_exists(0, $item) ? Carbon::parse($item[0])->format($format) : null,
                     'value' => array_key_exists(1, $item) ? $item[1] : null,
                 ];
             },  $OverallCPUChart['chart_data']);
@@ -47,12 +47,12 @@ trait ReestructurarDatosAPISite24x7
         }
     }
 
-    public function getOverallMemoryChart($OverallMemoryChart)
+    public function getOverallMemoryChart($OverallMemoryChart, $format = 'd M Y')
     {
         if (array_key_exists('chart_data', $OverallMemoryChart)) {
-            $OverallMemoryChart['chart_data'] = array_map(function ($item) {
+            $OverallMemoryChart['chart_data'] = array_map(function ($item) use ($format) {
                 return [
-                    'date' => array_key_exists(0, $item) ? Carbon::parse($item[0])->format('d M Y') : null,
+                    'date' => array_key_exists(0, $item) ? Carbon::parse($item[0])->format($format) : null,
                     'value' => array_key_exists(1, $item) ? $item[1] : null,
                 ];
             }, $OverallMemoryChart['chart_data']);
@@ -63,12 +63,12 @@ trait ReestructurarDatosAPISite24x7
         }
     }
 
-    public function getOverallDiskUtilization($OverallDiskUtilization)
+    public function getOverallDiskUtilization($OverallDiskUtilization, $format = 'd M Y')
     {
         if (array_key_exists('chart_data', $OverallDiskUtilization)) {
-            $OverallDiskUtilization['chart_data'] = array_map(function ($item) {
+            $OverallDiskUtilization['chart_data'] = array_map(function ($item) use ($format) {
                 return [
-                    'date' => array_key_exists(0, $item) ? Carbon::parse($item[0])->format('d M Y') : null,
+                    'date' => array_key_exists(0, $item) ? Carbon::parse($item[0])->format($format) : null,
                     'performance1' => array_key_exists(1, $item) ? $item[1] : null,
                     'performance2' => array_key_exists(2, $item) ? $item[2] : null,
                 ];
@@ -80,12 +80,12 @@ trait ReestructurarDatosAPISite24x7
         }
     }
 
-    public function getFormattedResponse($item)
+    public function getFormattedResponse($item, $format = 'd M Y')
     {
         if (array_key_exists('chart_data', $item)) {
-            $item['chart_data'] = array_map(function ($item) {
+            $item['chart_data'] = array_map(function ($item) use ($format) {
                 return [
-                    'date' => array_key_exists(0, $item) ? Carbon::parse($item[0])->format('d M Y') : null,
+                    'date' => array_key_exists(0, $item) ? Carbon::parse($item[0])->format($format) : null,
                     'value1' => array_key_exists(1, $item) ? $item[1] : null,
                 ];
             }, $item['chart_data']);
@@ -96,12 +96,12 @@ trait ReestructurarDatosAPISite24x7
         }
     }
 
-    public function getFormattedResponseWithTwoValues($item)
+    public function getFormattedResponseWithTwoValues($item, $format = 'd M Y')
     {
         if (array_key_exists('chart_data', $item)) {
-            $item['chart_data'] = array_map(function ($item) {
+            $item['chart_data'] = array_map(function ($item) use ($format) {
                 return [
-                    'date' => array_key_exists(0, $item) ? Carbon::parse($item[0])->format('d M Y') : null,
+                    'date' => array_key_exists(0, $item) ? Carbon::parse($item[0])->format($format) : null,
                     'value1' => array_key_exists(1, $item) ? $item[1] : null,
                     'value2' => array_key_exists(2, $item) ? $item[2] : null,
                 ];
@@ -113,12 +113,12 @@ trait ReestructurarDatosAPISite24x7
         }
     }
 
-    public function getFormattedResponseWithThreeValues($item)
+    public function getFormattedResponseWithThreeValues($item, $format = 'd M Y')
     {
         if (array_key_exists('chart_data', $item)) {
-            $item['chart_data'] = array_map(function ($item) {
+            $item['chart_data'] = array_map(function ($item) use ($format) {
                 return [
-                    'date' => array_key_exists(0, $item) ? Carbon::parse($item[0])->format('d M Y') : null,
+                    'date' => array_key_exists(0, $item) ? Carbon::parse($item[0])->format($format) : null,
                     'value1' => array_key_exists(1, $item) ? $item[1] : null,
                     'value2' => array_key_exists(2, $item) ? $item[2] : null,
                     'value3' => array_key_exists(3, $item) ? $item[3] : null,
@@ -131,12 +131,12 @@ trait ReestructurarDatosAPISite24x7
         }
     }
 
-    public function getFormattedResponseWithFourValues($item)
+    public function getFormattedResponseWithFourValues($item, $format = 'd M Y')
     {
         if (array_key_exists('chart_data', $item)) {
-            $item['chart_data'] = array_map(function ($item) {
+            $item['chart_data'] = array_map(function ($item) use ($format) {
                 return [
-                    'date' => array_key_exists(0, $item) ? Carbon::parse($item[0])->format('d M Y') : null,
+                    'date' => array_key_exists(0, $item) ? Carbon::parse($item[0])->format($format) : null,
                     'value1' => array_key_exists(1, $item) ? $item[1] : null,
                     'value2' => array_key_exists(2, $item) ? $item[2] : null,
                     'value3' => array_key_exists(3, $item) ? $item[3] : null,
@@ -150,12 +150,12 @@ trait ReestructurarDatosAPISite24x7
         }
     }
 
-    public function getFormattedResponseMemorySQL($item)
+    public function getFormattedResponseMemorySQL($item, $format = 'd M Y')
     {
         if (array_key_exists('chart_data', $item)) {
-            $item['chart_data'] = array_map(function ($item) {
+            $item['chart_data'] = array_map(function ($item) use ($format) {
                 return [
-                    'date' => array_key_exists(0, $item) ? Carbon::parse($item[0])->format('d M Y') : null,
+                    'date' => array_key_exists(0, $item) ? Carbon::parse($item[0])->format($format) : null,
                     'TotalSM' => array_key_exists(1, $item) ? $item[1] : null,
                     'TargetSM' => array_key_exists(2, $item) ? $item[2] : null,
                     'SQLCache' => array_key_exists(3, $item) ? $item[3] : null,
@@ -186,16 +186,16 @@ trait ReestructurarDatosAPISite24x7
         }
     }
 
-    public function getIndividualDiskUtilizationTimeChart($IndividualDiskUtilizationTimeChart)
+    public function getIndividualDiskUtilizationTimeChart($IndividualDiskUtilizationTimeChart, $format = 'd M Y')
     {
         // pass IndividualDiskUtilizationTimeChart to array_map
 
-        $IndividualDiskUtilizationTimeChart = array_map(function ($items) {
+        $IndividualDiskUtilizationTimeChart = array_map(function ($items) use ($format) {
             foreach ($items as $item) {
                 if (array_key_exists('chart_data', $item)) {
-                    $item['chart_data'] = array_map(function ($item) {
+                    $item['chart_data'] = array_map(function ($item) use ($format) {
                         return [
-                            'date' => array_key_exists(0, $item) ? Carbon::parse($item[0])->format('d M Y') : null,
+                            'date' => array_key_exists(0, $item) ? Carbon::parse($item[0])->format($format) : null,
                             'value1' => array_key_exists(1, $item) ? $item[1] : null,
                             'value2' => array_key_exists(2, $item) ? $item[2] : null,
                         ];
@@ -211,12 +211,12 @@ trait ReestructurarDatosAPISite24x7
         return $IndividualDiskUtilizationTimeChart;
     }
 
-    public function getOverallDiskUsedChart($OverallDiskUsedChart)
+    public function getOverallDiskUsedChart($OverallDiskUsedChart, $format = 'd M Y')
     {
         if (array_key_exists('chart_data', $OverallDiskUsedChart)) {
-            $OverallDiskUsedChart['chart_data'] = array_map(function ($item) {
+            $OverallDiskUsedChart['chart_data'] = array_map(function ($item) use ($format) {
                 return [
-                    'date' => array_key_exists(0, $item) ? Carbon::parse($item[0])->format('d M Y') : null,
+                    'date' => array_key_exists(0, $item) ? Carbon::parse($item[0])->format($format) : null,
                     'value1' => array_key_exists(1, $item) ? $item[1] : null,
                     'value2' => array_key_exists(2, $item) ? $item[2] : null,
                 ];
@@ -228,12 +228,12 @@ trait ReestructurarDatosAPISite24x7
         }
     }
 
-    public function getDiskIO($DiskIO)
+    public function getDiskIO($DiskIO, $format = 'd M Y')
     {
         if (array_key_exists('chart_data', $DiskIO)) {
-            $DiskIO['chart_data'] = array_map(function ($item) {
+            $DiskIO['chart_data'] = array_map(function ($item) use ($format) {
                 return [
-                    'date' => array_key_exists(0, $item) ? Carbon::parse($item[0])->format('d M Y') : null,
+                    'date' => array_key_exists(0, $item) ? Carbon::parse($item[0])->format($format) : null,
                     'value1' => array_key_exists(1, $item) ? $item[1] : null,
                     'value2' => array_key_exists(2, $item) ? $item[2] : null,
                 ];
@@ -245,12 +245,12 @@ trait ReestructurarDatosAPISite24x7
         }
     }
 
-    public function getFormattedResponsePlugin($item, $key)
+    public function getFormattedResponsePlugin($item, $key, $format = 'd M Y')
     {
         if (array_key_exists('chart_data', $item)) {
-            $item['chart_data'] = array_map(function ($item) {
+            $item['chart_data'] = array_map(function ($item) use ($format) {
                 return [
-                    'date' => array_key_exists(0, $item) ? Carbon::parse($item[0])->format('d M Y') : null,
+                    'date' => array_key_exists(0, $item) ? Carbon::parse($item[0])->format($format) : null,
                     'value1' => array_key_exists(1, $item) ? $item[1] : null,
                 ];
             }, $item['chart_data']);
@@ -262,15 +262,15 @@ trait ReestructurarDatosAPISite24x7
         }
     }
 
-    public function getFormattedResponseTraffic($traffic)
+    public function getFormattedResponseTraffic($traffic, $format = 'd M Y')
     {
         $trafficArray = [];
         foreach ($traffic as $traffic_it) {
             foreach ($traffic_it as $item) {
                 if (array_key_exists('chart_data', $item)) {
-                    $item['chart_data'] = array_map(function ($item) {
+                    $item['chart_data'] = array_map(function ($item) use ($format) {
                         return [
-                            'date' => array_key_exists(0, $item) ? Carbon::parse($item[0])->format('d M Y') : null,
+                            'date' => array_key_exists(0, $item) ? Carbon::parse($item[0])->format($format) : null,
                             'value1' => array_key_exists(1, $item) ? $item[1] : null,
                         ];
                     }, $item['chart_data']);
@@ -284,12 +284,12 @@ trait ReestructurarDatosAPISite24x7
         return $trafficArray;
     }
 
-    public function getFormattedResponseDatastore($item)
+    public function getFormattedResponseDatastore($item, $format = 'd M Y')
     {
         if (array_key_exists('chart_data', $item)) {
-            $item['chart_data'] = array_map(function ($item) {
+            $item['chart_data'] = array_map(function ($item) use ($format) {
                 return [
-                    'date' => array_key_exists(0, $item) ? Carbon::parse($item[0])->format('d M Y') : null,
+                    'date' => array_key_exists(0, $item) ? Carbon::parse($item[0])->format($format) : null,
                     'Snapshots Size' => array_key_exists(1, $item) ? $item[1] : null,
                     'Swap File Size' => array_key_exists(2, $item) ? $item[2] : null,
                     'Disk Files Size' => array_key_exists(3, $item) ? $item[3] : null,
@@ -305,12 +305,12 @@ trait ReestructurarDatosAPISite24x7
         }
     }
 
-    public function getFormattedResponseTimeReportURL($item)
+    public function getFormattedResponseTimeReportURL($item, $format = 'd M Y')
     {
         if (array_key_exists('chart_data', $item)) {
-            $item['chart_data'] = array_map(function ($item) {
+            $item['chart_data'] = array_map(function ($item) use ($format) {
                 return [
-                    'date' => array_key_exists(0, $item) ? Carbon::parse($item[0])->format('d M Y') : null,
+                    'date' => array_key_exists(0, $item) ? Carbon::parse($item[0])->format($format) : null,
                     'DNSTime' => array_key_exists(1, $item) ? $item[1] : null,
                     'ConnectionTime' => array_key_exists(2, $item) ? $item[2] : null,
                     'SSLHandshakeTime' => array_key_exists(3, $item) ? $item[3] : null,
@@ -325,14 +325,14 @@ trait ReestructurarDatosAPISite24x7
         }
     }
 
-    public function getFormattedLocationResponseTime($locationResponse)
+    public function getFormattedLocationResponseTime($locationResponse, $format = 'd M Y')
     {
-        $locationResponse = array_map(function ($items) {
+        $locationResponse = array_map(function ($items) use ($format) {
             foreach ($items as $item) {
                 if (array_key_exists('chart_data', $item)) {
-                    $item['chart_data'] = array_map(function ($item) {
+                    $item['chart_data'] = array_map(function ($item) use ($format) {
                         return [
-                            'date' => array_key_exists(0, $item) ? Carbon::parse($item[0])->format('d M Y') : null,
+                            'date' => array_key_exists(0, $item) ? Carbon::parse($item[0])->format($format) : null,
                             'value1' => array_key_exists(1, $item) ? $item[1] : null,
                         ];
                     }, $item['chart_data']);

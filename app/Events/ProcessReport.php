@@ -44,11 +44,11 @@ class ProcessReport implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return 'progress-reportD';
+        return env('PUSHER_DOWNLOAD_GENERATE_INDIVIDUAL_PROGRESS_CHANNEL');
     }
 
     public function broadcastAs()
     {
-        return 'process-report';
+        return env('PUSHER_DOWNLOAD_GENERATE_INDIVIDUAL_PROGRESS_EVENT');
     }
 }

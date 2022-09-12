@@ -38,7 +38,7 @@
 				<textElement textAlignment="Center">
 					<font isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[LEFT($F{average},FIND($F{average},",")).replace( "[","") + " %"]]></textFieldExpression>
+				<textFieldExpression><![CDATA[TEXT(FLOAT_VALUE(RIGHT($F{average},LEN($F{average})-FIND($F{average},",")).replace( "]","").replace( ",","")),"#,##0" ) + " %"]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="190" y="0" width="100" height="20" uuid="c533a742-0402-4243-bbfc-c2e02f83bbe0"/>
@@ -55,7 +55,7 @@
 				<textElement textAlignment="Center">
 					<font isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[LEFT($F{min},FIND($F{min},",")).replace( "[","") + " %"]]></textFieldExpression>
+				<textFieldExpression><![CDATA[TEXT(FLOAT_VALUE(RIGHT($F{min},LEN($F{min})-FIND($F{min},",")).replace( "]","").replace( ",","")),"#,##0" ) + " %"]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="430" y="0" width="100" height="20" uuid="00a2bf51-0b36-434d-9b12-f818d171047a"/>
@@ -67,7 +67,7 @@
 				<textElement textAlignment="Center">
 					<font isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[LEFT($F{max},FIND($F{max},",")).replace( "[","") + " %"]]></textFieldExpression>
+				<textFieldExpression><![CDATA[TEXT(FLOAT_VALUE(RIGHT($F{max},LEN($F{max})-FIND($F{max},",")).replace( "]","").replace( ",","")),"#,##0" ) + " %"]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="12" y="27" width="188" height="23" uuid="5933e348-74e9-48ea-9b76-c3dd9a5dd362"/>
@@ -78,7 +78,7 @@
 			</staticText>
 			<pieChart>
 				<chart isShowLegend="false" evaluationTime="Report">
-					<reportElement x="47" y="60" width="233" height="130" uuid="a78adb2b-680e-4135-bc3e-ba7e3eef7f74"/>
+					<reportElement x="47" y="60" width="233" height="130" uuid="98c65dab-cb8c-4918-b0c3-2b3da721005a"/>
 					<chartTitle/>
 					<chartSubtitle/>
 					<chartLegend>
@@ -88,20 +88,20 @@
 				<pieDataset maxCount="2">
 					<dataset resetType="Report"/>
 					<pieSeries>
-						<keyExpression><![CDATA["Used Space"]]></keyExpression>
+						<keyExpression><![CDATA["Free Space"]]></keyExpression>
 						<valueExpression><![CDATA[FLOAT_VALUE(LEFT($F{average},FIND($F{average},",")).replace( "[",""))]]></valueExpression>
-						<labelExpression><![CDATA["Used Space \n" + LEFT($F{average},FIND($F{average},",")).replace( "[","") + " %"]]></labelExpression>
+						<labelExpression><![CDATA["Free Space \n" + LEFT($F{average},FIND($F{average},",")).replace( "[","") + " %"]]></labelExpression>
 					</pieSeries>
 					<pieSeries>
-						<keyExpression><![CDATA["Free Space"]]></keyExpression>
+						<keyExpression><![CDATA["Used Space"]]></keyExpression>
 						<valueExpression><![CDATA[FLOAT_VALUE(RIGHT($F{average},LEN($F{average})-FIND($F{average},",")).replace( "]","").replace( ",",""))]]></valueExpression>
-						<labelExpression><![CDATA["Free Space \n" + TEXT(FLOAT_VALUE(RIGHT($F{average},LEN($F{average})-FIND($F{average},",")).replace( "]","").replace( ",","")),"#,##0" ) + " %"]]></labelExpression>
+						<labelExpression><![CDATA["Used Space \n" + TEXT(FLOAT_VALUE(RIGHT($F{average},LEN($F{average})-FIND($F{average},",")).replace( "]","").replace( ",","")),"#,##0" ) + " %"]]></labelExpression>
 					</pieSeries>
 				</pieDataset>
 				<piePlot isShowLabels="true">
 					<plot>
-						<seriesColor seriesOrder="0" color="#DF4B3C"/>
-						<seriesColor seriesOrder="1" color="#2EC36E"/>
+						<seriesColor seriesOrder="0" color="#2EC36E"/>
+						<seriesColor seriesOrder="1" color="#DF4B3C"/>
 					</plot>
 					<itemLabel>
 						<font size="7"/>

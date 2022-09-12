@@ -31,11 +31,12 @@ class ReloadProcessOnErrorAPI implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return 'reloadBecauseExistErrorOnAPI';
+
+        return env('PUSHER_RELOAD_BECAUSE_ERROR_CHANNEL');
     }
 
     public function broadcastAs()
     {
-        return 'reloadBecauseExistErrorOnAPIEvent';
+        return env('PUSHER_RELOAD_BECAUSE_ERROR_EVENT');
     }
 }
