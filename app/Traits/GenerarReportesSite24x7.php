@@ -49,11 +49,12 @@ trait GenerarReportesSite24x7
     public function createFolderToCustomer($last_month, $customer_name, $monitor = null, $group)
     {
         $customerNameWithoutSpecialChars = preg_replace('/[^A-Za-z0-9\-]/', '_', $customer_name);
+        $groupNameWithoutSpecialChars = preg_replace('/[^A-Za-z0-9\-]/', '_', $group);
 
         $path_reports = Carbon::now()->format('Y') . DIRECTORY_SEPARATOR . $customerNameWithoutSpecialChars . DIRECTORY_SEPARATOR . $last_month;
         if ($monitor) {
             if ($customer_name == 'Monitoring PrimeOps' || $customer_name == 'KIO CA&C') {
-                $path_reports = Carbon::now()->format('Y') . DIRECTORY_SEPARATOR . $customerNameWithoutSpecialChars . DIRECTORY_SEPARATOR . str_replace(".", "_", str_replace(" ", "_", $group)) . DIRECTORY_SEPARATOR . $last_month . DIRECTORY_SEPARATOR . $monitor['type'];
+                $path_reports = Carbon::now()->format('Y') . DIRECTORY_SEPARATOR . $customerNameWithoutSpecialChars . DIRECTORY_SEPARATOR . $groupNameWithoutSpecialChars . DIRECTORY_SEPARATOR . $last_month . DIRECTORY_SEPARATOR . $monitor['type'];
             } else {
                 $path_reports = Carbon::now()->format('Y') . DIRECTORY_SEPARATOR . $customerNameWithoutSpecialChars . DIRECTORY_SEPARATOR . $last_month . DIRECTORY_SEPARATOR . $monitor['type'];
             }

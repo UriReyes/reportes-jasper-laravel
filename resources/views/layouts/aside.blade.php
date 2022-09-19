@@ -12,7 +12,7 @@
 
     <hr class="h-px mt-0 bg-transparent bg-gradient-to-r from-transparent via-black/40 to-transparent" />
 
-    <div class="items-center block w-auto max-h-screen overflow-auto h-sidenav grow basis-full">
+    <div class="items-center block w-auto max-h-screen overflow-auto grow basis-full">
         <ul class="flex flex-col pl-0 mb-0">
             <li class="mt-0.5 w-full">
                 <a class="py-2.7 text-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap rounded-lg bg-white px-4 transition-colors"
@@ -63,6 +63,16 @@
                         <i class="fas fa-folder"></i>
                     </div>
                     <span class="ml-1 duration-300 opacity-100 pointer-events-none ease-soft">Gestor de Archivos</span>
+                </a>
+            </li>
+            <li class="mt-0.5 w-full">
+                <a class="py-2.7 text-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap px-4 transition-colors text-slate-700"
+                    href="{{ route('logs') }}">
+                    <div
+                        class="{{ request()->is('logs') ? 'from-purple-700 to-pink-500 bg-gradient-to-tl text-white' : '' }} shadow-soft-2xl shadow-soft-2xl mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-white bg-center stroke-0 text-center xl:p-2.5">
+                        <i class="fas fa-laptop-medical"></i>
+                    </div>
+                    <span class="ml-1 duration-300 opacity-100 pointer-events-none ease-soft">Logs</span>
                 </a>
             </li>
         </ul>

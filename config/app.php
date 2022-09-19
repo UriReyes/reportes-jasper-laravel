@@ -180,7 +180,7 @@ return [
         //insert jasper service provider here
         // JasperPHP\JasperPHPServiceProvider::class
         Alexusmai\LaravelFileManager\FileManagerServiceProvider::class,
-
+        Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider::class,
     ],
 
     /*
