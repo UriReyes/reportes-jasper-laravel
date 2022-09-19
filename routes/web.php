@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/',  [JasperController::class, 'index'])->name('home');
+Route::get('logs', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index'])->name('logs');
 Route::get('/export-all',  [JasperController::class, 'exportAll'])->name('export-all');
 Route::get('/downloaded-information',  [JasperController::class, 'downloadedInformationMSP'])->name('downloaded-information');
 Route::get('/folder',  [JasperController::class, 'folder'])->name('folder');
