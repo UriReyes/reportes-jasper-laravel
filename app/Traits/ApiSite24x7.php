@@ -5,6 +5,7 @@ namespace App\Traits;
 use App\Events\ReloadProcessOnErrorAPI;
 use Error;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 trait ApiSite24x7
 {
@@ -22,6 +23,7 @@ trait ApiSite24x7
             return $response->access_token;
         } catch (\Throwable | \GuzzleHttp\Exception\GuzzleException $th) {
             // return $response->error;
+            Log::debug('Error: ' . $th->getMessage());
             sleep(300);
             event(new ReloadProcessOnErrorAPI());
         }
@@ -39,7 +41,10 @@ trait ApiSite24x7
             $response = $response->json();
             return $response['data'];
         } catch (\Throwable | \GuzzleHttp\Exception\GuzzleException $th) {
-            return $th->getCode();
+            // return $th->getCode();
+            Log::debug('Error: ' . $th->getMessage());
+            sleep(180);
+            event(new ReloadProcessOnErrorAPI());
         }
     }
 
@@ -62,7 +67,8 @@ trait ApiSite24x7
                 return 'error';
             } else {
                 // die();
-                sleep(60);
+                Log::debug('Error: ' . $th->getMessage());
+                sleep(180);
                 event(new ReloadProcessOnErrorAPI());
             }
         }
@@ -90,7 +96,8 @@ trait ApiSite24x7
                 ];
             } else {
                 // die();
-                sleep(60);
+                Log::debug('Error: ' . $th->getMessage());
+                sleep(180);
                 event(new ReloadProcessOnErrorAPI());
             }
         }
@@ -118,7 +125,8 @@ trait ApiSite24x7
                 ];
             } else {
                 // die();
-                sleep(60);
+                Log::debug('Error: ' . $th->getMessage());
+                sleep(180);
                 event(new ReloadProcessOnErrorAPI());
             }
         }
@@ -146,7 +154,8 @@ trait ApiSite24x7
                 ];
             } else {
                 // die();
-                sleep(60);
+                Log::debug('Error: ' . $th->getMessage());
+                sleep(180);
                 event(new ReloadProcessOnErrorAPI());
             }
         }
@@ -173,7 +182,8 @@ trait ApiSite24x7
                 ];
             } else {
                 // die();
-                sleep(60);
+                Log::debug('Error: ' . $th->getMessage());
+                sleep(180);
                 event(new ReloadProcessOnErrorAPI());
             }
         }
@@ -199,7 +209,8 @@ trait ApiSite24x7
                 ];
             } else {
                 // die();
-                sleep(60);
+                Log::debug('Error: ' . $th->getMessage());
+                sleep(180);
                 event(new ReloadProcessOnErrorAPI());
             }
         }
@@ -226,7 +237,8 @@ trait ApiSite24x7
                 ];
             } else {
                 // die();
-                sleep(60);
+                Log::debug('Error: ' . $th->getMessage());
+                sleep(180);
                 event(new ReloadProcessOnErrorAPI());
             }
         }
@@ -253,7 +265,8 @@ trait ApiSite24x7
                 ];
             } else {
                 // die();
-                sleep(60);
+                Log::debug('Error: ' . $th->getMessage());
+                sleep(180);
                 event(new ReloadProcessOnErrorAPI());
             }
         }
