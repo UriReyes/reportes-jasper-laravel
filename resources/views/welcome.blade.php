@@ -44,9 +44,9 @@
         var privateChannelDownloadAPI2 = pusher.subscribe(PUSHER_RELOAD_BECAUSE_ERROR_CHANNEL);
         privateChannelDownloadAPI2.bind(PUSHER_RELOAD_BECAUSE_ERROR_EVENT, function(data) {
             localStorage.setItem('error-api-one', true);
-            setTimeout(() => {
-                window.location.reload();
-            }, 1000);
+            // setTimeout(() => {
+            //     window.location.reload();
+            // }, 1000);
         });
 
         document.addEventListener('DOMContentLoaded', () => {
