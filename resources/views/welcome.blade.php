@@ -47,9 +47,14 @@
             // setTimeout(() => {
             //     window.location.reload();
             // }, 1000);
+            sendEventReload();
         });
 
         document.addEventListener('DOMContentLoaded', () => {
+            sendEventReload();
+        })
+
+        function sendEventReload() {
             let errorOnAPI = localStorage.getItem('error-api-one');
             errorOnAPI = errorOnAPI == 'true' ? true : false;
             if (errorOnAPI) {
@@ -58,6 +63,6 @@
                     Livewire.emit('reloadProcessExport');
                 }, 2000);
             }
-        })
+        }
     </script>
 @endsection
