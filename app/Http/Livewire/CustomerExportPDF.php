@@ -57,6 +57,24 @@ class CustomerExportPDF extends Component implements ShouldBroadcast
 
     public function startProcess()
     {
+
+        $fileStateError = json_decode(Storage::get('public/error-api/state.json'));
+        if (is_null($fileStateError)) {
+            Storage::put('public/error-api/state.json', json_encode(["hasError" => false]));
+            $fileStateError = json_decode(Storage::get('public/error-api/state.json'));
+        }
+        #Validate if process has error
+        if ($fileStateError->hasError) {
+            // shell_exec('start httpd.exe');
+            Storage::put('public/error-api/state.json', json_encode(["hasError" => false]));
+            $fileState = json_decode(Storage::get('public\state-msp\state.json'));
+            $this->zaaid = $fileState->zaaid;
+            sleep(300);
+            $refresh_token = $this->getRefreshToken();
+        }
+        # End validate
+
+
         if (!$this->period_report || !in_array($this->period_report, [7, 13, 25, 50])) {
             $this->alert('info', '¡Debes seleccionar un periodo válido!', [
                 'position' => 'center',
@@ -125,12 +143,17 @@ class CustomerExportPDF extends Component implements ShouldBroadcast
                         $this->totalMonitors = count($monitors);
                         $this->completed_reports = count($completed_monitors);
                         $this->percentage = $totalMonitorsMask > 0 ? ($this->getPercentage($this->completed_reports, $totalMonitorsMask)) : 0;
-                        // $start_time = microtime(true);
+                        $start_time = microtime(true);
 
                         $monitorsCollect = collect();
                         // Se realiza el proceso de generacion de reportes
                         foreach ($monitors as $monitor) {
-
+                            $finish_time = microtime(true);
+                            $time = $finish_time - $start_time;
+                            if ($time > 3500) {
+                                $refresh_token = $this->getRefreshToken();
+                                $start_time = microtime(true);
+                            }
                             //if ($monitor['monitor_id'] == '417536000002177252') {
                             $processedMonitor = $this->processSite24x7Monitors(
                                 $monitor,

@@ -6,6 +6,7 @@ use App\Events\ReloadProcessOnErrorAPI;
 use Error;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 trait ApiSite24x7
 {
@@ -24,8 +25,10 @@ trait ApiSite24x7
         } catch (\Throwable | \GuzzleHttp\Exception\GuzzleException $th) {
             // return $response->error;
             Log::debug('Error: ' . $th->getMessage());
+            Storage::put('public/error-api/state.json', json_encode(["hasError" => true]));
             sleep(300);
             event(new ReloadProcessOnErrorAPI());
+            // shell_exec('taskkill /im "httpd.exe" /f /t');
         }
     }
 
@@ -43,8 +46,10 @@ trait ApiSite24x7
         } catch (\Throwable | \GuzzleHttp\Exception\GuzzleException $th) {
             // return $th->getCode();
             Log::debug('Error: ' . $th->getMessage());
+            Storage::put('public/error-api/state.json', json_encode(["hasError" => true]));
             sleep(180);
             event(new ReloadProcessOnErrorAPI());
+            // shell_exec('taskkill /im "httpd.exe" /f /t');
         }
     }
 
@@ -68,8 +73,10 @@ trait ApiSite24x7
             } else {
                 // die();
                 Log::debug('Error: ' . $th->getMessage());
+                Storage::put('public/error-api/state.json', json_encode(["hasError" => true]));
                 sleep(180);
                 event(new ReloadProcessOnErrorAPI());
+                // shell_exec('taskkill /im "httpd.exe" /f /t');
             }
         }
     }
@@ -97,8 +104,10 @@ trait ApiSite24x7
             } else {
                 // die();
                 Log::debug('Error: ' . $th->getMessage());
+                Storage::put('public/error-api/state.json', json_encode(["hasError" => true]));
                 sleep(180);
                 event(new ReloadProcessOnErrorAPI());
+                // shell_exec('taskkill /im "httpd.exe" /f /t');
             }
         }
     }
@@ -126,8 +135,10 @@ trait ApiSite24x7
             } else {
                 // die();
                 Log::debug('Error: ' . $th->getMessage());
+                Storage::put('public/error-api/state.json', json_encode(["hasError" => true]));
                 sleep(180);
                 event(new ReloadProcessOnErrorAPI());
+                // shell_exec('taskkill /im "httpd.exe" /f /t');
             }
         }
     }
@@ -155,8 +166,10 @@ trait ApiSite24x7
             } else {
                 // die();
                 Log::debug('Error: ' . $th->getMessage());
+                Storage::put('public/error-api/state.json', json_encode(["hasError" => true]));
                 sleep(180);
                 event(new ReloadProcessOnErrorAPI());
+                // shell_exec('taskkill /im "httpd.exe" /f /t');
             }
         }
     }
@@ -183,8 +196,10 @@ trait ApiSite24x7
             } else {
                 // die();
                 Log::debug('Error: ' . $th->getMessage());
+                Storage::put('public/error-api/state.json', json_encode(["hasError" => true]));
                 sleep(180);
                 event(new ReloadProcessOnErrorAPI());
+                // shell_exec('taskkill /im "httpd.exe" /f /t');
             }
         }
     }
@@ -210,8 +225,10 @@ trait ApiSite24x7
             } else {
                 // die();
                 Log::debug('Error: ' . $th->getMessage());
+                Storage::put('public/error-api/state.json', json_encode(["hasError" => true]));
                 sleep(180);
                 event(new ReloadProcessOnErrorAPI());
+                // shell_exec('taskkill /im "httpd.exe" /f /t');
             }
         }
     }
@@ -238,8 +255,10 @@ trait ApiSite24x7
             } else {
                 // die();
                 Log::debug('Error: ' . $th->getMessage());
+                Storage::put('public/error-api/state.json', json_encode(["hasError" => true]));
                 sleep(180);
                 event(new ReloadProcessOnErrorAPI());
+                // shell_exec('taskkill /im "httpd.exe" /f /t');
             }
         }
     }
@@ -266,8 +285,10 @@ trait ApiSite24x7
             } else {
                 // die();
                 Log::debug('Error: ' . $th->getMessage());
+                Storage::put('public/error-api/state.json', json_encode(["hasError" => true]));
                 sleep(180);
                 event(new ReloadProcessOnErrorAPI());
+                // shell_exec('taskkill /im "httpd.exe" /f /t');
             }
         }
     }
