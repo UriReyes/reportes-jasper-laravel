@@ -58,21 +58,21 @@ class CustomerExportPDF extends Component implements ShouldBroadcast
     public function startProcess()
     {
 
-        $fileStateError = json_decode(Storage::get('public/error-api/state.json'));
-        if (is_null($fileStateError)) {
-            Storage::put('public/error-api/state.json', json_encode(["hasError" => false]));
-            $fileStateError = json_decode(Storage::get('public/error-api/state.json'));
-        }
-        #Validate if process has error
-        if ($fileStateError->hasError) {
-            // shell_exec('start httpd.exe');
-            Storage::put('public/error-api/state.json', json_encode(["hasError" => false]));
-            $fileState = json_decode(Storage::get('public\state-msp\state.json'));
-            $this->zaaid = $fileState->zaaid;
-            sleep(300);
-            $refresh_token = $this->getRefreshToken();
-        }
-        # End validate
+        // $fileStateError = json_decode(Storage::get('public/error-api/state.json'));
+        // if (is_null($fileStateError)) {
+        //     Storage::put('public/error-api/state.json', json_encode(["hasError" => false]));
+        //     $fileStateError = json_decode(Storage::get('public/error-api/state.json'));
+        // }
+        // #Validate if process has error
+        // if ($fileStateError->hasError) {
+        //     // shell_exec('start httpd.exe');
+        //     Storage::put('public/error-api/state.json', json_encode(["hasError" => false]));
+        //     $fileState = json_decode(Storage::get('public\state-msp\state.json'));
+        //     $this->zaaid = $fileState->zaaid;
+        //     sleep(300);
+        //     $refresh_token = $this->getRefreshToken();
+        // }
+        // # End validate
 
 
         if (!$this->period_report || !in_array($this->period_report, [7, 13, 25, 50])) {
@@ -145,47 +145,62 @@ class CustomerExportPDF extends Component implements ShouldBroadcast
                         $this->percentage = $totalMonitorsMask > 0 ? ($this->getPercentage($this->completed_reports, $totalMonitorsMask)) : 0;
                         $start_time = microtime(true);
 
-                        $monitorsCollect = collect();
-                        // Se realiza el proceso de generacion de reportes
-                        foreach ($monitors as $monitor) {
-                            $finish_time = microtime(true);
-                            $time = $finish_time - $start_time;
-                            if ($time > 3500) {
+                        if ($this->totalMonitors > 1500) {
+                            $chunk_monitors = array_chunk($monitors, 1500, true);
+                            foreach ($chunk_monitors as $monitors) {
                                 $refresh_token = $this->getRefreshToken();
-                                $start_time = microtime(true);
+                                $this->iterateMonitors($monitors, $completed_monitors, $totalMonitorsMask, $start_time, $site24x7Url, $refresh_token);
                             }
-                            //if ($monitor['monitor_id'] == '417536000002177252') {
-                            $processedMonitor = $this->processSite24x7Monitors(
-                                $monitor,
-                                $site24x7Url,
-                                $refresh_token,
-                                $this->zaaid,
-                                $this->name,
-                                $this->last_month
-                            );
-
-                            $this->completed_reports++;
-                            $this->percentage = $this->getPercentage($this->completed_reports, $totalMonitorsMask);
-                            array_push($this->storedInformation[0]['monitors'], $processedMonitor);
-                            file_put_contents(public_path("storage/downloaded_msp_information/{$this->name}_{$this->zaaid}.json"), json_encode($this->storedInformation));
-                            //SAVE STATE
-                            array_push($completed_monitors, $monitor['monitor_id']);
-                            $state_stored = json_encode([
-                                'customer' => $this->name,
-                                'zaaid' => $this->zaaid,
-                                'completed_monitors' => json_encode($completed_monitors),
-                                'completed_reports' => $this->completed_reports,
-                                'percentage' => $this->percentage,
-                                'downloaded_files' => false
-                            ], JSON_PRETTY_PRINT);
-                            Storage::put('public/state-msp/state.json', $state_stored);
-                            event(new DownloadInformationAPI($totalMonitorsMask, $this->percentage, $this->completed_reports, $this->zaaid, $this->name, 'Descargando Información...'));
+                        } else {
+                            $monitorsCollect = collect();
+                            $this->iterateMonitors($monitors, $completed_monitors, $totalMonitorsMask, $start_time, $site24x7Url, $refresh_token);
                         }
+
+                        // Se realiza el proceso de generacion de reportes
+
 
                         // $this->generateMSPReport("downloaded_msp_information/{$this->name}_{$this->zaaid}.json");
                     }
                 }
             }
+        }
+    }
+
+    public function iterateMonitors($monitors, $completed_monitors, $totalMonitorsMask, $start_time, $site24x7Url, $refresh_token)
+    {
+        foreach ($monitors as $monitor) {
+            $finish_time = microtime(true);
+            $time = $finish_time - $start_time;
+            if ($time > 3500) {
+                $refresh_token = $this->getRefreshToken();
+                $start_time = microtime(true);
+            }
+            //if ($monitor['monitor_id'] == '417536000002177252') {
+            $processedMonitor = $this->processSite24x7Monitors(
+                $monitor,
+                $site24x7Url,
+                $refresh_token,
+                $this->zaaid,
+                $this->name,
+                $this->last_month
+            );
+
+            $this->completed_reports++;
+            $this->percentage = $this->getPercentage($this->completed_reports, $totalMonitorsMask);
+            array_push($this->storedInformation[0]['monitors'], $processedMonitor);
+            file_put_contents(public_path("storage/downloaded_msp_information/{$this->name}_{$this->zaaid}.json"), json_encode($this->storedInformation));
+            //SAVE STATE
+            array_push($completed_monitors, $monitor['monitor_id']);
+            $state_stored = json_encode([
+                'customer' => $this->name,
+                'zaaid' => $this->zaaid,
+                'completed_monitors' => json_encode($completed_monitors),
+                'completed_reports' => $this->completed_reports,
+                'percentage' => $this->percentage,
+                'downloaded_files' => false
+            ], JSON_PRETTY_PRINT);
+            Storage::put('public/state-msp/state.json', $state_stored);
+            event(new DownloadInformationAPI($totalMonitorsMask, $this->percentage, $this->completed_reports, $this->zaaid, $this->name, 'Descargando Información...'));
         }
     }
 
