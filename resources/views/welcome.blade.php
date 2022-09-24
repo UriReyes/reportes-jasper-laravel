@@ -60,7 +60,8 @@
             if (errorOnAPI) {
                 setTimeout(() => {
                     console.log('Error on API ONE');
-                    Livewire.emit('reloadProcessExport');
+                    // Livewire.emit('reloadProcessExport');
+                    document.getElementById('btnStartProcess763229256').click();
                 }, 2000);
             }
         }

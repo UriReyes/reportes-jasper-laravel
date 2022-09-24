@@ -9,8 +9,8 @@
         </small>
         <div class="flex justify-between mb-1" style="align-items: center;">
             <span class="text-base font-medium text-blue-700 dark:text-white">
-                <i class="fa-solid fa-play text-green-500" wire:loading.remove.all
-                    wire:click.prevent="startProcess()"></i>
+                <i class="fa-solid fa-play text-green-500" wire:loading.remove.all wire:click.prevent="startProcess()"
+                    id="btnStartProcess{{ $customer['zaaid'] }}"></i>
                 <i class="fa-solid fa-spinner fa-spin-pulse" wire:loading wire:target="startProcess"></i>
             </span>
             <div class="w-full text-right">
