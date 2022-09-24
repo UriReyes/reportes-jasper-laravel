@@ -145,11 +145,15 @@ class CustomerExportPDF extends Component implements ShouldBroadcast
                         $this->percentage = $totalMonitorsMask > 0 ? ($this->getPercentage($this->completed_reports, $totalMonitorsMask)) : 0;
                         $start_time = microtime(true);
 
-                        if ($this->totalMonitors > 1500) {
-                            $chunk_monitors = array_chunk($monitors, 1500, true);
+                        if ($this->totalMonitors > 1000) {
+                            $chunk_monitors = array_chunk($monitors, 1000, true);
+                            $totalChunks = count($chunk_monitors);
+                            $count_chunk = 1;
                             foreach ($chunk_monitors as $monitors) {
                                 $refresh_token = $this->getRefreshToken();
-                                $this->iterateMonitors($monitors, $completed_monitors, $totalMonitorsMask, $start_time, $site24x7Url, $refresh_token);
+                                $this->iterateMonitors($monitors, $completed_monitors, $totalMonitorsMask, $start_time, $site24x7Url, $refresh_token, $totalChunks, $count_chunk);
+                                $count_chunk++;
+                                sleep(60);
                             }
                         } else {
                             $monitorsCollect = collect();
@@ -166,7 +170,7 @@ class CustomerExportPDF extends Component implements ShouldBroadcast
         }
     }
 
-    public function iterateMonitors($monitors, $completed_monitors, $totalMonitorsMask, $start_time, $site24x7Url, $refresh_token)
+    public function iterateMonitors($monitors, $completed_monitors, $totalMonitorsMask, $start_time, $site24x7Url, $refresh_token, $totalChunks = null, $countChunk = null)
     {
         foreach ($monitors as $monitor) {
             $finish_time = microtime(true);
@@ -200,7 +204,11 @@ class CustomerExportPDF extends Component implements ShouldBroadcast
                 'downloaded_files' => false
             ], JSON_PRETTY_PRINT);
             Storage::put('public/state-msp/state.json', $state_stored);
-            event(new DownloadInformationAPI($totalMonitorsMask, $this->percentage, $this->completed_reports, $this->zaaid, $this->name, 'Descargando Información...'));
+            $message = "Descargando Información...";
+            if ($totalChunks) {
+                $message = "Fase {$countChunk} de {$totalChunks} | Descargando...";
+            }
+            event(new DownloadInformationAPI($totalMonitorsMask, $this->percentage, $this->completed_reports, $this->zaaid, $this->name, $message));
         }
     }
 
