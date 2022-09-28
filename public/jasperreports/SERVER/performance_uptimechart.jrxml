@@ -23,8 +23,11 @@
 		<property name="net.sf.jasperreports.json.field.expression" value="value1"/>
 		<fieldDescription><![CDATA[value1]]></fieldDescription>
 	</field>
+	<variable name="last_value" class="java.lang.String" incrementType="Report" calculation="Highest">
+		<variableExpression><![CDATA["Last UpTime: " + IF(FLOOR(FLOAT_VALUE($F{value1})/86400) >= 1, TEXT(FLOOR(FLOAT_VALUE($F{value1})/86400),"#,###" ) + " days ","") + TEXT(FLOOR(FLOAT_VALUE($F{value1}) % (3600*24) / 3600),"###" ) + " Hrs " + TEXT(FLOOR(FLOAT_VALUE($F{value1}) % 3600 / 60),"###" ) + " Mins"]]></variableExpression>
+	</variable>
 	<title>
-		<band height="170" splitType="Stretch">
+		<band height="178" splitType="Stretch">
 			<lineChart>
 				<chart evaluationTime="Report">
 					<reportElement x="0" y="18" width="550" height="150" uuid="4b6e51e2-cc76-4bcc-8755-162f00caee48">
@@ -34,7 +37,9 @@
 					</reportElement>
 					<chartTitle/>
 					<chartSubtitle/>
-					<chartLegend/>
+					<chartLegend>
+						<font size="8"/>
+					</chartLegend>
 				</chart>
 				<categoryDataset>
 					<dataset resetType="Report"/>
@@ -70,6 +75,13 @@
 				</textElement>
 				<text><![CDATA[Server UpTime]]></text>
 			</staticText>
+			<textField evaluationTime="Report">
+				<reportElement x="272" y="4" width="259" height="14" uuid="74d3bb6c-0f31-4ad1-a2c2-47bc86148fcc"/>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{last_value}]]></textFieldExpression>
+			</textField>
 		</band>
 	</title>
 </jasperReport>

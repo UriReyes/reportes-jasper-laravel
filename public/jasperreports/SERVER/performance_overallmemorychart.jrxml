@@ -39,7 +39,7 @@
 			<subreport>
 				<reportElement x="9" y="46" width="521" height="70" uuid="632ff9d4-ed64-4718-9c87-461e90f69d61"/>
 				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("chart_data")]]></dataSourceExpression>
-				<subreportExpression><![CDATA["C:\\Users\\uriel.santiago\\JaspersoftWorkspace\\Reports\\SERVER\\performance_overallmemorychart_charts.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA["C:\\Users\\urire\\JaspersoftWorkspace\\Reports\\SERVER\\performance_overallmemorychart_charts.jasper"]]></subreportExpression>
 			</subreport>
 			<textField>
 				<reportElement x="190" y="20" width="100" height="20" uuid="8ddce0d7-a854-4796-b59e-b69cbfd9de3f"/>

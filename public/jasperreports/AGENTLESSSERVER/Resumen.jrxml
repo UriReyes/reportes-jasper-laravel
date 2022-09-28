@@ -54,7 +54,7 @@
 		<band height="57" splitType="Stretch">
 			<image>
 				<reportElement x="2" y="7" width="552" height="30" uuid="f4ce0081-a3e9-4fe6-9d66-8833ba0397be"/>
-				<imageExpression><![CDATA["C:\\Users\\uriel.santiago\\JaspersoftWorkspace\\Reports\\AGENTLESSSERVER\\informe de rendimiento.png"]]></imageExpression>
+				<imageExpression><![CDATA["C:\\Users\\urire\\JaspersoftWorkspace\\Reports\\AGENTLESSSERVER\\informe de rendimiento.png"]]></imageExpression>
 			</image>
 			<textField pattern="MMM d, yyyy h:mm:ss a">
 				<reportElement x="453" y="41" width="100" height="16" uuid="29c02edf-4fbc-4c0b-b755-996a91c67ee9">
@@ -87,60 +87,69 @@
 		</band>
 	</title>
 	<detail>
-		<band height="47" splitType="Stretch">
+		<band height="41" splitType="Stretch">
 			<subreport>
 				<reportElement x="3" y="10" width="550" height="27" uuid="22b32f6d-4f26-4cc0-8493-7a1f6fdb311f"/>
 				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("monitor")]]></dataSourceExpression>
-				<subreportExpression><![CDATA["C:\\Users\\uriel.santiago\\JaspersoftWorkspace\\Reports\\AGENTLESSSERVER\\monitor.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA["C:\\Users\\urire\\JaspersoftWorkspace\\Reports\\AGENTLESSSERVER\\monitor.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
-		<band height="43">
+		<band height="37">
 			<subreport>
-				<reportElement x="3" y="5" width="551" height="35" uuid="ab05a58c-2638-48a0-94b5-95c2f22773fb"/>
+				<reportElement x="1" y="3" width="551" height="30" uuid="4306fe8c-a04b-4cf5-9adb-fa8f3a03a6e6">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
 				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("availability.data")]]></dataSourceExpression>
-				<subreportExpression><![CDATA["C:\\Users\\uriel.santiago\\JaspersoftWorkspace\\Reports\\AGENTLESSSERVER\\availability.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA["C:\\Users\\urire\\JaspersoftWorkspace\\Reports\\AGENTLESSSERVER\\period_report.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
-		<band height="50">
+		<band height="37">
 			<subreport overflowType="Stretch">
-				<reportElement x="3" y="10" width="551" height="30" uuid="f251f2db-cbdc-49fd-b3ee-58c960815625"/>
+				<reportElement x="0" y="3" width="551" height="30" uuid="f251f2db-cbdc-49fd-b3ee-58c960815625"/>
 				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("performance_ContRendimiento.data.chart_data.DialValueChart")]]></dataSourceExpression>
-				<subreportExpression><![CDATA["C:\\Users\\uriel.santiago\\JaspersoftWorkspace\\Reports\\AGENTLESSSERVER\\performance_uptimechart.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA["C:\\Users\\urire\\JaspersoftWorkspace\\Reports\\AGENTLESSSERVER\\performance_uptimechart.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="37">
+			<subreport>
+				<reportElement x="2" y="5" width="551" height="25" uuid="ab05a58c-2638-48a0-94b5-95c2f22773fb"/>
+				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("availability.data")]]></dataSourceExpression>
+				<subreportExpression><![CDATA["C:\\Users\\urire\\JaspersoftWorkspace\\Reports\\AGENTLESSSERVER\\availability.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
 		<band height="50">
 			<subreport overflowType="Stretch">
 				<reportElement x="2" y="10" width="551" height="30" uuid="734ae9e1-1be9-4b35-b670-5d575fbfa187"/>
 				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("availability.data.charts.data.uptimes")]]></dataSourceExpression>
-				<subreportExpression><![CDATA["C:\\Users\\uriel.santiago\\JaspersoftWorkspace\\Reports\\AGENTLESSSERVER\\graficas.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA["C:\\Users\\urire\\JaspersoftWorkspace\\Reports\\AGENTLESSSERVER\\graficas.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
 		<band height="50">
 			<subreport>
 				<reportElement x="3" y="5" width="550" height="40" uuid="6d15a5ec-ef48-43ea-90d8-ea17016b4ab5"/>
 				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("performance.data.chart_data.CpuUtilChart")]]></dataSourceExpression>
-				<subreportExpression><![CDATA["C:\\Users\\uriel.santiago\\JaspersoftWorkspace\\Reports\\AGENTLESSSERVER\\performanceCpuUtilChart.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA["C:\\Users\\urire\\JaspersoftWorkspace\\Reports\\AGENTLESSSERVER\\performanceCpuUtilChart.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
 		<band height="50">
 			<subreport>
 				<reportElement x="0" y="10" width="550" height="40" uuid="f80fd167-48cf-4635-9d91-443d6fa9ddd4"/>
 				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("performance.data.chart_data.MemoryUtilChart")]]></dataSourceExpression>
-				<subreportExpression><![CDATA["C:\\Users\\uriel.santiago\\JaspersoftWorkspace\\Reports\\AGENTLESSSERVER\\performanceMemoryUtilChart.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA["C:\\Users\\urire\\JaspersoftWorkspace\\Reports\\AGENTLESSSERVER\\performanceMemoryUtilChart.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
 		<band height="61">
 			<subreport>
 				<reportElement x="3" y="10" width="550" height="40" uuid="cedada46-c982-42ff-860e-9a9b9845b569"/>
 				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("performance.data.chart_data.DiskUtilChart")]]></dataSourceExpression>
-				<subreportExpression><![CDATA["C:\\Users\\uriel.santiago\\JaspersoftWorkspace\\Reports\\AGENTLESSSERVER\\performanceDiskUtilChart.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA["C:\\Users\\urire\\JaspersoftWorkspace\\Reports\\AGENTLESSSERVER\\performanceDiskUtilChart.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
 		<band height="50">
 			<subreport>
 				<reportElement x="4" y="7" width="547" height="36" uuid="7d085891-c81d-47d1-b33d-8a717835c66d"/>
 				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("performance_disk.data.AllDiskUsedChart")]]></dataSourceExpression>
-				<subreportExpression><![CDATA["C:\\Users\\uriel.santiago\\JaspersoftWorkspace\\Reports\\AGENTLESSSERVER\\performanceAllDiskUsedChart.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA["C:\\Users\\urire\\JaspersoftWorkspace\\Reports\\AGENTLESSSERVER\\performanceAllDiskUsedChart.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
 		<band height="46">
@@ -149,7 +158,7 @@
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("performance_diskdetail.data.widgets")]]></dataSourceExpression>
-				<subreportExpression><![CDATA["C:\\Users\\uriel.santiago\\JaspersoftWorkspace\\Reports\\AGENTLESSSERVER\\performance_DiskDetail_Widget_charts.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA["C:\\Users\\urire\\JaspersoftWorkspace\\Reports\\AGENTLESSSERVER\\performance_DiskDetail_Widget_charts.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
 	</detail>

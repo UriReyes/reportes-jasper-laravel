@@ -36,7 +36,7 @@
 			<subreport>
 				<reportElement x="10" y="49" width="521" height="70" uuid="d6681919-726f-45c9-8781-2a6db53f50ee"/>
 				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("chart_data")]]></dataSourceExpression>
-				<subreportExpression><![CDATA["C:\\Users\\uriel.santiago\\JaspersoftWorkspace\\Reports\\PLUGIN\\performance_PluginChart_charts.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA["C:\\Users\\urire\\JaspersoftWorkspace\\Reports\\PLUGIN\\performance_PluginChart_charts.jasper"]]></subreportExpression>
 			</subreport>
 			<textField>
 				<reportElement x="190" y="22" width="100" height="20" uuid="cbdec456-ec70-4b5c-a35e-e1a00ca84b83"/>

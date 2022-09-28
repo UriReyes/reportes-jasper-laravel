@@ -24,11 +24,17 @@
 		<fieldDescription><![CDATA[value1]]></fieldDescription>
 	</field>
 	<sortField name="date"/>
+	<variable name="last_value" class="java.lang.String" incrementType="Report" calculation="Highest">
+		<variableExpression><![CDATA["Last UpTime: " + IF(FLOOR((FLOAT_VALUE($F{value1})*3600)/86400) >= 1, TEXT(FLOOR((FLOAT_VALUE($F{value1})*3600)/86400),"#,###.##" ) + " days ","") + TEXT(FLOOR((FLOAT_VALUE($F{value1})*3600) % (3600*24) / 3600),"###" ) + " Hrs " + TEXT(FLOOR((FLOAT_VALUE($F{value1})*3600) % 3600 / 60),"###" ) + " Mins"]]></variableExpression>
+	</variable>
+	<variable name="Variable_1" class="java.lang.String" incrementType="Report" calculation="Highest">
+		<variableExpression><![CDATA[TEXT(FLOOR(FLOAT_VALUE($F{value1})),"#,###")]]></variableExpression>
+	</variable>
 	<title>
-		<band height="218" splitType="Stretch">
+		<band height="227" splitType="Stretch">
 			<lineChart>
 				<chart evaluationTime="Report">
-					<reportElement x="0" y="12" width="550" height="190" uuid="4b6e51e2-cc76-4bcc-8755-162f00caee48">
+					<reportElement x="0" y="12" width="540" height="190" uuid="abe007ff-4098-4ff6-a8f0-e218b4d089a0">
 						<property name="net.sf.jasperreports.customizer.0.selectionMode" value="itemSeries"/>
 						<property name="net.sf.jasperreports.customizer.0.shapeType" value="polygon"/>
 						<property name="net.sf.jasperreports.customizer.class.0" value="net.sf.jasperreports.customizers.shape.LineDotShapeCustomizer"/>
@@ -40,7 +46,7 @@
 				<categoryDataset>
 					<dataset resetType="Report"/>
 					<categorySeries>
-						<seriesExpression><![CDATA["Server Uptime (seconds)"]]></seriesExpression>
+						<seriesExpression><![CDATA["Server Uptime (Hours)"]]></seriesExpression>
 						<categoryExpression><![CDATA[$F{date}]]></categoryExpression>
 						<valueExpression><![CDATA[FLOAT_VALUE($F{value1})]]></valueExpression>
 					</categorySeries>
@@ -64,6 +70,13 @@
 					</valueAxisFormat>
 				</linePlot>
 			</lineChart>
+			<textField evaluationTime="Report">
+				<reportElement x="272" y="4" width="259" height="14" uuid="196cccf9-ad61-4c45-9593-7d64382f40df"/>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{last_value}]]></textFieldExpression>
+			</textField>
 		</band>
 	</title>
 </jasperReport>

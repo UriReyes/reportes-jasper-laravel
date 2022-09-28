@@ -95,7 +95,7 @@
 			<subreport>
 				<reportElement x="11" y="49" width="521" height="51" uuid="d6681919-726f-45c9-8781-2a6db53f50ee"/>
 				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("chart_data")]]></dataSourceExpression>
-				<subreportExpression><![CDATA["C:\\Users\\uriel.santiago\\JaspersoftWorkspace\\Reports\\URL\\performance_LocationResponseTimeChart_charts.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA["C:\\Users\\urire\\JaspersoftWorkspace\\Reports\\URL\\performance_LocationResponseTimeChart_charts.jasper"]]></subreportExpression>
 			</subreport>
 			<textField>
 				<reportElement x="30" y="9" width="260" height="19" uuid="8a5b2027-2746-4c41-9f31-0da9143f6e54"/>

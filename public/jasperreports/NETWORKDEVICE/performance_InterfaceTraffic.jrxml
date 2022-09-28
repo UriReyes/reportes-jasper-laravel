@@ -42,7 +42,7 @@
 			<subreport>
 				<reportElement x="20" y="31" width="521" height="39" uuid="632ff9d4-ed64-4718-9c87-461e90f69d61"/>
 				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("intraffic")]]></dataSourceExpression>
-				<subreportExpression><![CDATA["C:\\Users\\uriel.santiago\\JaspersoftWorkspace\\Reports\\NETWORKDEVICE\\performance_InterfaceInTrafficChart.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA["C:\\Users\\urire\\JaspersoftWorkspace\\Reports\\NETWORKDEVICE\\performance_InterfaceInTrafficChart.jasper"]]></subreportExpression>
 			</subreport>
 			<textField>
 				<reportElement x="20" y="6" width="352" height="22" backcolor="#EBEBEB" uuid="d6b94f5f-9f22-46e6-89e8-a0e578b69eda"/>
@@ -56,7 +56,7 @@
 			<subreport>
 				<reportElement x="20" y="10" width="521" height="39" uuid="d421892d-4ac8-49b7-b9d6-29953f924b82"/>
 				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("outtraffic")]]></dataSourceExpression>
-				<subreportExpression><![CDATA["C:\\Users\\uriel.santiago\\JaspersoftWorkspace\\Reports\\NETWORKDEVICE\\performance_InterfaceOutTrafficChart.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA["C:\\Users\\urire\\JaspersoftWorkspace\\Reports\\NETWORKDEVICE\\performance_InterfaceOutTrafficChart.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
 	</detail>
