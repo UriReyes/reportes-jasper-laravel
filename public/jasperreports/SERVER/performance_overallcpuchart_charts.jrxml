@@ -32,7 +32,7 @@
 		<variableExpression><![CDATA[$F{value}]]></variableExpression>
 	</variable>
 	<title>
-		<band height="154" splitType="Stretch">
+		<band height="150" splitType="Stretch">
 			<lineChart>
 				<chart evaluationTime="Report">
 					<reportElement x="20" y="0" width="512" height="150" uuid="fcb2bba9-2c20-4e34-95dd-f84c1263897f">
@@ -42,7 +42,9 @@
 					</reportElement>
 					<chartTitle/>
 					<chartSubtitle/>
-					<chartLegend/>
+					<chartLegend>
+						<font size="9"/>
+					</chartLegend>
 				</chart>
 				<categoryDataset>
 					<dataset resetType="Report"/>

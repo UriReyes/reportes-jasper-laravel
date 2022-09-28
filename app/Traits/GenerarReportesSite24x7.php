@@ -509,109 +509,123 @@ trait GenerarReportesSite24x7
 
     public function applyFormatToPerformanceDiskCharts($performance, $format)
     {
-        if (array_key_exists('data', $performance)) {
-            if (array_key_exists('AllDiskUsedChart', $performance['data'])) {
-                $newPerformances = [];
-                foreach ($performance['data']['AllDiskUsedChart'] as $disks) {
-                    foreach ($disks as $disk) {
-                        array_push($newPerformances, $this->getFormattedResponse($disk, $format));
+        if ($performance) {
+            if (array_key_exists('data', $performance)) {
+                if (array_key_exists('AllDiskUsedChart', $performance['data'])) {
+                    $newPerformances = [];
+                    foreach ($performance['data']['AllDiskUsedChart'] as $disks) {
+                        foreach ($disks as $disk) {
+                            array_push($newPerformances, $this->getFormattedResponse($disk, $format));
+                        }
                     }
+                    $performance['data']['AllDiskUsedChart'] = $newPerformances;
+                    return $performance;
                 }
-                $performance['data']['AllDiskUsedChart'] = $newPerformances;
-                return $performance;
             }
+            return [];
         }
-        return [];
     }
 
     public function applyFormatToPerformanceServerUpTime($performance, $format)
     {
-        if (array_key_exists('data', $performance)) {
-            $newPerformances = [];
-            foreach ($performance['data'] as $pfms) {
-                foreach ($pfms as $pfm) {
-                    if (array_key_exists('chart_data', $pfm)) {
-                        array_push($newPerformances, $this->getFormattedResponse($pfm, $format));
-                    }
-                }
-            }
-            $performance['data']['chart_data'] = $newPerformances;
-            return $performance;
-        }
-        return [];
-    }
-
-    public function applyFormatToPerformancePlugin($performance, $format)
-    {
-        if (array_key_exists('data', $performance)) {
-            if (array_key_exists('chart_data', $performance['data'])) {
+        if ($performance) {
+            if (array_key_exists('data', $performance)) {
                 $newPerformances = [];
-                foreach ($performance['data']['chart_data'] as $plugins) {
-                    //dd($plugins);
-                    foreach ($plugins as $plugin) {
-                        foreach ($plugin as $key => $plugin_item) {
-                            $newPerformances[] = $this->getFormattedResponsePlugin($plugin_item, $key, $format);
+                foreach ($performance['data'] as $pfms) {
+                    foreach ($pfms as $pfm) {
+                        if (array_key_exists('chart_data', $pfm)) {
+                            array_push($newPerformances, $this->getFormattedResponse($pfm, $format));
                         }
                     }
                 }
                 $performance['data']['chart_data'] = $newPerformances;
                 return $performance;
             }
+            return [];
         }
-        return [];
+    }
+
+    public function applyFormatToPerformancePlugin($performance, $format)
+    {
+        if ($performance) {
+            if (array_key_exists('data', $performance)) {
+                if (array_key_exists('chart_data', $performance['data'])) {
+                    $newPerformances = [];
+                    foreach ($performance['data']['chart_data'] as $plugins) {
+                        //dd($plugins);
+                        foreach ($plugins as $plugin) {
+                            foreach ($plugin as $key => $plugin_item) {
+                                $newPerformances[] = $this->getFormattedResponsePlugin($plugin_item, $key, $format);
+                            }
+                        }
+                    }
+                    $performance['data']['chart_data'] = $newPerformances;
+                    return $performance;
+                }
+            }
+            return [];
+        }
     }
 
     public function applyFormatToPerformanceInterface($performance, $format)
     {
-        if (array_key_exists('data', $performance)) {
-            if (array_key_exists('chart_data', $performance['data'])) {
-                $newPerformances = [];
-                foreach ($performance['data']['chart_data'] as $pfms) {
-                    if (array_key_exists('InterfaceTrafficInChart', $pfms)) {
-                        $newPerformances['InterfaceTrafficInChart'] = $this->getFormattedResponseTraffic($pfms['InterfaceTrafficInChart'], $format);
+        if ($performance) {
+
+
+            if (array_key_exists('data', $performance)) {
+                if (array_key_exists('chart_data', $performance['data'])) {
+                    $newPerformances = [];
+                    foreach ($performance['data']['chart_data'] as $pfms) {
+                        if (array_key_exists('InterfaceTrafficInChart', $pfms)) {
+                            $newPerformances['InterfaceTrafficInChart'] = $this->getFormattedResponseTraffic($pfms['InterfaceTrafficInChart'], $format);
+                        }
+                        if (array_key_exists('InterfaceTrafficOutChart', $pfms)) {
+                            $newPerformances['InterfaceTrafficOutChart'] = $this->getFormattedResponseTraffic($pfms['InterfaceTrafficOutChart'], $format);
+                        }
                     }
-                    if (array_key_exists('InterfaceTrafficOutChart', $pfms)) {
-                        $newPerformances['InterfaceTrafficOutChart'] = $this->getFormattedResponseTraffic($pfms['InterfaceTrafficOutChart'], $format);
-                    }
+                    $performance['data']['chart_data'] = $newPerformances;
+                    return $performance;
                 }
-                $performance['data']['chart_data'] = $newPerformances;
-                return $performance;
             }
         }
     }
 
     public function applyFormatToPerformanceRequestChart($performance, $format)
     {
-        if (array_key_exists('data', $performance)) {
-            $newPerformances = [];
-            foreach ($performance['data'] as $pfms) {
-                foreach ($pfms as $pfm) {
-                    if (array_key_exists('chart_data', $pfm)) {
-                        array_push($newPerformances, $this->getFormattedResponseWithTwoValues($pfm, $format));
+        if ($performance) {
+            if (array_key_exists('data', $performance)) {
+                $newPerformances = [];
+                foreach ($performance['data'] as $pfms) {
+                    foreach ($pfms as $pfm) {
+                        if (array_key_exists('chart_data', $pfm)) {
+                            array_push($newPerformances, $this->getFormattedResponseWithTwoValues($pfm, $format));
+                        }
                     }
                 }
+                $performance['data']['chart_data'] = $newPerformances;
+                return $performance;
             }
-            $performance['data']['chart_data'] = $newPerformances;
-            return $performance;
+            return [];
         }
-        return [];
     }
 
     public function applyFormatToPerformanceIndividualApp($performance, $format)
     {
-        if (array_key_exists('data', $performance)) {
-            if (array_key_exists('IndividualAppPoolData', $performance['data'])) {
-                $newPerformances = [];
-                foreach ($performance['data']['IndividualAppPoolData'] as $apps) {
-                    foreach ($apps as $app) {
-                        array_push($newPerformances, $this->getFormattedResponse($app, $format));
+        if ($performance) {
+            if (array_key_exists('data', $performance)) {
+                if (array_key_exists('IndividualAppPoolData', $performance['data'])) {
+                    $newPerformances = [];
+                    foreach ($performance['data']['IndividualAppPoolData'] as $apps) {
+                        foreach ($apps as $app) {
+                            array_push($newPerformances, $this->getFormattedResponse($app, $format));
+                        }
                     }
+                    $performance['data']['IndividualAppPoolData'] = $newPerformances;
+                    return $performance;
                 }
-                $performance['data']['IndividualAppPoolData'] = $newPerformances;
-                return $performance;
             }
+            return [];
         }
-        return [];
     }
 
     function getPercentage($cantidad, $total)
