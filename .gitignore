@@ -6,6 +6,10 @@
 /storage/app/public/reports
 /storage/app/public/jasper
 /storage/app/public/state-msp
+/storage/app/email
+/storage/app/cron
+/storage/app/token
+/storage/app/public/error-api
 /storage/*.key
 /vendor
 .env

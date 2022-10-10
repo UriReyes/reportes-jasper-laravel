@@ -41,8 +41,10 @@ trait GenerarReportesSite24x7
             $output_folder,
             $options
         )->output();
-
-        shell_exec('cd /d "C:\Program Files (x86)\JasperStarter\bin" && ' . $output);
+        $JASPER_STARTER_PATH = env('JASPER_STARTER_PATH');
+        dispatch(function () use ($output, $JASPER_STARTER_PATH) {
+            shell_exec('cd /d "' . $JASPER_STARTER_PATH . '" && ' . $output);
+        });
         // dd($output);
     }
 
@@ -632,7 +634,7 @@ trait GenerarReportesSite24x7
     {
         $porcentaje = ($cantidad * 100) / $total; // Regla de tres
         // $porcentaje = round($porcentaje, 0);  // Quitar los decimalesreturn $porcentaje;
-        return round($porcentaje);
+        return round($porcentaje, 2);
     }
 
     function getPerformanceTraffic($intraffic, $outtraffic)

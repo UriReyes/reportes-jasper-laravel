@@ -33,7 +33,7 @@ class TaskGeneraInformes extends Command
         // $texto = "[" . date("Y-m-d H:i:s") . "]: Inicio de tarea de generación de informes.";
         // Storage::append("tareas_programadas.txt", $texto);
         $reportes = new ExportAllReports();
-        $reportes->startProcess();
+        $reportes->startProcess('cron');
         // $texto = "[" . date("Y-m-d H:i:s") . "]: Fin de tarea de generación de informes.";
         // Storage::append("tareas_programadas.txt", $texto);
         //return 0;

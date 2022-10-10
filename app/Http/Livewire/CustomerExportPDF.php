@@ -10,6 +10,7 @@ use App\Traits\ReestructurarDatosAPISite24x7;
 use Carbon\Carbon;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
@@ -52,6 +53,7 @@ class CustomerExportPDF extends Component implements ShouldBroadcast
 
     public function render()
     {
+
         return view('livewire.customer-export-p-d-f');
     }
 
@@ -73,8 +75,9 @@ class CustomerExportPDF extends Component implements ShouldBroadcast
         //     $refresh_token = $this->getRefreshToken();
         // }
         // # End validate
-
-
+        Storage::makeDirectory('token');
+        $refresh_token = $this->getRefreshToken();
+        Storage::put('token/refreshTokenByMSP.txt', $refresh_token);
         if (!$this->period_report || !in_array($this->period_report, [7, 13, 25, 50])) {
             $this->alert('info', '¡Debes seleccionar un periodo válido!', [
                 'position' => 'center',
@@ -103,7 +106,9 @@ class CustomerExportPDF extends Component implements ShouldBroadcast
                 ]);
 
                 $site24x7Url = env('SITE_24X7_API');
-                $refresh_token = $this->getRefreshToken();
+                $r_token = Storage::get('token/refreshTokenByMSP.txt');
+                // $refresh_token = $this->getRefreshToken();
+                $refresh_token = $r_token;
                 if ($refresh_token == 500) {
                     $this->alert('info', 'Upps!', [
                         'position' => 'center',
@@ -150,7 +155,9 @@ class CustomerExportPDF extends Component implements ShouldBroadcast
                             $totalChunks = count($chunk_monitors);
                             $count_chunk = 1;
                             foreach ($chunk_monitors as $monitors) {
-                                $refresh_token = $this->getRefreshToken();
+                                $r_token = Storage::get('token/refreshTokenByMSP.txt');
+                                // $refresh_token = $this->getRefreshToken();
+                                $refresh_token = $r_token;
                                 $this->iterateMonitors($monitors, $completed_monitors, $totalMonitorsMask, $start_time, $site24x7Url, $refresh_token, $totalChunks, $count_chunk);
                                 $count_chunk++;
                                 sleep(60);
@@ -176,7 +183,9 @@ class CustomerExportPDF extends Component implements ShouldBroadcast
             $finish_time = microtime(true);
             $time = $finish_time - $start_time;
             if ($time > 3500) {
-                $refresh_token = $this->getRefreshToken();
+                $r_token = Storage::get('token/refreshTokenByMSP.txt');
+                // $refresh_token = $this->getRefreshToken();
+                $refresh_token = $r_token;
                 $start_time = microtime(true);
             }
             //if ($monitor['monitor_id'] == '417536000002177252') {

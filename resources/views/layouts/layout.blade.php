@@ -44,6 +44,8 @@
     <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <link rel="stylesheet" href="{{ asset('vendor/file-manager/css/file-manager.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="{{ asset('css/loader.css') }}">
     @livewireStyles
     @yield('styles')
 </head>
@@ -69,7 +71,6 @@
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <x-livewire-alert::scripts />
 
-    @yield('scripts')
     <!-- plugin for charts  -->
     <script src="{{ asset('assets/js/plugins/chartjs.min.js') }}" async></script>
     <!-- plugin for scrollbar  -->
@@ -78,6 +79,11 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <!-- main script file  -->
     <script src="{{ asset('assets/js/soft-ui-dashboard-tailwind.min.js') }}" async></script>
+    <script src="https://code.jquery.com/jquery-3.6.1.slim.min.js"
+        integrity="sha256-w8CvhFs7iHNVUtnSP0YKEg00p9Ih13rlL9zGqvLdePA=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+    @yield('scripts')
 </body>
 
 </html>
