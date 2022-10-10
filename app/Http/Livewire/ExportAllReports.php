@@ -6,12 +6,17 @@ use App\Events\DownloadAllInformationAPI;
 use App\Events\DownloadInformationAPI;
 use App\Events\ProcessReport;
 use App\Events\ProcessReports;
+use App\Mail\GeneracionDeReporteFinalizada;
+use App\Mail\GeneracionDeReportesFinalizada;
+use App\Mail\GeneracionDeReportesIniciada;
 use App\Traits\ApiSite24x7;
 use App\Traits\GenerarReportesSite24x7;
 use App\Traits\ReestructurarDatosAPISite24x7;
 use Livewire\Component;
 use Jenssegers\Date\Date;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 
@@ -34,7 +39,7 @@ class ExportAllReports extends Component
     public $storedInformation;
     public $msp_init = 'undefinedMSP';
 
-    protected $listeners = ['reloadProcessExportAll' => 'startProcess'];
+    // protected $listeners = ['reloadProcessExportAll' => 'startProcess'];
     protected $queryString = [
         'last_month' => ['except' => ''],
         'period_report' => ['except' => ''],
@@ -96,7 +101,9 @@ class ExportAllReports extends Component
     public function render()
     {
         $site24x7Url = env('SITE_24X7_API');
+        Storage::makeDirectory('token');
         $refresh_token = $this->getRefreshToken();
+        Storage::put('token/refreshToken.txt', $refresh_token);
         if ($refresh_token == 'access_denied') {
             $customers_its = [];
         } else {
@@ -108,8 +115,18 @@ class ExportAllReports extends Component
         return view('livewire.export-all-reports', compact('customers_its'));
     }
 
-    public function startProcess()
+    public function startProcess($tipo = null)
     {
+        if (Storage::get('email/email.txt')) {
+            Mail::to(Storage::get('email/email.txt'))->send(new GeneracionDeReportesIniciada());
+        }
+        if ($tipo == 'cron') {
+            Storage::makeDirectory('token');
+            $refresh_token_generate = $this->getRefreshToken();
+            Storage::put('token/refreshToken.txt', $refresh_token_generate);
+            $this->last_month = ucfirst(Date::now()->firstOfMonth()->subMonth()->format('F'));
+        }
+
         if (!$this->period_report || !in_array($this->period_report, [7, 13, 25, 50])) {
             $this->alert('info', '¡Debes seleccionar un periodo válido!', [
                 'position' => 'center',
@@ -130,8 +147,9 @@ class ExportAllReports extends Component
                 // $this->last_month = ucfirst(Date::now()->firstOfMonth()->subMonth()->format('F'));
 
                 $site24x7Url = env('SITE_24X7_API');
-                $refresh_token = $this->getRefreshToken();
-
+                $r_token = Storage::get('token/refreshToken.txt');
+                // $refresh_token = $this->getRefreshToken();
+                $refresh_token = $r_token;
                 $state = json_decode(Storage::get('public/state-msp-all/state.json'), true);
                 $customers_its = $this->getCustomers($site24x7Url, $refresh_token);
                 if ($this->msp_init != 'undefinedMSP') {
@@ -175,7 +193,9 @@ class ExportAllReports extends Component
                         $zaaid = $customer_it['zaaid'];
                         //Create File
 
-                        $refresh_token = $this->getRefreshToken();
+                        $r_token = Storage::get('token/refreshToken.txt');
+                        // $refresh_token = $this->getRefreshToken();
+                        $refresh_token = $r_token;
                         $monitors = $this->getMonitors($site24x7Url, $zaaid, $refresh_token);
                         array_push($this->storedInformation, [
                             'id' => $customer_id,
@@ -228,7 +248,9 @@ class ExportAllReports extends Component
                                 $totalChunks = count($chunk_monitors);
                                 $count_chunk = 1;
                                 foreach ($chunk_monitors as $monitors) {
-                                    $refresh_token = $this->getRefreshToken();
+                                    $r_token = Storage::get('token/refreshToken.txt');
+                                    // $refresh_token = $this->getRefreshToken();
+                                    $refresh_token = $r_token;
                                     $this->iterateMonitors($monitors, $site24x7Url, $refresh_token, $zaaid, $customer, $start_time, $completed_monitors, $totalChunks, $count_chunk);
                                     $count_chunk++;
                                     sleep(60);
@@ -251,10 +273,16 @@ class ExportAllReports extends Component
                         }
                         Storage::put('public/state-msp-all/state.json', json_encode([], JSON_PRETTY_PRINT));
                         // });
+                        if (Storage::get('email/email.txt')) {
+                            Mail::to(Storage::get('email/email.txt'))->send(new GeneracionDeReporteFinalizada($customer));
+                        }
                     }
                     // $this->generateMSPReports();
                     $texto = "[" . date("Y-m-d H:i:s") . "]: Fin de tarea de generación de informes.";
                     Storage::append("tareas_programadas.txt", $texto);
+                    if (Storage::get('email/email.txt')) {
+                        Mail::to(Storage::get('email/email.txt'))->send(new GeneracionDeReportesFinalizada());
+                    }
                 }
             }
         }
@@ -272,6 +300,7 @@ class ExportAllReports extends Component
             $time = $finish_time - $start_time;
             if ($time > 3500) {
                 $refresh_token = $this->getRefreshToken();
+                Storage::put('token/refreshToken.txt', $refresh_token);
                 $start_time = microtime(true);
             }
             // $monitorsCollect->push($processedMonitor);

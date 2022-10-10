@@ -19,5 +19,7 @@ Route::get('logs', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'i
 Route::get('/export-all',  [JasperController::class, 'exportAll'])->name('export-all');
 Route::get('/downloaded-information',  [JasperController::class, 'downloadedInformationMSP'])->name('downloaded-information');
 Route::get('/folder',  [JasperController::class, 'folder'])->name('folder');
+Route::get('/cron',  [JasperController::class, 'cron'])->name('cron');
+Route::get('/notificaciones',  [JasperController::class, 'notificaciones'])->name('notificaciones');
 Route::get('/administracion',  [JasperController::class, 'administracion'])->name('administracion');
 // Route::post('tests', [JasperController::class, 'tests'])->name('tests');

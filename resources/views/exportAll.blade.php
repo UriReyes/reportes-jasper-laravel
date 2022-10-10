@@ -3,7 +3,25 @@
     Exportar Todo
 @endsection --}}
 @section('content')
-    @livewire('export-all-reports')
+    <style>
+        .mspCompleted {
+            background: rgb(45 90 202);
+            color: white;
+        }
+
+        .mspCompleted::before {
+            font-family: "Font Awesome 5 Free";
+            content: "\f00c";
+            display: inline-block;
+            padding-right: 3px;
+            vertical-align: middle;
+            font-weight: 900;
+        }
+    </style>
+    <div style="position: relative;">
+
+        @livewire('export-all-reports')
+    </div>
 @endsection
 
 @section('scripts')
@@ -48,6 +66,23 @@
         privateChannelDownloadAPI.bind(PUSHER_DOWNLOAD_INFORMATION_INDIVIDUAL_PROGRESS_EVENT, function(data) {
             localStorage.setItem('error-api', false);
             Livewire.emit('current-percentage-donwload', data);
+            if (data.progress == 100) {
+                document.getElementById('loaderIndicator').style.display = "none";
+                document.getElementById('loaderText').style.display = "none";
+                document.getElementById('startAllProcessPlay').style.display = "block";
+                document.getElementById('startAllProcessCharge').style.display = "none";
+            } else {
+                document.getElementById('startAllProcessPlay').style.display = "none";
+                document.getElementById('startAllProcessCharge').style.display = "block";
+                document.getElementById('loaderIndicator').style.display = "flex";
+                document.getElementById('loaderText').style.display = "block";
+                document.getElementById('mspName').innerHTML = data.customer;
+                document.getElementById('percentageMsp').innerHTML = data.progress;
+                document.getElementById('totalMonitorMsp').innerHTML = data.total_monitors;
+                document.getElementById('completedMonitorMsp').innerHTML = data.completed_reports;
+                let completedMSP = $(`#${data.zaaid}_customer`).prevAll('li').addClass("mspCompleted");
+
+            }
         });
         var privateChannelDownloadAPIAll = pusher.subscribe(PUSHER_DOWNLOAD_INFORMATION_MASIVE_PROGRESS_CHANNEL);
         privateChannelDownloadAPIAll.bind(PUSHER_DOWNLOAD_INFORMATION_MASIVE_PROGRESS_EVENT, function(data) {
