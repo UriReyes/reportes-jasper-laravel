@@ -124,7 +124,44 @@ class ExportAllReports extends Component
             Storage::makeDirectory('token');
             $refresh_token_generate = $this->getRefreshToken();
             Storage::put('token/refreshToken.txt', $refresh_token_generate);
-            $this->last_month = ucfirst(Date::now()->firstOfMonth()->subMonth()->format('F'));
+            switch (ucfirst(Date::now()->firstOfMonth()->subMonth()->format('F'))) {
+                case "January":
+                    $this->last_month = "Enero";
+                    break;
+                case "February":
+                    $this->last_month = "Febrero";
+                    break;
+                case "March":
+                    $this->last_month = "Marzo";
+                    break;
+                case "April":
+                    $this->last_month = "Abril";
+                    break;
+                case "May":
+                    $this->last_month = "Mayo";
+                    break;
+                case "June":
+                    $this->last_month = "Junio";
+                    break;
+                case "July":
+                    $this->last_month = "Julio";
+                    break;
+                case "August":
+                    $this->last_month = "Agosto";
+                    break;
+                case "September":
+                    $this->last_month = "Septiembre";
+                    break;
+                case "October":
+                    $this->last_month = "Octubre";
+                    break;
+                case "November":
+                    $this->last_month = "Noviembre";
+                    break;
+                case "December":
+                    $this->last_month = "Diciembre";
+                    break;
+            }
         }
 
         if (!$this->period_report || !in_array($this->period_report, [7, 13, 25, 50])) {
