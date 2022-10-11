@@ -27,6 +27,7 @@ trait ApiSite24x7
             Log::debug('Error: ' . $th->getMessage());
             // Storage::put('public/error-api/state.json', json_encode(["hasError" => true]));
             Storage::put('token/refreshToken.txt', $this->getRefreshToken());
+            Storage::put('token/refreshTokenByMSP.txt', $this->getRefreshToken());
             // sleep(300);
             // event(new ReloadProcessOnErrorAPI());
             // shell_exec('taskkill /im "httpd.exe" /f /t');
@@ -49,6 +50,7 @@ trait ApiSite24x7
             Log::debug('Error: ' . $th->getMessage());
             // Storage::put('public/error-api/state.json', json_encode(["hasError" => true]));
             Storage::put('token/refreshToken.txt', $this->getRefreshToken());
+            Storage::put('token/refreshTokenByMSP.txt', $this->getRefreshToken());
             // sleep(180);
             // event(new ReloadProcessOnErrorAPI());
             // shell_exec('taskkill /im "httpd.exe" /f /t');
@@ -77,6 +79,7 @@ trait ApiSite24x7
                 Log::debug('Error: ' . $th->getMessage());
                 // Storage::put('public/error-api/state.json', json_encode(["hasError" => true]));
                 Storage::put('token/refreshToken.txt', $this->getRefreshToken());
+                Storage::put('token/refreshTokenByMSP.txt', $this->getRefreshToken());
                 // sleep(180);
                 // event(new ReloadProcessOnErrorAPI());
                 // shell_exec('taskkill /im "httpd.exe" /f /t');
@@ -109,6 +112,7 @@ trait ApiSite24x7
                 Log::debug('Error: ' . $th->getMessage());
                 // Storage::put('public/error-api/state.json', json_encode(["hasError" => true]));
                 Storage::put('token/refreshToken.txt', $this->getRefreshToken());
+                Storage::put('token/refreshTokenByMSP.txt', $this->getRefreshToken());
                 // sleep(180);
                 // event(new ReloadProcessOnErrorAPI());
                 // shell_exec('taskkill /im "httpd.exe" /f /t');
@@ -141,6 +145,7 @@ trait ApiSite24x7
                 Log::debug('Error: ' . $th->getMessage());
                 // Storage::put('public/error-api/state.json', json_encode(["hasError" => true]));
                 Storage::put('token/refreshToken.txt', $this->getRefreshToken());
+                Storage::put('token/refreshTokenByMSP.txt', $this->getRefreshToken());
                 // sleep(180);
                 // event(new ReloadProcessOnErrorAPI());
                 // shell_exec('taskkill /im "httpd.exe" /f /t');
@@ -173,6 +178,7 @@ trait ApiSite24x7
                 Log::debug('Error: ' . $th->getMessage());
                 // Storage::put('public/error-api/state.json', json_encode(["hasError" => true]));
                 Storage::put('token/refreshToken.txt', $this->getRefreshToken());
+                Storage::put('token/refreshTokenByMSP.txt', $this->getRefreshToken());
                 // sleep(180);
                 // event(new ReloadProcessOnErrorAPI());
                 // shell_exec('taskkill /im "httpd.exe" /f /t');
@@ -204,6 +210,7 @@ trait ApiSite24x7
                 Log::debug('Error: ' . $th->getMessage());
                 // Storage::put('public/error-api/state.json', json_encode(["hasError" => true]));
                 Storage::put('token/refreshToken.txt', $this->getRefreshToken());
+                Storage::put('token/refreshTokenByMSP.txt', $this->getRefreshToken());
                 // sleep(180);
                 // event(new ReloadProcessOnErrorAPI());
                 // shell_exec('taskkill /im "httpd.exe" /f /t');
@@ -234,6 +241,7 @@ trait ApiSite24x7
                 Log::debug('Error: ' . $th->getMessage());
                 // Storage::put('public/error-api/state.json', json_encode(["hasError" => true]));
                 Storage::put('token/refreshToken.txt', $this->getRefreshToken());
+                Storage::put('token/refreshTokenByMSP.txt', $this->getRefreshToken());
                 // sleep(180);
                 // event(new ReloadProcessOnErrorAPI());
                 // shell_exec('taskkill /im "httpd.exe" /f /t');
@@ -265,6 +273,7 @@ trait ApiSite24x7
                 Log::debug('Error: ' . $th->getMessage());
                 // Storage::put('public/error-api/state.json', json_encode(["hasError" => true]));
                 Storage::put('token/refreshToken.txt', $this->getRefreshToken());
+                Storage::put('token/refreshTokenByMSP.txt', $this->getRefreshToken());
                 // sleep(180);
                 // event(new ReloadProcessOnErrorAPI());
                 // shell_exec('taskkill /im "httpd.exe" /f /t');
@@ -296,6 +305,7 @@ trait ApiSite24x7
                 Log::debug('Error: ' . $th->getMessage());
                 // Storage::put('public/error-api/state.json', json_encode(["hasError" => true]));
                 Storage::put('token/refreshToken.txt', $this->getRefreshToken());
+                Storage::put('token/refreshTokenByMSP.txt', $this->getRefreshToken());
                 // sleep(180);
                 // event(new ReloadProcessOnErrorAPI());
                 // shell_exec('taskkill /im "httpd.exe" /f /t');
