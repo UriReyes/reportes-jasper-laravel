@@ -21,7 +21,14 @@ trait ApiSite24x7
                 'grant_type' => "refresh_token"
             ]);
             $response = $response->object();
-            return $response->access_token;
+            if ($response == null) {
+                sleep(300);
+                Storage::put('token/refreshToken.txt', $this->getRefreshToken());
+                $token = Storage::get('token/refreshToken.txt');
+                return $token;
+            } else {
+                return $response->access_token;
+            }
         } catch (\Throwable | \GuzzleHttp\Exception\GuzzleException $th) {
             // return $response->error;
             Log::debug('Error: ' . $th->getMessage());
