@@ -102,7 +102,7 @@ class ExportAllReports extends Component
     {
         $site24x7Url = env('SITE_24X7_API');
         Storage::makeDirectory('token');
-        $refresh_token = $this->getRefreshToken();
+        $refresh_token = $this->getRefreshToken()->access_token;
         Storage::put('token/refreshToken.txt', $refresh_token);
         if ($refresh_token == 'access_denied') {
             $customers_its = [];
@@ -120,9 +120,10 @@ class ExportAllReports extends Component
         if (Storage::get('email/email.txt')) {
             Mail::to(Storage::get('email/email.txt'))->send(new GeneracionDeReportesIniciada());
         }
+        Storage::put('inicio_procesos/InicioMasiveExport.txt', now()->format('d-m-Y H:i:s'));
         if ($tipo == 'cron') {
             Storage::makeDirectory('token');
-            $refresh_token_generate = $this->getRefreshToken();
+            $refresh_token_generate = $this->getRefreshToken()->access_token;
             Storage::put('token/refreshToken.txt', $refresh_token_generate);
             switch (ucfirst(Date::now()->firstOfMonth()->subMonth()->format('F'))) {
                 case "January":
@@ -222,6 +223,12 @@ class ExportAllReports extends Component
                     $texto = "[" . date("Y-m-d H:i:s") . "]: Inicio de tarea de generación de informes.";
                     Storage::append("tareas_programadas.txt", $texto);
                     foreach ($customers_its as $customer_it) {
+                        $inicio_proceso = Storage::get('inicio_procesos/InicioMasiveExport.txt');
+                        if (Carbon::parse($inicio_proceso)->diffInMinutes(now()) > 55) {
+                            $refresh_token = $this->getRefreshToken()->access_token;
+                            Storage::put('token/refreshToken.txt', $refresh_token);
+                            Storage::put('inicio_procesos/InicioMasiveExport.txt', now()->format('d-m-Y H:i:s'));
+                        }
                         // dispatch(function () use ($customer_it, $site24x7Url, $state, $start_time, $customers_its) {
                         $completed_monitors = [];
                         $this->storedInformation = [];
@@ -333,12 +340,21 @@ class ExportAllReports extends Component
             $processedMonitor = $this->processSite24x7Monitors($monitor, $site24x7Url, $refresh_token, $zaaid, $customer, $this->last_month);
             $this->completed_reports++;
             $this->percentage = $this->getPercentage($this->completed_reports, $this->totalMonitors);
-            $finish_time = microtime(true);
-            $time = $finish_time - $start_time;
-            if ($time > 3500) {
-                $refresh_token = $this->getRefreshToken();
+            // $finish_time = microtime(true);
+            // $time = $finish_time - $start_time;
+            // if ($time > 3500) {
+            //     do {
+            //         $refresh_token = $this->getRefreshToken();
+            //     } while (!$refresh_token);
+            //     $refresh_token = $refresh_token->access_token;
+            //     Storage::put('token/refreshToken.txt', $refresh_token);
+            //     $start_time = microtime(true);
+            // }
+            $inicio_proceso = Storage::get('inicio_procesos/InicioMasiveExport.txt');
+            if (Carbon::parse($inicio_proceso)->diffInMinutes(now()) > 55) {
+                $refresh_token = $this->getRefreshToken()->access_token;
                 Storage::put('token/refreshToken.txt', $refresh_token);
-                $start_time = microtime(true);
+                Storage::put('inicio_procesos/InicioMasiveExport.txt', now()->format('d-m-Y H:i:s'));
             }
             // $monitorsCollect->push($processedMonitor);
             array_push($this->storedInformation[0]['monitors'], $processedMonitor);

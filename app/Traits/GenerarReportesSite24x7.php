@@ -483,29 +483,31 @@ trait GenerarReportesSite24x7
 
     public function applyFormatToPerformanceDisk($performance, $format)
     {
-        if (array_key_exists('data', $performance)) {
-            $newPerformances = [];
-            foreach ($performance['data']['chart_data'] as $pfms) {
-                foreach ($pfms as $pfm) {
-                    if (array_key_exists('OverallDiskUtilization', $pfm)) {
-                        $newPerformances['OverallDiskUtilization'] = $this->getOverallDiskUtilization($pfm['OverallDiskUtilization'], $format);
+        if ($performance) {
+            if (array_key_exists('data', $performance)) {
+                $newPerformances = [];
+                foreach ($performance['data']['chart_data'] as $pfms) {
+                    foreach ($pfms as $pfm) {
+                        if (array_key_exists('OverallDiskUtilization', $pfm)) {
+                            $newPerformances['OverallDiskUtilization'] = $this->getOverallDiskUtilization($pfm['OverallDiskUtilization'], $format);
+                        }
+                        if (array_key_exists('OverallDiskUsedChart', $pfm)) {
+                            $newPerformances['OverallDiskUsedChart'] = $this->getOverallDiskUsedChart($pfm['OverallDiskUsedChart'], $format);
+                        }
+                        if (array_key_exists('IndividualDiskUtilization', $pfm)) {
+                            $newPerformances['IndividualDiskUtilization'] = $this->getIndividualDiskUtilization($pfm['IndividualDiskUtilization']);
+                        }
+                        if (array_key_exists('DiskIO', $pfm)) {
+                            $newPerformances['DiskIO'] = $this->getDiskIO($pfm['DiskIO'], $format);
+                        }
                     }
-                    if (array_key_exists('OverallDiskUsedChart', $pfm)) {
-                        $newPerformances['OverallDiskUsedChart'] = $this->getOverallDiskUsedChart($pfm['OverallDiskUsedChart'], $format);
-                    }
-                    if (array_key_exists('IndividualDiskUtilization', $pfm)) {
-                        $newPerformances['IndividualDiskUtilization'] = $this->getIndividualDiskUtilization($pfm['IndividualDiskUtilization']);
-                    }
-                    if (array_key_exists('DiskIO', $pfm)) {
-                        $newPerformances['DiskIO'] = $this->getDiskIO($pfm['DiskIO'], $format);
+                    if (array_key_exists('IndividualDiskUtilizationTimeChart', $pfms)) {
+                        $newPerformances['IndividualDiskUtilizationTimeChart'] = $this->getIndividualDiskUtilizationTimeChart($pfms['IndividualDiskUtilizationTimeChart'], $format);
                     }
                 }
-                if (array_key_exists('IndividualDiskUtilizationTimeChart', $pfms)) {
-                    $newPerformances['IndividualDiskUtilizationTimeChart'] = $this->getIndividualDiskUtilizationTimeChart($pfms['IndividualDiskUtilizationTimeChart'], $format);
-                }
+                $performance['data']['chart_data'] = $newPerformances;
+                return $performance;
             }
-            $performance['data']['chart_data'] = $newPerformances;
-            return $performance;
         }
     }
 
