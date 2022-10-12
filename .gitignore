@@ -9,6 +9,7 @@
 /storage/app/email
 /storage/app/cron
 /storage/app/token
+/storage/app/inicio_procesos
 /storage/app/public/error-api
 /storage/*.key
 /vendor

@@ -60,23 +60,10 @@ class CustomerExportPDF extends Component implements ShouldBroadcast
     public function startProcess()
     {
 
-        // $fileStateError = json_decode(Storage::get('public/error-api/state.json'));
-        // if (is_null($fileStateError)) {
-        //     Storage::put('public/error-api/state.json', json_encode(["hasError" => false]));
-        //     $fileStateError = json_decode(Storage::get('public/error-api/state.json'));
-        // }
-        // #Validate if process has error
-        // if ($fileStateError->hasError) {
-        //     // shell_exec('start httpd.exe');
-        //     Storage::put('public/error-api/state.json', json_encode(["hasError" => false]));
-        //     $fileState = json_decode(Storage::get('public\state-msp\state.json'));
-        //     $this->zaaid = $fileState->zaaid;
-        //     sleep(300);
-        //     $refresh_token = $this->getRefreshToken();
-        // }
-        // # End validate
         Storage::makeDirectory('token');
-        $refresh_token = $this->getRefreshToken();
+        Storage::makeDirectory('inicio_procesos');
+        Storage::put('inicio_procesos/InicioByMPS.txt', now()->format('d-m-Y H:i:s'));
+        $refresh_token = $this->getRefreshToken()->access_token;
         Storage::put('token/refreshTokenByMSP.txt', $refresh_token);
         if (!$this->period_report || !in_array($this->period_report, [7, 13, 25, 50])) {
             $this->alert('info', '¡Debes seleccionar un periodo válido!', [
@@ -180,13 +167,19 @@ class CustomerExportPDF extends Component implements ShouldBroadcast
     public function iterateMonitors($monitors, $completed_monitors, $totalMonitorsMask, $start_time, $site24x7Url, $refresh_token, $totalChunks = null, $countChunk = null)
     {
         foreach ($monitors as $monitor) {
-            $finish_time = microtime(true);
-            $time = $finish_time - $start_time;
-            if ($time > 3500) {
-                $r_token = Storage::get('token/refreshTokenByMSP.txt');
-                // $refresh_token = $this->getRefreshToken();
-                $refresh_token = $r_token;
-                $start_time = microtime(true);
+            // $finish_time = microtime(true);
+            // $time = $finish_time - $start_time;
+            // if ($time > 3500) {
+            //     $r_token = Storage::get('token/refreshTokenByMSP.txt');
+            //     // $refresh_token = $this->getRefreshToken();
+            //     $refresh_token = $r_token;
+            //     $start_time = microtime(true);
+            // }
+            $inicio_proceso = Storage::get('inicio_procesos/InicioByMPS.txt');
+            if (Carbon::parse($inicio_proceso)->diffInMinutes(now()) > 55) {
+                $refresh_token = $this->getRefreshToken()->access_token;
+                Storage::put('token/refreshTokenByMSP.txt', $refresh_token);
+                Storage::put('inicio_procesos/InicioByMPS.txt', now()->format('d-m-Y H:i:s'));
             }
             //if ($monitor['monitor_id'] == '417536000002177252') {
             $processedMonitor = $this->processSite24x7Monitors(

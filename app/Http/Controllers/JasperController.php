@@ -16,8 +16,7 @@ class JasperController extends Controller
     public function index()
     {
         $site24x7Url = env('SITE_24X7_API');
-        $refresh_token = $this->getRefreshToken();
-
+        $refresh_token = $this->getRefreshToken()->access_token;
         if ($refresh_token == 'access_denied') {
             $customers_its  = [];
         } else {
