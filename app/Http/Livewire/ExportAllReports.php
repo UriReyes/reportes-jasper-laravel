@@ -335,27 +335,17 @@ class ExportAllReports extends Component
     public function iterateMonitors($monitors, $site24x7Url, $refresh_token, $zaaid, $customer, $start_time, $completed_monitors, $totalChunks = null, $countChunk = null)
     {
         foreach ($monitors as $monitor) {
-
-
-            $processedMonitor = $this->processSite24x7Monitors($monitor, $site24x7Url, $refresh_token, $zaaid, $customer, $this->last_month);
-            $this->completed_reports++;
-            $this->percentage = $this->getPercentage($this->completed_reports, $this->totalMonitors);
-            // $finish_time = microtime(true);
-            // $time = $finish_time - $start_time;
-            // if ($time > 3500) {
-            //     do {
-            //         $refresh_token = $this->getRefreshToken();
-            //     } while (!$refresh_token);
-            //     $refresh_token = $refresh_token->access_token;
-            //     Storage::put('token/refreshToken.txt', $refresh_token);
-            //     $start_time = microtime(true);
-            // }
             $inicio_proceso = Storage::get('inicio_procesos/InicioMasiveExport.txt');
             if (Carbon::parse($inicio_proceso)->diffInMinutes(now()) > 55) {
                 $refresh_token = $this->getRefreshToken()->access_token;
                 Storage::put('token/refreshToken.txt', $refresh_token);
                 Storage::put('inicio_procesos/InicioMasiveExport.txt', now()->format('d-m-Y H:i:s'));
             }
+
+            $processedMonitor = $this->processSite24x7Monitors($monitor, $site24x7Url, $refresh_token, $zaaid, $customer, $this->last_month);
+            $this->completed_reports++;
+            $this->percentage = $this->getPercentage($this->completed_reports, $this->totalMonitors);
+
             // $monitorsCollect->push($processedMonitor);
             array_push($this->storedInformation[0]['monitors'], $processedMonitor);
             file_put_contents(public_path("storage/downloaded_msp_information/{$customer}_{$zaaid}.json"), json_encode($this->storedInformation));
