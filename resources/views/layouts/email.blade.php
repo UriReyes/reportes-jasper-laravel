@@ -92,27 +92,33 @@
                         <td style="padding:36px 30px 42px 30px;">
                             <table role="presentation"
                                 style="width:100%;border-collapse:collapse;border:0;border-spacing:0;">
-                                <tr>
-                                    <hr style="margin:0;width: 100%; height: 1.5px; background-color: #153643;">
-                                    &nbsp;
-                                    </hr>
-                                    <h2 style="padding-top:3px; color:#153643; text-align:center">
-                                        KIO NETWORKS</h2>
-                                    <hr style="margin:0;width: 100%; height:1.5px; background-color: #153643;">
-                                    &nbsp;
-                                    </hr>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <hr style="margin:0;width: 100%; height: 1.5px; background-color: #153643;">
+                                            &nbsp;
+                                            </hr>
+                                            <h2 style="padding-top:3px; color:#153643; text-align:center">
+                                                KIO NETWORKS</h2>
+                                            <hr style="margin:0;width: 100%; height:1.5px; background-color: #153643;">
+                                            &nbsp;
+                                            </hr>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding:0 0 36px 0;">
 
-                                    <td style="padding:0 0 36px 0;">
-
-                                        <div class="caja_img_logo" style="margin-top:30px; text-align:center">
-                                            <img width="160" src="{{ asset('assets/img/logo-KIO.webp') }}"
-                                                class="mt-2 ml-4" style="width:160px;">
-                                        </div>
-                                        <div>
-                                            @yield('content')
-                                        </div>
-                                    </td>
-                                </tr>
+                                            <div class="caja_img_logo" style="margin-top:30px; text-align:center">
+                                                <img width="160"
+                                                    src="https://www.kionetworks.com/hubfs/Logos%20KIO/logo-KIO.png"
+                                                    class="mt-2 ml-4" style="width:160px;">
+                                            </div>
+                                            <div>
+                                                @yield('content')
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
                             </table>
                         </td>
                     </tr>
