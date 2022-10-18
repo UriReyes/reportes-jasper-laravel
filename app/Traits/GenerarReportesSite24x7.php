@@ -98,7 +98,7 @@ trait GenerarReportesSite24x7
             $group = 'Sin Grupo';
             if ($monitor_group != 0 && ($customer_name == 'Monitoring PrimeOps' || $customer_name == 'KIO CA&C')) {
                 $monitorGroups = $this->getMonitorGroups($site24x7Url, $zaaid, $refresh_token, $monitor_group);
-                $group =  $monitorGroups['display_name'];
+                $group =  array_key_exists('display_name', $monitorGroups) ? $monitorGroups['display_name'] : 'Sin Grupo';
             };
 
 

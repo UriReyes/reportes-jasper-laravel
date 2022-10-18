@@ -1,7 +1,10 @@
 <?php
 
 use App\Http\Controllers\JasperController;
+use App\Mail\GeneracionDeReportesIniciada;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,4 +25,7 @@ Route::get('/folder',  [JasperController::class, 'folder'])->name('folder');
 Route::get('/cron',  [JasperController::class, 'cron'])->name('cron');
 Route::get('/notificaciones',  [JasperController::class, 'notificaciones'])->name('notificaciones');
 Route::get('/administracion',  [JasperController::class, 'administracion'])->name('administracion');
+// Route::get('/test', function () {
+//     Mail::to(Storage::get('email/email.txt'))->send(new GeneracionDeReportesIniciada());
+// });
 // Route::post('tests', [JasperController::class, 'tests'])->name('tests');
