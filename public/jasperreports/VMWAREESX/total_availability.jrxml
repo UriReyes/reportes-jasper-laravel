@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.19.0.final using JasperReports Library version 6.19.0-646c68931cebf1a58bc65c4359d1f0ca223c5e94  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="total_availability" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="9f1c1e01-d30d-4987-87be-262d87fc2d90">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="VMWAREESX\BANOBRASS.jrdax"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<queryString language="json">
+		<![CDATA[customer.vmwareesx.data]]>
+	</queryString>
+	<field name="LOCATIONID" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="LOCATIONID"/>
+		<fieldDescription><![CDATA[LOCATIONID]]></fieldDescription>
+	</field>
+	<field name="HARDWAREVENDOR" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="HARDWAREVENDOR"/>
+		<fieldDescription><![CDATA[HARDWAREVENDOR]]></fieldDescription>
+	</field>
+	<field name="HARDWAREMODEL" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="HARDWAREMODEL"/>
+		<fieldDescription><![CDATA[HARDWAREMODEL]]></fieldDescription>
+	</field>
+	<field name="HOSTNAME" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="HOSTNAME"/>
+		<fieldDescription><![CDATA[HOSTNAME]]></fieldDescription>
+	</field>
+	<field name="BUILD" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="BUILD"/>
+		<fieldDescription><![CDATA[BUILD]]></fieldDescription>
+	</field>
+	<field name="VERSION" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="VERSION"/>
+		<fieldDescription><![CDATA[VERSION]]></fieldDescription>
+	</field>
+	<field name="POWER" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="POWER"/>
+		<fieldDescription><![CDATA[POWER]]></fieldDescription>
+	</field>
+	<field name="VENDORNAME" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="VENDORNAME"/>
+		<fieldDescription><![CDATA[VENDORNAME]]></fieldDescription>
+	</field>
+	<field name="UUID" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="UUID"/>
+		<fieldDescription><![CDATA[UUID]]></fieldDescription>
+	</field>
+	<field name="collectiontime" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="collectiontime"/>
+		<fieldDescription><![CDATA[collectiontime]]></fieldDescription>
+	</field>
+	<field name="CPUMODEL" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="CPUMODEL"/>
+		<fieldDescription><![CDATA[CPUMODEL]]></fieldDescription>
+	</field>
+	<field name="UPTIME" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="UPTIME"/>
+		<fieldDescription><![CDATA[UPTIME]]></fieldDescription>
+	</field>
+	<title>
+		<band height="34" splitType="Stretch">
+			<textField>
+				<reportElement x="280" y="0" width="300" height="20" uuid="3d6c1e49-7463-4794-995e-e46a07a51ce9"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Last Uptime: "+$F{UPTIME}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+</jasperReport>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<jsonDataAdapter class="net.sf.jasperreports.data.json.JsonDataAdapterImpl">
+  <name>BANOBRASS</name>
+  <dataFile type="repositoryDataLocation">
+    <location>C:\Users\urire\Documents\DATASET\BANOBRAS_785801948.json</location>
+  </dataFile>
+  <selectExpression></selectExpression>
+  <locale>es_MX</locale>
+  <timeZone>America/Mexico_City</timeZone>
+  <useConnection>false</useConnection>
+  <language>json</language>
+</jsonDataAdapter>
