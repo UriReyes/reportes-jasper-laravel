@@ -249,6 +249,37 @@ trait ApiSite24x7
         }
     }
 
+    public function getVMWareESX($url, $monitor_id, $zaaid, $refresh_token, $attributos)
+    {
+        try {
+            $authorization = "Zoho-oauthtoken {$refresh_token}";
+            $cookie = "zaaid={$zaaid}";
+            $response = Http::connectTimeout(10)->timeout(5000)->withHeaders([
+                'Accept' => 'application/json; version=2.0',
+                'Authorization' => $authorization,
+                'Cookie' => $cookie
+            ])->retry(3, 10000)->get("{$url}/esx_server_details/{$monitor_id}{$attributos}");
+            $response = $response->json();
+            return $response;
+        } catch (\Throwable | \GuzzleHttp\Exception\GuzzleException $th) {
+            if (str_contains($th->getMessage(), '"message":"Invalid data provided."')) {
+                return [
+                    'data' => [],
+                    'chart_data' => [],
+                ];
+            } else {
+                // die();
+                Log::debug('Error: ' . $th->getMessage());
+                // Storage::put('public/error-api/state.json', json_encode(["hasError" => true]));
+                // Storage::put('token/refreshToken.txt', $this->getRefreshToken());
+                // Storage::put('token/refreshTokenByMSP.txt', $this->getRefreshToken());
+                // sleep(180);
+                // event(new ReloadProcessOnErrorAPI());
+                // shell_exec('taskkill /im "httpd.exe" /f /t');
+            }
+        }
+    }
+
     public function getPerformanceCharts($url, $monitor_id, $zaaid, $refresh_token, $attributos)
     {
         try {
