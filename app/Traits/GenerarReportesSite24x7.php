@@ -171,8 +171,16 @@ trait GenerarReportesSite24x7
                 // $path_reports = $this->createFolderToCustomer($last_month, $customer_name, $monitor, $group);
                 // $this->getJasperReport($customers, str_replace("&", "_", str_replace(" ", "_", $customer_name)), $monitor['display_name'], $path_reports, $monitor_id, $monitor['type']);
             } else if ($monitor['type'] == 'VMWAREESX' and $monitor['state'] == 0) {
+                $startLastMonth = new Carbon('first day of last month');
+                $endLastMonth = new Carbon('last day of last month');
+                $startLastMonth = $startLastMonth->format('Y-m-d');
+                $endLastMonth = $endLastMonth->format('Y-m-d');
+
+                // $attributesIf = $this->period_report == 7 ? "?period=50&start_date={$startLastMonth}&end_date=2022-10-31" : "?period={$this->period_report}&start_date={$this->start_custom_date}&end_date={$this->end_custom_date}";
                 $availability = $this->getAvailabilityReport($site24x7Url, $monitor_id, $zaaid, $refresh_token, "?period={$this->period_report}&start_date={$this->start_custom_date}&end_date={$this->end_custom_date}");
                 $performance = $this->getPerformance($site24x7Url, $monitor_id, $zaaid, $refresh_token, "?unit_of_time={$unit_of_time}&period={$this->period_report}&start_date={$this->start_custom_date}&end_date={$this->end_custom_date}");
+                $informationVMWare = $this->getVMWareESX($site24x7Url, $monitor_id, $zaaid, $refresh_token, "");
+
                 $customers = [
                     'customer' => [
                         'group' => $group,
@@ -182,8 +190,10 @@ trait GenerarReportesSite24x7
                         'monitor' => $monitor,
                         'availability' => $this->getUptimeDownTimeAndMaintenance($availability, $format),
                         'performance' =>  $this->applyFormatToPerformance($performance, $format),
+                        'vmwareesx' => $informationVMWare
                     ]
                 ];
+
                 $monitors = $customers;
                 $this->generatePDFMSP($customers, $monitor_id, $customer_name, $monitor, $group);
                 // $path_reports = $this->createFolderToCustomer($last_month, $customer_name, $monitor, $group);
