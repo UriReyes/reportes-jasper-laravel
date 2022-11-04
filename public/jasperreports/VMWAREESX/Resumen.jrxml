@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.19.1.final using JasperReports Library version 6.19.1-867c00bf88cd4d784d404379d6c05e1b419e8a4c  -->
+<!-- Created with Jaspersoft Studio version 6.19.0.final using JasperReports Library version 6.19.0-646c68931cebf1a58bc65c4359d1f0ca223c5e94  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Resumen" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="26a00adc-4d12-40ea-85f4-32fe1a249089">
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Adapter API - KIO"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="VMWAREESX\BANOBRASS.jrdax"/>
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
@@ -101,16 +101,28 @@
 				<subreportExpression><![CDATA["C:\\Users\\urire\\JaspersoftWorkspace\\Reports\\VMWAREESX\\availability.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
-		<band height="40">
+		<band height="53">
 			<subreport overflowType="Stretch">
 				<reportElement x="2" y="7" width="551" height="30" uuid="734ae9e1-1be9-4b35-b670-5d575fbfa187"/>
 				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("availability.data.charts.data.uptimes")]]></dataSourceExpression>
 				<subreportExpression><![CDATA["C:\\Users\\urire\\JaspersoftWorkspace\\Reports\\VMWAREESX\\graficas.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
+		<band height="43">
+			<subreport>
+				<reportElement x="0" y="5" width="200" height="25" uuid="46b0a9f3-036f-49f1-bd01-056cbe2f94d9"/>
+				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("vmwareesx.data")]]></dataSourceExpression>
+				<subreportExpression><![CDATA["C:\\Users\\urire\\JaspersoftWorkspace\\Reports\\VMWAREESX\\total_availability.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement x="0" y="10" width="552" height="30" uuid="deb8ba25-f1c0-4b37-86dd-0b4cd7753583"/>
+				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("availability.data.charts.data.uptimes")]]></dataSourceExpression>
+				<subreportExpression><![CDATA["C:\\Users\\urire\\JaspersoftWorkspace\\Reports\\VMWAREESX\\performance_uptimechart.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
 		<band height="50">
 			<subreport>
-				<reportElement x="2" y="4" width="551" height="40" uuid="41fa938e-2d9d-438c-af4e-52c02ce1dfd2"/>
+				<reportElement x="1" y="4" width="551" height="40" uuid="41fa938e-2d9d-438c-af4e-52c02ce1dfd2"/>
 				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("performance.data.chart_data.CPUUtilizationChart")]]></dataSourceExpression>
 				<subreportExpression><![CDATA["C:\\Users\\urire\\JaspersoftWorkspace\\Reports\\VMWAREESX\\performance_CPUUtilizationChart.jasper"]]></subreportExpression>
 			</subreport>
