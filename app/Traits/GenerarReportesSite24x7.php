@@ -695,20 +695,24 @@ trait GenerarReportesSite24x7
 
     function getPerformanceTraffic($intraffic, $outtraffic)
     {
-        $performance_traffic_array = [];
-        foreach ($intraffic['data']['chart_data']['InterfaceTrafficInChart'] as $intraffic_it) {
-            foreach ($outtraffic['data']['chart_data']['InterfaceTrafficOutChart'] as $outtraffic_it) {
-                if ($intraffic_it['label'] == $outtraffic_it['label']) {
-                    array_push($performance_traffic_array, [
-                        'label' => $intraffic_it['label'],
-                        'intraffic' => $intraffic_it,
-                        'outtraffic' => $outtraffic_it,
-                    ]);
+        if ($intraffic) {
+            $performance_traffic_array = [];
+            foreach ($intraffic['data']['chart_data']['InterfaceTrafficInChart'] as $intraffic_it) {
+                if ($outtraffic) {
+                    foreach ($outtraffic['data']['chart_data']['InterfaceTrafficOutChart'] as $outtraffic_it) {
+                        if ($intraffic_it['label'] == $outtraffic_it['label']) {
+                            array_push($performance_traffic_array, [
+                                'label' => $intraffic_it['label'],
+                                'intraffic' => $intraffic_it,
+                                'outtraffic' => $outtraffic_it,
+                            ]);
+                        }
+                    }
                 }
             }
+            sort($performance_traffic_array);
+            return $performance_traffic_array;
         }
-        sort($performance_traffic_array);
-        return $performance_traffic_array;
     }
 
     function isPermitedEstatus($current_status)
