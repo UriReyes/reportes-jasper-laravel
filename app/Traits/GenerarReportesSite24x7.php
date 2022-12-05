@@ -65,6 +65,27 @@ trait GenerarReportesSite24x7
         return $path_reports;
     }
 
+    public function getAvailabilityPerDay($site24x7Url, $monitor_id, $zaaid, $refresh_token)
+    {
+        if ($this->period_report == 7) {
+            $startDay = new Carbon('first day of last month');
+            $endDay = new Carbon('last day of last month');
+            $endRestDay = $endDay->subDays(1);
+            $endDay2 = new Carbon('last day of last month');
+            $availability = $this->getAvailabilityReport($site24x7Url, $monitor_id, $zaaid, $refresh_token, "?period=50&start_date={$startDay->format('Y-m-d')}&end_date={$endRestDay->format('Y-m-d')}");
+            $endRestDay = $endDay->subDays(5);
+            $availabilitySecond = $this->getAvailabilityReport($site24x7Url, $monitor_id, $zaaid, $refresh_token, "?period=50&start_date={$endRestDay->format('Y-m-d')}&end_date={$endDay2->format('Y-m-d')}");
+            if (count($availability['data']['charts'][0]['data'])) {
+                if (count($availabilitySecond['data']['charts'][0]['data'])) {
+                    $availability['data']['charts'][0]['data'][] = $availabilitySecond['data']['charts'][0]['data'][6];
+                }
+            }
+        } else {
+            $availability = $this->getAvailabilityReport($site24x7Url, $monitor_id, $zaaid, $refresh_token, "?period={$this->period_report}&start_date={$this->start_custom_date}&end_date={$this->end_custom_date}");
+        }
+        return $availability;
+    }
+
     public function processSite24x7Monitors($monitor, $site24x7Url, $refresh_token, $zaaid, $customer_name, $last_month)
     {
         $monitors = null;
@@ -103,11 +124,13 @@ trait GenerarReportesSite24x7
 
 
             if ($monitor['type'] == 'SERVER' and $monitor['state'] == 0) {
+                // $availability = $this->getAvailabilityPerDay($site24x7Url, $monitor_id, $zaaid, $refresh_token);
                 $availability = $this->getAvailabilityReport($site24x7Url, $monitor_id, $zaaid, $refresh_token, "?period={$this->period_report}&start_date={$this->start_custom_date}&end_date={$this->end_custom_date}");
                 $performance = $this->getPerformance($site24x7Url, $monitor_id, $zaaid, $refresh_token, "?unit_of_time={$unit_of_time}&period={$this->period_report}&start_date={$this->start_custom_date}&end_date={$this->end_custom_date}");
                 $performance_disk = $this->getPerformance($site24x7Url, $monitor_id, $zaaid, $refresh_token, "?unit_of_time={$unit_of_time}&period={$this->period_report}&start_date={$this->start_custom_date}&end_date={$this->end_custom_date}&report_attribute=DISK");
                 $ServerUptime = $this->getPerformanceCharts($site24x7Url, $monitor_id, $zaaid, $refresh_token, "/ServerUptimeChart?granularity={$unit_of_time}&period={$this->period_report}&start_date={$this->start_custom_date}&end_date={$this->end_custom_date}");
                 $performance_diskdetail = $this->getPerformanceDiskWidget($site24x7Url, $monitor_id, $zaaid, $refresh_token, "?period={$this->period_report}&start_date={$this->start_custom_date}&end_date={$this->end_custom_date}&widget_name=DiskDetails");
+
                 $customers = [
                     'customer' => [
                         'group' => $group,
@@ -127,6 +150,8 @@ trait GenerarReportesSite24x7
                 // $path_reports = $this->createFolderToCustomer($last_month, $customer_name, $monitor, $group);
                 // $this->getJasperReport($customers,  str_replace("&", "_", str_replace(" ", "_", $customer_name)), $monitor['display_name'], $path_reports, $monitor_id, $monitor['type']);
             } else if ($monitor['type'] == 'AGENTLESSSERVER' and $monitor['state'] == 0) {
+                // $availability = $this->getAvailabilityReport($site24x7Url, $monitor_id, $zaaid, $refresh_token, "?period={$this->period_report}&start_date={$this->start_custom_date}&end_date={$this->end_custom_date}");
+                // $availability = $this->getAvailabilityPerDay($site24x7Url, $monitor_id, $zaaid, $refresh_token);
                 $availability = $this->getAvailabilityReport($site24x7Url, $monitor_id, $zaaid, $refresh_token, "?period={$this->period_report}&start_date={$this->start_custom_date}&end_date={$this->end_custom_date}");
                 $performance = $this->getPerformance($site24x7Url, $monitor_id, $zaaid, $refresh_token, "?unit_of_time={$unit_of_time}&period={$this->period_report}&start_date={$this->start_custom_date}&end_date={$this->end_custom_date}");
                 $performance_disk = $this->getPerformanceCharts($site24x7Url, $monitor_id, $zaaid, $refresh_token, "/AllDiskUsedChart?granularity={$unit_of_time}&period={$this->period_report}&start_date={$this->start_custom_date}&end_date={$this->end_custom_date}");
@@ -151,6 +176,8 @@ trait GenerarReportesSite24x7
                 // $path_reports = $this->createFolderToCustomer($last_month, $customer_name, $monitor, $group);
                 // $this->getJasperReport($customers, str_replace("&", "_", str_replace(" ", "_", $customer_name)), $monitor['display_name'], $path_reports, $monitor_id, $monitor['type']);
             } else if ($monitor['type'] == 'VMWAREVM' and $monitor['state'] == 0) {
+                // $availability = $this->getAvailabilityReport($site24x7Url, $monitor_id, $zaaid, $refresh_token, "?period={$this->period_report}&start_date={$this->start_custom_date}&end_date={$this->end_custom_date}");
+                // $availability = $this->getAvailabilityPerDay($site24x7Url, $monitor_id, $zaaid, $refresh_token);
                 $availability = $this->getAvailabilityReport($site24x7Url, $monitor_id, $zaaid, $refresh_token, "?period={$this->period_report}&start_date={$this->start_custom_date}&end_date={$this->end_custom_date}");
                 $performance = $this->getPerformance($site24x7Url, $monitor_id, $zaaid, $refresh_token, "?unit_of_time={$unit_of_time}&period={$this->period_report}&start_date={$this->start_custom_date}&end_date={$this->end_custom_date}");
                 $performance_disk = $this->getPerformanceDiskWidget($site24x7Url, $monitor_id, $zaaid, $refresh_token, "?period={$this->period_report}&start_date={$this->start_custom_date}&end_date={$this->end_custom_date}&widget_name=GUESTDISKIO");
@@ -177,10 +204,11 @@ trait GenerarReportesSite24x7
                 $endLastMonth = $endLastMonth->format('Y-m-d');
 
                 // $attributesIf = $this->period_report == 7 ? "?period=50&start_date={$startLastMonth}&end_date=2022-10-31" : "?period={$this->period_report}&start_date={$this->start_custom_date}&end_date={$this->end_custom_date}";
+                // $availability = $this->getAvailabilityReport($site24x7Url, $monitor_id, $zaaid, $refresh_token, "?period={$this->period_report}&start_date={$this->start_custom_date}&end_date={$this->end_custom_date}");
+                // $availability = $this->getAvailabilityPerDay($site24x7Url, $monitor_id, $zaaid, $refresh_token);
                 $availability = $this->getAvailabilityReport($site24x7Url, $monitor_id, $zaaid, $refresh_token, "?period={$this->period_report}&start_date={$this->start_custom_date}&end_date={$this->end_custom_date}");
                 $performance = $this->getPerformance($site24x7Url, $monitor_id, $zaaid, $refresh_token, "?unit_of_time={$unit_of_time}&period={$this->period_report}&start_date={$this->start_custom_date}&end_date={$this->end_custom_date}");
                 $informationVMWare = $this->getVMWareESX($site24x7Url, $monitor_id, $zaaid, $refresh_token, "");
-
                 $customers = [
                     'customer' => [
                         'group' => $group,
@@ -199,6 +227,8 @@ trait GenerarReportesSite24x7
                 // $path_reports = $this->createFolderToCustomer($last_month, $customer_name, $monitor, $group);
                 // $this->getJasperReport($customers, str_replace("&", "_", str_replace(" ", "_", $customer_name)), $monitor['display_name'], $path_reports, $monitor_id, $monitor['type']);
             } else if ($monitor['type'] == 'PLUGIN' and $monitor['state'] == 0) {
+                // $availability = $this->getAvailabilityReport($site24x7Url, $monitor_id, $zaaid, $refresh_token, "?period={$this->period_report}&start_date={$this->start_custom_date}&end_date={$this->end_custom_date}");
+                // $availability = $this->getAvailabilityPerDay($site24x7Url, $monitor_id, $zaaid, $refresh_token);
                 $availability = $this->getAvailabilityReport($site24x7Url, $monitor_id, $zaaid, $refresh_token, "?period={$this->period_report}&start_date={$this->start_custom_date}&end_date={$this->end_custom_date}");
                 $performance = $this->getPerformance($site24x7Url, $monitor_id, $zaaid, $refresh_token, "?unit_of_time={$unit_of_time}&period={$this->period_report}&start_date={$this->start_custom_date}&end_date={$this->end_custom_date}");
                 $customers = [
@@ -217,6 +247,8 @@ trait GenerarReportesSite24x7
                 // $path_reports = $this->createFolderToCustomer($last_month, $customer_name, $monitor, $group);
                 // $this->getJasperReport($customers, str_replace("&", "_", str_replace(" ", "_", $customer_name)), $monitor['display_name'], $path_reports, $monitor_id, $monitor['type']);
             } else if ($monitor['type'] == 'SQLSERVER' and $monitor['state'] == 0) {
+                // $availability = $this->getAvailabilityReport($site24x7Url, $monitor_id, $zaaid, $refresh_token, "?period={$this->period_report}&start_date={$this->start_custom_date}&end_date={$this->end_custom_date}");
+                // $availability = $this->getAvailabilityPerDay($site24x7Url, $monitor_id, $zaaid, $refresh_token);
                 $availability = $this->getAvailabilityReport($site24x7Url, $monitor_id, $zaaid, $refresh_token, "?period={$this->period_report}&start_date={$this->start_custom_date}&end_date={$this->end_custom_date}");
                 $performance = $this->getPerformance($site24x7Url, $monitor_id, $zaaid, $refresh_token, "?unit_of_time={$unit_of_time}&period={$this->period_report}&start_date={$this->start_custom_date}&end_date={$this->end_custom_date}");
                 $performance_page = $this->getPerformance($site24x7Url, $monitor_id, $zaaid, $refresh_token, "?period={$this->period_report}&start_date={$this->start_custom_date}&end_date={$this->end_custom_date}&report_attribute=PAGEREADS");
@@ -239,6 +271,8 @@ trait GenerarReportesSite24x7
                 // $path_reports = $this->createFolderToCustomer($last_month, $customer_name, $monitor, $group);
                 // $this->getJasperReport($customers, str_replace("&", "_", str_replace(" ", "_", $customer_name)), $monitor['display_name'], $path_reports, $monitor_id, $monitor['type']);
             } else if ($monitor['type'] == 'NETWORKDEVICE' and $monitor['state'] == 0) {
+                // $availability = $this->getAvailabilityReport($site24x7Url, $monitor_id, $zaaid, $refresh_token, "?period={$this->period_report}&start_date={$this->start_custom_date}&end_date={$this->end_custom_date}");
+                // $availability = $this->getAvailabilityPerDay($site24x7Url, $monitor_id, $zaaid, $refresh_token);
                 $availability = $this->getAvailabilityReport($site24x7Url, $monitor_id, $zaaid, $refresh_token, "?period={$this->period_report}&start_date={$this->start_custom_date}&end_date={$this->end_custom_date}");
                 $performance = $this->getPerformance($site24x7Url, $monitor_id, $zaaid, $refresh_token, "?unit_of_time={$unit_of_time}&period={$this->period_report}&start_date={$this->start_custom_date}&end_date={$this->end_custom_date}");
                 $performance_intraffic = $this->getPerformance($site24x7Url, $monitor_id, $zaaid, $refresh_token, "?period={$this->period_report}&start_date={$this->start_custom_date}&end_date={$this->end_custom_date}&report_attribute=INTRAFFIC");
@@ -263,6 +297,8 @@ trait GenerarReportesSite24x7
                 // $path_reports = $this->createFolderToCustomer($last_month, $customer_name, $monitor, $group);
                 // $this->getJasperReport($customers, str_replace("&", "_", str_replace(" ", "_", $customer_name)), $monitor['display_name'], $path_reports, $monitor_id, $monitor['type']);
             } else if ($monitor['type'] == 'DATASTORE' and $monitor['state'] == 0) {
+                // $availability = $this->getAvailabilityReport($site24x7Url, $monitor_id, $zaaid, $refresh_token, "?period={$this->period_report}&start_date={$this->start_custom_date}&end_date={$this->end_custom_date}");
+                // $availability = $this->getAvailabilityPerDay($site24x7Url, $monitor_id, $zaaid, $refresh_token);
                 $availability = $this->getAvailabilityReport($site24x7Url, $monitor_id, $zaaid, $refresh_token, "?period={$this->period_report}&start_date={$this->start_custom_date}&end_date={$this->end_custom_date}");
                 $performance = $this->getPerformance($site24x7Url, $monitor_id, $zaaid, $refresh_token, "?unit_of_time={$unit_of_time}&period={$this->period_report}&start_date={$this->start_custom_date}&end_date={$this->end_custom_date}");
                 $performance_store = $this->getPerformanceDiskWidget($site24x7Url, $monitor_id, $zaaid, $refresh_token, "?period={$this->period_report}&start_date={$this->start_custom_date}&end_date={$this->end_custom_date}&widget_name=VMSTORAGE");
@@ -283,6 +319,8 @@ trait GenerarReportesSite24x7
                 // $path_reports = $this->createFolderToCustomer($last_month, $customer_name, $monitor, $group);
                 // $this->getJasperReport($customers, str_replace("&", "_", str_replace(" ", "_", $customer_name)), $monitor['display_name'], $path_reports, $monitor_id, $monitor['type']);
             } else if ($monitor['type'] == 'MSEXCHANGE' and $monitor['state'] == 0) {
+                // $availability = $this->getAvailabilityReport($site24x7Url, $monitor_id, $zaaid, $refresh_token, "?period={$this->period_report}&start_date={$this->start_custom_date}&end_date={$this->end_custom_date}");
+                // $availability = $this->getAvailabilityPerDay($site24x7Url, $monitor_id, $zaaid, $refresh_token);
                 $availability = $this->getAvailabilityReport($site24x7Url, $monitor_id, $zaaid, $refresh_token, "?period={$this->period_report}&start_date={$this->start_custom_date}&end_date={$this->end_custom_date}");
                 $performance = $this->getPerformance($site24x7Url, $monitor_id, $zaaid, $refresh_token, "?unit_of_time={$unit_of_time}&period={$this->period_report}&start_date={$this->start_custom_date}&end_date={$this->end_custom_date}");
                 $customers = [
@@ -301,6 +339,8 @@ trait GenerarReportesSite24x7
                 // $path_reports = $this->createFolderToCustomer($last_month, $customer_name, $monitor, $group);
                 // $this->getJasperReport($customers, str_replace("&", "_", str_replace(" ", "_", $customer_name)), $monitor['display_name'], $path_reports, $monitor_id, $monitor['type']);
             } else if ($monitor['type'] == 'IISSERVER' and $monitor['state'] == 0) {
+                // $availability = $this->getAvailabilityReport($site24x7Url, $monitor_id, $zaaid, $refresh_token, "?period={$this->period_report}&start_date={$this->start_custom_date}&end_date={$this->end_custom_date}");
+                // $availability = $this->getAvailabilityPerDay($site24x7Url, $monitor_id, $zaaid, $refresh_token);
                 $availability = $this->getAvailabilityReport($site24x7Url, $monitor_id, $zaaid, $refresh_token, "?period={$this->period_report}&start_date={$this->start_custom_date}&end_date={$this->end_custom_date}");
                 $performance = $this->getPerformance($site24x7Url, $monitor_id, $zaaid, $refresh_token, "?unit_of_time={$unit_of_time}&period={$this->period_report}&start_date={$this->start_custom_date}&end_date={$this->end_custom_date}");
                 $RequestChart = $this->getPerformanceCharts($site24x7Url, $monitor_id, $zaaid, $refresh_token, "/REQUESTCHART?granularity={$unit_of_time}&period={$this->period_report}&start_date={$this->start_custom_date}&end_date={$this->end_custom_date}");
@@ -324,6 +364,8 @@ trait GenerarReportesSite24x7
                 // $this->getJasperReport($customers, str_replace("&", "_", str_replace(" ", "_", $customer_name)), $monitor['display_name'], $path_reports, $monitor_id, $monitor['type']);
             }
             if ($monitor['type'] == 'PING' and $monitor['state'] == 0) {
+                // $availability = $this->getAvailabilityReport($site24x7Url, $monitor_id, $zaaid, $refresh_token, "?period={$this->period_report}&start_date={$this->start_custom_date}&end_date={$this->end_custom_date}");
+                // $availability = $this->getAvailabilityPerDay($site24x7Url, $monitor_id, $zaaid, $refresh_token);
                 $availability = $this->getAvailabilityReport($site24x7Url, $monitor_id, $zaaid, $refresh_token, "?period={$this->period_report}&start_date={$this->start_custom_date}&end_date={$this->end_custom_date}");
                 $performance = $this->getPerformance($site24x7Url, $monitor_id, $zaaid, $refresh_token, "?unit_of_time={$unit_of_time}&period={$this->period_report}&start_date={$this->start_custom_date}&end_date={$this->end_custom_date}");
                 $customers = [
@@ -342,6 +384,8 @@ trait GenerarReportesSite24x7
                 // $path_reports = $this->createFolderToCustomer($last_month, $customer_name, $monitor, $group);
                 // $this->getJasperReport($customers, str_replace("&", "_", str_replace(" ", "_", $customer_name)), $monitor['display_name'], $path_reports, $monitor_id, $monitor['type']);
             } else if ($monitor['type'] == 'URL' and $monitor['state'] == 0) {
+                // $availability = $this->getAvailabilityReport($site24x7Url, $monitor_id, $zaaid, $refresh_token, "?period={$this->period_report}&start_date={$this->start_custom_date}&end_date={$this->end_custom_date}");
+                // $availability = $this->getAvailabilityPerDay($site24x7Url, $monitor_id, $zaaid, $refresh_token);
                 $availability = $this->getAvailabilityReport($site24x7Url, $monitor_id, $zaaid, $refresh_token, "?period={$this->period_report}&start_date={$this->start_custom_date}&end_date={$this->end_custom_date}");
                 $performance = $this->getPerformance($site24x7Url, $monitor_id, $zaaid, $refresh_token, "?unit_of_time={$unit_of_time}&period={$this->period_report}&start_date={$this->start_custom_date}&end_date={$this->end_custom_date}");
                 $customers = [
