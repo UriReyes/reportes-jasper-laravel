@@ -1,17 +1,3 @@
-<!--
-=========================================================
-* Soft UI Dashboard Tailwind - v1.0.4
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/soft-ui-dashboard-tailwind
-* Copyright 2022 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://www.creative-tim.com/license)
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
--->
 <!DOCTYPE html>
 <html lang="ES">
 
@@ -50,6 +36,15 @@
     <link rel="stylesheet" href="{{ asset('css/loader.css') }}">
     @livewireStyles
     @yield('styles')
+    <style>
+        body {
+            min-height: 100vh;
+        }
+
+        #mainContent {
+            min-height: calc(100vh - 110px);
+        }
+    </style>
 </head>
 
 <body class="m-0 font-sans antialiased font-normal text-base leading-default bg-gray-50 text-slate-500">
@@ -61,7 +56,7 @@
         @include('layouts.navbar')
         <!-- end Navbar -->
         <!-- cards -->
-        <div class="w-full px-6 pb-6 mx-auto">
+        <div class="w-full px-6 pb-6 mx-auto" id="mainContent">
             @yield('content')
         </div>
         @include('layouts.footer')
