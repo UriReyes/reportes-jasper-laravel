@@ -60,8 +60,8 @@
                     </div>
                     <div class="w-full mt-2">
                         <button wire:click.prevent="changeMsps"
-                            class="bg-yellow-500 hover:bg-black text-white font-bold py-1 px-2 rounded">
-                            <i class="fas fa-sync"></i> Cambiar Posición
+                            class="hover:bg-black text-black font-bold py-1 px-2 rounded" style="background: #FECC2F">
+                            <i class="fas fa-sync-alt"></i> Cambiar Posición
                         </button>
                     </div>
                 </div>

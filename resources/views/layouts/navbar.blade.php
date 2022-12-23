@@ -1,6 +1,6 @@
 <nav class="relative mb-4 flex flex-wrap items-center justify-between px-0 py-2 transition-all shadow-none duration-250 ease-soft-in lg:flex-nowrap lg:justify-start bg-black h-14"
     style="position: sticky;top: 0;z-index: 4" navbar-main navbar-scroll="true">
-    <a style="position: absolute;top:20px;left: 10px;" class="block p-0 transition-all ease-nav-brand text-sm text-white"
+    <a style="position: absolute;top:20px;left: 25px;" class="block p-0 transition-all ease-nav-brand text-sm text-white"
         sidenav-trigger>
         <div class="w-4.5 overflow-hidden">
             <i class="ease-soft mb-0.75 relative block h-0.5 rounded-sm bg-white transition-all"></i>
