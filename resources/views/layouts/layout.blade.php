@@ -23,7 +23,7 @@
     <meta http-equiv='cache-control' content='no-cache'>
     <meta http-equiv='expires' content='0'>
     <meta http-equiv='pragma' content='no-cache'>
-    <title>KIO NETWORKS</title>
+    <title>MONDRIAN</title>
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!--     Fonts and icons     -->
@@ -40,11 +40,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
         integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link href="{{ asset('assets/css/soft-ui-dashboard-tailwind.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/css/soft-ui-dashboard-tailwind.css') }}" rel="stylesheet" />
     <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <link rel="stylesheet" href="{{ asset('vendor/file-manager/css/file-manager.css') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script defer src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <link rel="stylesheet" href="{{ asset('css/loader.css') }}">
     @livewireStyles
     @yield('styles')
@@ -54,23 +56,21 @@
     <!-- sidenav  -->
     @include('layouts.aside')
     <!-- end sidenav -->
-    <main class="ease-soft-in-out xl:ml-68.5 relative h-full max-h-screen rounded-xl transition-all duration-200">
+    <main class="ease-soft-in-out xl:ml-68.5 relative max-w-full h-full max-h-screen transition-all duration-200">
         <!-- Navbar -->
         @include('layouts.navbar')
         <!-- end Navbar -->
-
         <!-- cards -->
         <div class="w-full px-6 pb-6 mx-auto">
             @yield('content')
-
-            @include('layouts.footer')
         </div>
+        @include('layouts.footer')
         <!-- end cards -->
     </main>
     @livewireScripts
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <x-livewire-alert::scripts />
-
+    <script src="https://cdn.jsdelivr.net/gh/livewire/sortable@v0.x.x/dist/livewire-sortable.js"></script>
     <!-- plugin for charts  -->
     <script src="{{ asset('assets/js/plugins/chartjs.min.js') }}" async></script>
     <!-- plugin for scrollbar  -->
@@ -78,7 +78,7 @@
     <!-- github button -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <!-- main script file  -->
-    <script src="{{ asset('assets/js/soft-ui-dashboard-tailwind.min.js') }}" async></script>
+    <script src="{{ asset('assets/js/soft-ui-dashboard-tailwind.js') }}" async></script>
     <script src="https://code.jquery.com/jquery-3.6.1.slim.min.js"
         integrity="sha256-w8CvhFs7iHNVUtnSP0YKEg00p9Ih13rlL9zGqvLdePA=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>

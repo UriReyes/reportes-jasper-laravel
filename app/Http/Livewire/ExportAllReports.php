@@ -11,6 +11,7 @@ use App\Mail\GeneracionDeReportesFinalizada;
 use App\Mail\GeneracionDeReportesIniciada;
 use App\Traits\ApiSite24x7;
 use App\Traits\GenerarReportesSite24x7;
+use App\Traits\ObtenerMSPs;
 use App\Traits\ReestructurarDatosAPISite24x7;
 use Livewire\Component;
 use Jenssegers\Date\Date;
@@ -22,7 +23,7 @@ use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class ExportAllReports extends Component
 {
-    use ApiSite24x7, ReestructurarDatosAPISite24x7, GenerarReportesSite24x7;
+    use ApiSite24x7, ReestructurarDatosAPISite24x7, GenerarReportesSite24x7, ObtenerMSPs;
     use LivewireAlert;
 
     // public $period = 7;
@@ -107,10 +108,10 @@ class ExportAllReports extends Component
         if ($refresh_token == 'access_denied') {
             $customers_its = [];
         } else {
-            $customers_its = $this->getCustomers($site24x7Url, $refresh_token);
-            if ($customers_its == 401) {
-                $customers_its = [];
-            }
+            $customers_its = $this->generarMSPs($this->getCustomers($site24x7Url, $refresh_token));
+            // if ($customers_its == 401) {
+            //     $customers_its = [];
+            // }
         }
         return view('livewire.export-all-reports', compact('customers_its'));
     }
@@ -189,7 +190,7 @@ class ExportAllReports extends Component
                 // $refresh_token = $this->getRefreshToken();
                 $refresh_token = $r_token;
                 $state = json_decode(Storage::get('public/state-msp-all/state.json'), true);
-                $customers_its = $this->getCustomers($site24x7Url, $refresh_token);
+                $customers_its = $this->generarMSPs($this->getCustomers($site24x7Url, $refresh_token));
                 if ($this->msp_init != 'undefinedMSP') {
                     foreach ($customers_its as $index => $msp) {
                         if ($msp['zaaid'] != $this->msp_init) {
@@ -211,7 +212,7 @@ class ExportAllReports extends Component
                     }
                 }
 
-                if ($customers_its == 401) {
+                if (!$customers_its) {
                     $this->alert('info', 'Upps!', [
                         'position' => 'center',
                         'timer' => 3000,

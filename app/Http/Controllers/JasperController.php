@@ -28,6 +28,10 @@ class JasperController extends Controller
         return view('welcome', compact('customers_its'));
     }
 
+    public function sort()
+    {
+        return view('sort-msp');
+    }
     public function exportAll()
     {
         return view('exportAll');
