@@ -3,12 +3,16 @@
 namespace App\Http\Livewire;
 
 use App\Models\Msp;
+use App\Traits\ApiSite24x7;
+use App\Traits\ObtenerMSPs;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 
 class SortMsps extends Component
 {
     use LivewireAlert;
+    use ObtenerMSPs;
+    use ApiSite24x7;
 
     public $mspsSortByOrder;
     public $mspsSortByName;
@@ -25,6 +29,16 @@ class SortMsps extends Component
         $this->mspsSortByOrder = $this->getMsps();
         $this->mspsSortByName = $this->getMsps('name');
     }
+
+    public function syncMsps()
+    {
+        $site24x7Url = env('SITE_24X7_API');
+        $refresh_token = $this->getRefreshToken()->access_token;
+        $this->generarMSPs($this->getCustomers($site24x7Url, $refresh_token));
+        $this->mspsSortByOrder = $this->getMsps();
+        $this->mspsSortByName = $this->getMsps('name');
+    }
+
     public function getMsps($order = 'order')
     {
         return Msp::orderBy($order)->get();
