@@ -52,13 +52,16 @@ trait GenerarReportesSite24x7
     {
         $customerNameWithoutSpecialChars = preg_replace('/[^A-Za-z0-9\-]/', '_', $customer_name);
         $groupNameWithoutSpecialChars = preg_replace('/[^A-Za-z0-9\-]/', '_', $group);
-
-        $path_reports = Carbon::now()->format('Y') . DIRECTORY_SEPARATOR . $customerNameWithoutSpecialChars . DIRECTORY_SEPARATOR . $last_month;
+        $year = Carbon::now()->format('Y');
+        if ($last_month == 'Diciembre') {
+            $year = Carbon::now()->format('Y') - 1;
+        }
+        $path_reports = $year . DIRECTORY_SEPARATOR . $customerNameWithoutSpecialChars . DIRECTORY_SEPARATOR . $last_month;
         if ($monitor) {
             if ($customer_name == 'Monitoring PrimeOps' || $customer_name == 'KIO CA&C') {
-                $path_reports = Carbon::now()->format('Y') . DIRECTORY_SEPARATOR . $customerNameWithoutSpecialChars . DIRECTORY_SEPARATOR . $groupNameWithoutSpecialChars . DIRECTORY_SEPARATOR . $last_month . DIRECTORY_SEPARATOR . $monitor['type'];
+                $path_reports = $year . DIRECTORY_SEPARATOR . $customerNameWithoutSpecialChars . DIRECTORY_SEPARATOR . $groupNameWithoutSpecialChars . DIRECTORY_SEPARATOR . $last_month . DIRECTORY_SEPARATOR . $monitor['type'];
             } else {
-                $path_reports = Carbon::now()->format('Y') . DIRECTORY_SEPARATOR . $customerNameWithoutSpecialChars . DIRECTORY_SEPARATOR . $last_month . DIRECTORY_SEPARATOR . $monitor['type'];
+                $path_reports = $year . DIRECTORY_SEPARATOR . $customerNameWithoutSpecialChars . DIRECTORY_SEPARATOR . $last_month . DIRECTORY_SEPARATOR . $monitor['type'];
             }
         }
         Storage::makeDirectory('public/InformesKIO' . DIRECTORY_SEPARATOR . $path_reports);
