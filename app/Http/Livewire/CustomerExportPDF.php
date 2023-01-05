@@ -106,10 +106,11 @@ class CustomerExportPDF extends Component implements ShouldBroadcast
                 } else {
                     $monitors = $this->getMonitors($site24x7Url, $this->zaaid, $refresh_token);
                     //For ID Monitor
-                    // $monitorID = "417536000013071024";
+                    // $monitorID = ["417536000000211165", "417536000000211314"];
                     // $monitors = array_filter($monitors, function ($monitor_item) use ($monitorID) {
-                    //     return $monitor_item['monitor_id'] == $monitorID;
+                    //     return in_array($monitor_item['monitor_id'], $monitorID);
                     // });
+                    // dd($monitors);
 
                     $totalMonitorsMask = count($monitors);
                     if ($state != null) {
